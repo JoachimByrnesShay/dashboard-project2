@@ -6,7 +6,15 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dashboard2.settings')
+   # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dashboard2.settings')
+    if 'DYNO' in os.environ:
+        # Is being run on Heroku, use production as default settings
+        default_settings_file = 'dashboard2.config.production'
+    else:
+        # Not being run on Heroku, use local as default settings
+        default_settings_file = 'dashboard2.config.local'
+
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', default_settings_file)
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -20,3 +28,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+

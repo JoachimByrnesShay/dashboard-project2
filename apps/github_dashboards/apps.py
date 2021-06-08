@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class GithubDashboardsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'github_dashboards'
+    name = 'apps.github_dashboards'

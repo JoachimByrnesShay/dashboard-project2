@@ -11,8 +11,9 @@ django-bootstrap4 = "*"
 python-dotenv = "*"
 pygithub = "*"
 django-mathfilters = "*"
+django-heroku = "*"
+django-debug-toolbar = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
-
-[requires]
-python_version = "3.9"
+django-debug-toolbar = "*"
