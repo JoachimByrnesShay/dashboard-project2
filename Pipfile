@@ -16,6 +16,9 @@ django-debug-toolbar = "*"
 psycopg2-binary = "*"
 dnspython = "*"
 psycopg2 = "*"
+dj-database-url = "*"
+whitenoise = "*"
+gunicorn = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

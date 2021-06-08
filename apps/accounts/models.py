@@ -37,27 +37,6 @@ class UserEmailField(models.EmailField):
 # https://github.com/pennersr/django-allauth
 # https://stackoverflow.com/questions/654380/modify-value-of-a-django-form-field-during-clean
 
-def checkDomainExists(email):
-        domain = email.split('@')[1]
-
-        # Make sure the domain exists
-        try:
-            logger.debug('Checking domain %s', domain)
-
-            results = dns.resolver.query(domain, 'MX')
-
-        except dns.exception.DNSException as e:
-            logger.debug('Domain %s does not exist.', e)
-
-            raise \
-                ValidationError(mark_safe("The domain %s could not be found. <br/> Please enter a real email address."
-                                      % domain))
-                # ValidationError(("The domain %s could not be found.  Enter a real email address.") 
-                #                       % domain)
-                
-
-        return email
-
  
 
 class User(AbstractUser):
@@ -79,6 +58,28 @@ class User(AbstractUser):
 
         return GRAVATAR_URL % (digest, size_str)
     def clean(self):
+
+        def checkDomainExists(email):
+            domain = email.split('@')[1]
+
+            # Make sure the domain exists
+            try:
+                logger.debug('Checking domain %s', domain)
+
+                results = dns.resolver.query(domain, 'MX')
+
+            except dns.exception.DNSException as e:
+                logger.debug('Domain %s does not exist.', e)
+
+                raise \
+                    ValidationError(mark_safe("The domain %s could not be found. <br/> Please enter a real email address."
+                                          % domain))
+                    # ValidationError(("The domain %s could not be found.  Enter a real email address.") 
+                    #                       % domain)
+                    
+
+            return email
+            
         checkDomainExists(self.email)
 
  

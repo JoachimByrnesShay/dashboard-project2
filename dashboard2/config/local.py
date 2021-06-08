@@ -1,6 +1,7 @@
 # Settings that are unique to local dev go here
 from .base import *
 #import os 
+
 from dotenv import load_dotenv
 load_dotenv()
 db_password = os.getenv('DB_PASSWORD')
