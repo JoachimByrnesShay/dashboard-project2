@@ -15,6 +15,7 @@ django-heroku = "*"
 django-debug-toolbar = "*"
 psycopg2-binary = "*"
 dnspython = "*"
+psycopg2 = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

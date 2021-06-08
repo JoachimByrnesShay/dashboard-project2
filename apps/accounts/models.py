@@ -28,6 +28,15 @@ class UserEmailField(models.EmailField):
         return str(value).lower()
 
 # checks if domain user enters for email field is a real functioning domain
+# source for cheking domain is here
+# https://gist.github.com/dokterbob/876648/22fe8830c7beb419c02060ffa2658749d94d4b6d
+# https://pypi.org/project/email-validator/
+# https://stackoverflow.com/questions/47076555/check-email-validation-django
+# https://stackoverflow.com/questions/11653471/newline-in-label-for-django-form-field
+# https://stackoverflow.com/questions/12995888/name-is-not-defined/12995923
+# https://github.com/pennersr/django-allauth
+# https://stackoverflow.com/questions/654380/modify-value-of-a-django-form-field-during-clean
+
 def checkDomainExists(email):
         domain = email.split('@')[1]
 
