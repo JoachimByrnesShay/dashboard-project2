@@ -11,6 +11,7 @@ h1 {
 body {
   background: rgb(215,240,240);
   background: #e5e5e5;
+  background: lightblue;
 }
 
 /** end general styles **/
@@ -84,6 +85,29 @@ nav ul:hover a.active {
 }
 
 /** end navigation bar styles **/
+
+/** dashboard styles **/
+
+/** dashboard styles **/
+
+div.dashboards {
+  position: relative;
+  background: green;
+  border: 5px solid red;
+}
+
+div.dashboards div.dashboard embed {
+}
+
+div.dashboards div.dashboard h2 {
+  color: blue;
+  font-size: .5em;
+}
+
+div.dashboards div.dashboard h3 {
+  color: red;
+  font-size: .5em;
+}
 
 /** homepage styles **/
 

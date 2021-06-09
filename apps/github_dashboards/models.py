@@ -4,13 +4,17 @@ from .modules import custom_utils
 # Create your models here.
 from django.conf import settings
 from pygal.style import *
+from pygal import Bar, Pie, HorizontalBar, Gauge, Dot, Treemap
 import sys
 
 
 class PanelTypes(models.TextChoices):
-    PIE= 'Pie', 'pie chart of languages used'
-    BAR= 'Bar', 'bar chart of languages used'
-
+    PIE= 'Pie', 'pie chart'
+    BAR= 'Bar', 'bar chart'
+    HORIZONTALBAR = 'HorizontalBar', 'horizontal bar chart'
+    GAUGE = 'Gauge', 'gauge chart'
+    DOT = "Dot", 'dot chart'
+    TREEMAP = "Treemap", 'treemap chart'
 
 
 class DashboardPanel(models.Model):
@@ -39,16 +43,19 @@ class DashboardPanel(models.Model):
     panel_type = models.CharField(
         max_length = 100,
         choices=PanelTypes.choices,
-        default="lang-bar"
+        default="Bar"
     )
     
 
     def get_chart(self):
         repo = custom_utils.get_repo(self.github_username, self.repo_name)
-        #print(repo)
+        print("INSIDE GET CHART")
+        print(repo)
        # piechart_style = getattr(sys.modules[__name__], self.panel_style)
-        piechart_style = getattr(sys.modules[__name__], self.panel_style)
+        #piechart_style = getattr(sys.modules[__name__], self.panel_style)
+        piechart_style = self.panel_style
         chart_type= self.panel_type
+
         # print(list(repo))
         #return custom_utils.get_repo_languages_piechart(repo)
         #chart = get_chart_type(self.panel_type)

@@ -9,7 +9,7 @@ requests = "*"
 pygal = "*"
 django-bootstrap4 = "*"
 python-dotenv = "*"
-pygithub = "*"
+pygithub = {extras = ["integrations"], version = "*"}
 django-mathfilters = "*"
 django-heroku = "*"
 django-debug-toolbar = "*"
@@ -20,6 +20,7 @@ dj-database-url = "*"
 whitenoise = "*"
 gunicorn = "*"
 django-userforeignkey = "*"
+ghapi = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

@@ -3,13 +3,15 @@
 Github Dashboard App - Home
 {% endblock title %}
 {% block content %}
-<div class='row'>
+<div class='row dashboards'>
     {% for dash in dashboards %}
-    <div class='col-3'>
-        <h2></h2>
-        {% if dash.get_chart %}
-<embed type="image/svg+xml" src="{{ dash.get_chart|safe}}" />
-{% endif %}
+    <div class='col-3 dashboard card'>
+        {% load cache %}
+        {% cache 500 dashdisplay dash.id %}
+        <h2>{{dash.github_username}}/{{dash.repo_name}}</h2>
+        <h3>{{dash.repo_description}}</h3>
+        <embed type="image/svg+xml" src="{{ dash.get_chart | safe}}">
+        {% endcache %}
     </div>
     {% endfor %}
 </div>
