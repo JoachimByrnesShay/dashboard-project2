@@ -2,7 +2,6 @@
 
 h1 {
   background: #Acc1d9;
-  background: green;
   padding: .2em 0.4em .2em 0.4em;
   color: hsl(220,50%,40%);
   text-shadow: 4px 4px .6em hsl(20,50%,50%);
@@ -12,6 +11,7 @@ body {
   background: rgb(215,240,240);
   background: #e5e5e5;
   background: lightblue;
+  font-family: 'Montserrat';
 }
 
 /** end general styles **/
@@ -94,19 +94,44 @@ div.dashboards {
   position: relative;
   background: green;
   border: 5px solid red;
+  height: 20em;
 }
 
 div.dashboards div.dashboard embed {
+  position: absolute;
+  bottom: 0;
+  align-self: center;
 }
 
 div.dashboards div.dashboard h2 {
   color: blue;
-  font-size: .5em;
+  font-size: .9em;
 }
 
 div.dashboards div.dashboard h3 {
   color: red;
-  font-size: .5em;
+  font-size: .9em;
+}
+
+/** users pages styles **/
+
+.users .card {
+  padding: .7em;
+  font-family: sans-serif;
+}
+
+.users a:hover {
+  text-decoration: none;
+  text-shadow: .5em .45em .1em hsla(200,50%,40%,.5);
+  color: white;
+}
+
+.users a {
+  font-family: sans-serif;
+}
+
+.users .card:hover {
+  background: hsla(110,50%,40%,.5);
 }
 
 /** homepage styles **/

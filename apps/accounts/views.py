@@ -10,6 +10,13 @@ from django.urls import reverse
 from apps.accounts.models import User
 #from django.contrib.auth.forms import AuthenticationForm
 
+def users_view_all(request):
+    users = User.objects.all()
+    context = {
+        'users':users,
+    }
+    return render(request, 'users.html', context)#
+
 def user_register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
