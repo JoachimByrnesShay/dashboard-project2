@@ -1,9 +1,11 @@
 """ imports of libraries and modules required for functions in this file (modules/custom_utils.py), which is imported into views.py"""
 import os
+import sys
 import requests
 from github import Github
 import pygal
-from .pygal_styles import * 
+#from .pygal_styles import * 
+from pygal.style import *
 from .custom_forms import BlankGetRepoForm
 
 
@@ -51,7 +53,7 @@ def sortby_data(repo, sortby_value):
 
 """get default repos and return svg barchart created via pygal using size attribute for repos"""
 def get_repos_size_barchart():
-    line_chart = pygal.Bar(style=barchart_style)
+    line_chart = pygal.Bar()
     line_chart.title = 'Repos by size'
     repos = get_repos()
 
@@ -62,16 +64,21 @@ def get_repos_size_barchart():
 
 
 """param is a single repo object. returns an svg pichart created via pygal using languages data from repo.languages_url (convered to json object)"""
-def get_repo_languages_piechart(repo):
-    pie_chart = pygal.Pie(style=piechart_style)
+def get_repo_languages_piechart(repo, panel_type, piechart_style):
+    #this_style = getattr(sys.modules[__name__], piechart_style)
+    print(piechart_style.__class__)
+    this_style = getattr(sys.modules[__name__], "BlueStyle") 
+    this_style = getattr(sys.modules[__name__], piechart_style) 
+    pie_chart = pygal.Pie(style=this_style)
+    print(pie_chart)
     pie_chart.title = "Languages used in this repository"
     languages = requests.get(repo.languages_url).json()
 
     for lang in languages:
         size = languages[lang]
         pie_chart.add(lang, size)
+    #pie = pie_chart.render_data_uri()
     pie = pie_chart.render_data_uri()
-    
     return pie
 
 

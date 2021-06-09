@@ -19,6 +19,7 @@ psycopg2 = "*"
 dj-database-url = "*"
 whitenoise = "*"
 gunicorn = "*"
+django-userforeignkey = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

@@ -20,7 +20,7 @@ django_secret_key = os.getenv("DJANGO_SECRET_KEY")
 #BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-#print(BASE_DIR)
+print(os.path.dirname(BASE_DIR))
 #exit()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -45,6 +45,7 @@ LOCAL_APPS = [
 THIRD_PARTY_APPS = [
     'bootstrap4',
     'mathfilters',
+    'django_userforeignkey',
 ]
 
 DJANGO_APPS = [
@@ -67,6 +68,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_userforeignkey.middleware.UserForeignKeyMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]

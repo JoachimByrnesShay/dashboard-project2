@@ -2,6 +2,7 @@
 
 h1 {
   background: #Acc1d9;
+  background: green;
   padding: .2em 0.4em .2em 0.4em;
   color: hsl(220,50%,40%);
   text-shadow: 4px 4px .6em hsl(20,50%,50%);
@@ -26,6 +27,26 @@ body {
 }
 
 /** navigation bar styles **/
+
+div.auth-links {
+  background: red;
+  margin-left: 15em;
+  width: 15em;
+}
+
+div.auth-links li {
+  margin: 0 7em 0 7em;
+  display: block;
+}
+
+li.username {
+  width: 10em;
+}
+
+img.gravatar {
+  position: fixed;
+  right: 27.4em;
+}
 
 li.nav-item {
   margin-right: .5em;
@@ -55,7 +76,7 @@ li.nav-item:hover a {
   text-transform: uppercase;
 }
 
-nav ul.nav:hover a.active {
+nav ul:hover a.active {
   text-shadow: none;
   font-weight: normal;
   text-transform: normal;

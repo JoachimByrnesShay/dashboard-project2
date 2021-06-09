@@ -18,6 +18,12 @@ def user_register(request):
             messages.success(request, 'Great job! You are registered!')
             login(request, user)
             return redirect('home')
+        else: 
+            pass
+           # print(list(form.errors.as_data().values()))
+           # print(form.errors.as_data())
+           # print(form.errors.as_list())
+
     else:
         form = RegisterForm()
 

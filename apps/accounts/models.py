@@ -25,7 +25,13 @@ class UserEmailField(models.EmailField):
         super(UserEmailField, self).__init__(*args, **kwargs)
 
     def get_prep_value(self, value):    
+
+        # the user entered email value can be printed before validation
+        
+        print(value)
         return str(value).lower()
+    #def clean(self):
+
 
 # checks if domain user enters for email field is a real functioning domain
 # source for cheking domain is here
@@ -37,14 +43,14 @@ class UserEmailField(models.EmailField):
 # https://github.com/pennersr/django-allauth
 # https://stackoverflow.com/questions/654380/modify-value-of-a-django-form-field-during-clean
 
- 
+
 
 class User(AbstractUser):
 
     bio = models.TextField()
     #username = models.CharField(error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username'),
     username = UserNameField(max_length=200, unique=True)
-    email = UserEmailField(unique=True, validators=[EmailValidator])
+    email = UserEmailField(unique=True)
 
     def gravatar(self, size=None):
         GRAVATAR_URL = 'https://gravatar.com/avatar/%s?d=identicon%s'
@@ -57,12 +63,19 @@ class User(AbstractUser):
             size_str = ''
 
         return GRAVATAR_URL % (digest, size_str)
+
+    
+
     def clean(self):
-
+        # running this check before any other validations
         def checkDomainExists(email):
-            domain = email.split('@')[1]
-
-            # Make sure the domain exists
+            print(email)
+            print(email.__class__)
+            try:
+                domain = email.split('@')[1]
+            except:
+                domain = ''
+            
             try:
                 logger.debug('Checking domain %s', domain)
 
@@ -70,16 +83,11 @@ class User(AbstractUser):
 
             except dns.exception.DNSException as e:
                 logger.debug('Domain %s does not exist.', e)
-
                 raise \
-                    ValidationError(mark_safe("The domain %s could not be found. <br/> Please enter a real email address."
+                    ValidationError(mark_safe("Email domain %s could not be found. <br/> Please enter a real email address."
                                           % domain))
-                    # ValidationError(("The domain %s could not be found.  Enter a real email address.") 
-                    #                       % domain)
-                    
-
             return email
-            
         checkDomainExists(self.email)
-
- 
+        # Make sure the domain exists
+        
+       
