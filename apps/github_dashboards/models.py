@@ -3,12 +3,13 @@ from apps.accounts.models import User
 from .modules import custom_utils
 # Create your models here.
 from django.conf import settings
+from pygal.style import *
 import sys
 
 
 class PanelTypes(models.TextChoices):
-    LANG_PIE= 'lang-pie', 'pie chart of languages used'
-    LANG_BAR= 'lang-bar', 'bar chart of languages used'
+    PIE= 'Pie', 'pie chart of languages used'
+    BAR= 'Bar', 'bar chart of languages used'
 
 
 
@@ -46,7 +47,7 @@ class DashboardPanel(models.Model):
         repo = custom_utils.get_repo(self.github_username, self.repo_name)
         #print(repo)
        # piechart_style = getattr(sys.modules[__name__], self.panel_style)
-        piechart_style = self.panel_style
+        piechart_style = getattr(sys.modules[__name__], self.panel_style)
         chart_type= self.panel_type
         # print(list(repo))
         #return custom_utils.get_repo_languages_piechart(repo)

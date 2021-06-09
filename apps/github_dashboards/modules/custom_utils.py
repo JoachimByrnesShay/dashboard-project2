@@ -7,6 +7,7 @@ import pygal
 #from .pygal_styles import * 
 from pygal.style import *
 from .custom_forms import BlankGetRepoForm
+from pygal import Bar, Pie
 
 
 """get all github repos via api for single user. default value for username
@@ -67,9 +68,10 @@ def get_repos_size_barchart():
 def get_repo_languages_piechart(repo, panel_type, piechart_style):
     #this_style = getattr(sys.modules[__name__], piechart_style)
     print(piechart_style.__class__)
-    this_style = getattr(sys.modules[__name__], "BlueStyle") 
-    this_style = getattr(sys.modules[__name__], piechart_style) 
-    pie_chart = pygal.Pie(style=this_style)
+    #this_style = getattr(sys.modules[__name__], "BlueStyle") 
+    #this_style = getattr(sys.modules[__name__], piechart_style) 
+    pie_chart = getattr(sys.modules[__name__], panel_type)(style=piechart_style)
+    #pie_chart = pygal.Pie(style=piechart_style)
     print(pie_chart)
     pie_chart.title = "Languages used in this repository"
     languages = requests.get(repo.languages_url).json()
