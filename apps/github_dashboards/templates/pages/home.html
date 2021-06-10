@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load bootstrap4 %}
 {% block title %}
 Github Dashboard App - Home
 {% endblock title %}
@@ -6,12 +7,14 @@ Github Dashboard App - Home
 <div class='row dashboards'>
     {% for dash in dashboards %}
     <div class='col-3 dashboard card'>
-        {% load cache %}
-        {% cache 500 dashdisplay dash.id %}
-        <h2>{{dash.github_username}}/{{dash.repo_name}}</h2>
-        <h3>{{dash.repo_description}}</h3>
-        <embed type="image/svg+xml" src="{{ dash.get_chart | safe}}">
-        {% endcache %}
+        <a class="stretched-link" href="/details/{dash.id}/">
+            {% load cache %}
+            {% cache 500 dashdisplay dash.id %}
+            <h2>{{dash.github_username}}/{{dash.repo_name}}</h2>
+            <h3>{{dash.repo_description}}</h3>
+            <embed type="image/svg+xml" src="{{ dash.get_chart | safe}}">
+            {% endcache %}
+        </a>
     </div>
     {% endfor %}
 </div>

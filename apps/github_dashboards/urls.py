@@ -4,8 +4,8 @@ from apps.github_dashboards import views
 
 urlpatterns = [
     # CRUD views for ReadingLists
-    # path('', views.homepage, name="home"),
-    # path('list/create/', views.reading_list_create),
+    #path('', views.homepage, name="home"),
+    path('details/<int:dash_id>/', views.panel_details, name='panel_details'),
     # path('list/delete/<int:list_id>/', views.reading_list_delete),
     # path('list/<int:list_id>/', views.reading_list_details),
 

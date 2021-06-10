@@ -90,6 +90,10 @@ nav ul:hover a.active {
 
 /** dashboard styles **/
 
+.card {
+  position: relative;
+}
+
 div.dashboards {
   position: relative;
   background: green;

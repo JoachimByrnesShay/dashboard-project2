@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 """from modules/*, custom modules containing utility fnctions and form classes"""
 from .modules import custom_utils
-from .models import DashboardPanel, PanelsCollection
+from .models import DashboardPanel, PanelCollection
 #from .modules import custom_forms
 
 """load any needed env variables"""
@@ -25,3 +25,6 @@ def home(request):
     context['home_active'] = 'active'
     return render(request, 'pages/home.html', context)
 
+def panel_details(request):
+    context = {}
+    
