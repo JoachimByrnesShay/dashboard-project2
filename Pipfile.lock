@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "430170493e97f8f2fffbe7c79db7b2d5aff2ac79d78649109b19ad83fd5bf2cb"
+            "sha256": "fd7d68ef36ba4e9d1ae89191aa3ce3efd64e033df3f7db1c887d67443405723a"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -187,22 +187,6 @@
             "index": "pypi",
             "version": "==2.1.0"
         },
-        "fastcore": {
-            "hashes": [
-                "sha256:084ff680813f09cc85883b05bb616bdee09d214245840c6fb52fb16c71b1aced",
-                "sha256:cd45dcbfe5869cf174bc98eb931be609e8f8d55062bc3d68700a921136548a77"
-            ],
-            "markers": "python_version >= '3.6'",
-            "version": "==1.3.20"
-        },
-        "ghapi": {
-            "hashes": [
-                "sha256:915e2c8ac52b6ab208c97f748c1660d6eca537de8f2833ae442949dd2c511e65",
-                "sha256:b6db6590f64d64b92706fa884ffff3e36430217506e57490a2e121135de45f5b"
-            ],
-            "index": "pypi",
-            "version": "==0.1.17"
-        },
         "gunicorn": {
             "hashes": [
                 "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e",
@@ -218,14 +202,6 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==2.10"
-        },
-        "packaging": {
-            "hashes": [
-                "sha256:5b327ac1320dc863dca72f4514ecc086f31186744b84a230374cc1fd776feae5",
-                "sha256:67714da7f7bc052e064859c05c595155bd1ee9f69f76557e21f051443c20947a"
-            ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
-            "version": "==20.9"
         },
         "psycopg2": {
             "hashes": [
@@ -347,14 +323,6 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.4.0"
-        },
-        "pyparsing": {
-            "hashes": [
-                "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1",
-                "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"
-            ],
-            "markers": "python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'",
-            "version": "==2.4.7"
         },
         "python-dotenv": {
             "hashes": [

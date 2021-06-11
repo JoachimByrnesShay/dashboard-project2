@@ -9,20 +9,6 @@ from pygal import Bar, Pie, HorizontalBar, Gauge, Dot, Treemap
 import sys
 from django.utils.safestring import mark_safe
 
-# class TimeStamped(models.Model):
-#     creation_date = models.DateTimeField(editable=False)
-#     last_modified = models.DateTimeField(editable=False)
-
-#     def save(self, *args, **kwargs):
-#         if not self.creation_date:
-#             self.creation_date = timezone.now()
-
-#         self.last_modified = timezone.now()
-#         return super(TimeStamped, self).save(*args, **kwargs)
-
-#     class Meta:
-#         abstract = True
-
 
 class PanelTypes(models.TextChoices):
     PIE= 'Pie', 'pie chart'
@@ -44,7 +30,6 @@ class DashboardPanel(models.Model):
         null=True,
         blank=True
     )
-
     
     #creator = UserForeignKey(auto_user=True, on_delete=models.CASCADE)
     panel_type = models.CharField(
@@ -82,12 +67,11 @@ class DashboardPanel(models.Model):
         piechart_style = self.panel_style
         chart_type= self.panel_type
 
-        # print(list(repo))
-        #return custom_utils.get_repo_languages_piechart(repo)
-        #chart = get_chart_type(self.panel_type)
         chart = custom_utils.get_repo_languages_piechart(repo, chart_type, piechart_style)
-        #print(chart)
+
         return chart
+
+    svg = models.TextField(blank=True, null=True, editable=False)
 
     def repo_get(self):
         repo = custom_utils.get_repo(self.github_username, self.repo_name)
@@ -95,7 +79,10 @@ class DashboardPanel(models.Model):
 
     def __str__(self):
         return self.github_username + '/' + self.repo_name
-   
+ 
+
+    def clean(self):
+        self.svg = self.get_chart()
 
 class PanelCollection(models.Model):
     creator = models.ForeignKey(
@@ -112,6 +99,3 @@ class PanelCollection(models.Model):
     modified = models.DateTimeField(auto_now=True)
     def get_panels(self):
         return mark_safe("<br>".join([" %s.../%s" % (p.github_username[0:5],p.repo_name) for p in self.panels.all()]))
-       # return "\n".join([a.visitor_name for a in obj.visitor_set.all()])
-    #from django.utils.html import mark_safeget_panels.allow_tags = True
-       

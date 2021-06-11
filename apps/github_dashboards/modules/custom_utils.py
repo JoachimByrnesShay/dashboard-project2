@@ -1,12 +1,6 @@
 """ imports of libraries and modules required for functions in this file (modules/custom_utils.py), which is imported into views.py"""
-import os
-import sys
-import requests
-
+import os, sys, requests, pygal
 from github import Github
-from ghapi.all import GhApi
-import pygal
-from .pygal_styles import * 
 from pygal.style import *
 from .custom_forms import BlankGetRepoForm
 from pygal import Bar, Pie, HorizontalBar, Gauge, Dot, Treemap
@@ -27,37 +21,11 @@ def get_repos(username='JoachimByrnesShay'):
     return user.get_repos()
 
 
-""" return a singular repo object where requested repo exists for specified user
-otherwise try will fail and except branch will prepare None for return from function """
-# def get_repo(user, repo):
-#     url = "https://api.github.com/users/%s/repos" % user
-
-#     token = os.getenv('GH_ACCESS_TOKEN')
-#     api = GhApi()
-#     api = GhApi(owner=user, repo=repo, token=token)
-#     # print(api.git)
-#     #gettd = api.git.get_ref('heads/master')
-#     gettd = api.repos
-    #print('token is here')
-    #print(token)
-    #g = Github(token)
-   
-    # try:
-    #     user = g.get_user(user)
-    #     repo = user.get_repo(repo)
-    # except:
-    #     repo = None
-    #return api
-    #return repo
-    # return gettd
-def get_repo(user, repo):
-    access_token = os.getenv('GH_ACCESS_TOKEN')
-    print(access_token)
-    headers = {'Authorization':"Token "+access_token}
-    url=f"https://api.github.com/repos/{user}/{repo}"
-    #https://api.github.com/repos/JoachimByrnesShay/dashboard-project2
-    repo=requests.get(url,headers=headers).json()
-
+def get_repo(user,repo):
+    token = os.getenv('GH_ACCESS_TOKEN')
+    g = Github(token)
+    user = g.get_user(user)
+    repo = user.get_repo(repo)
     return repo
 """params are a singular repo object and a repo field attribute as a string
    use getattr function to obtain repo.attribute value 
@@ -95,14 +63,14 @@ def get_repo_languages_piechart(repo, panel_type, piechart_style):
     pie_chart = getattr(sys.modules[__name__], panel_type)(style=this_style)
     pie_chart.title = "Languages used in this repository"
     print(repo)
-    languages = requests.get(repo['languages_url'], headers).json()
+    languages = requests.get(repo.languages_url, headers).json()
+    #languages = requests.get(repo['languages_url'], headers).json()
     print('the repo is this one')
     
     for lang in languages:
         size = languages[lang]
         pie_chart.add(lang, size)
-    #pie = pie_chart.render_data_uri()
-    #pie = pie_chart.render()
+ 
     pie = pie_chart.render_data_uri()
     return pie
 
