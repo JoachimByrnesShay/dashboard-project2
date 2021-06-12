@@ -1,0 +1,42 @@
+/** dashboard styles **/
+
+/** dashboard styles **/
+
+.card {
+  position: relative;
+}
+
+.col {
+}
+
+.stretched-link {
+}
+
+.dashboards {
+  position: relative;
+  background: green;
+  border: 5px solid red;
+}
+
+.dashboard-panel {
+  position: relative;
+  width: 100%;
+}
+
+.repo-description {
+  height: 4em;
+}
+
+.dashboards .dashboard-panel embed {
+  justify-self: flex-end;
+}
+
+.dashboards .dashboard-panel h2 {
+  color: blue;
+  font-size: .9em;
+}
+
+.dashboards .dashboard-panel h3 {
+  color: red;
+  font-size: .9em;
+}

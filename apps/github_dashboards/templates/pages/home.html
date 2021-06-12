@@ -1,18 +1,24 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
+{% load static %}
 {% block title %}
 Github Dashboard App - Home
 {% endblock title %}
 {% block content %}
 <div class='row dashboards'>
     {% for dash in dashboards %}
-    <div class='col-3 dashboard card'>
-        <a class="stretched-link" href="/details/{{dash.id}}/">
+    <a class="stretched-link col-4" href="/details/{{dash.id}}/">
+        <div class='col col-12 dashboard-panel card d-flex'>
+            {{ dash.panel_type }}
+            {% if dash.panel_type == 'Table' %}
+            {{ hello }}
+            {% else %}
             <h2>{{dash.github_username}}/{{dash.repo_name}}</h2>
-            <h3>{{dash.repo_description}}</h3>
-            <embed type="image/svg+xml" src="{{ dash.svg | safe}}">
-        </a>
-    </div>
+            <h3 class='repo-description'>{{dash.repo_description}}</h3>
+            <embed class='mb-0' type="image/svg+xml" src="{{ dash.svg | safe}}">
+            {% endif %}
+        </div>
+    </a>
     {% endfor %}
 </div>
 {% endblock content %}

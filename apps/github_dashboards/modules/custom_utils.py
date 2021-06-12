@@ -24,8 +24,11 @@ def get_repos(username='JoachimByrnesShay'):
 def get_repo(user,repo):
     token = os.getenv('GH_ACCESS_TOKEN')
     g = Github(token)
+    print(g)
     user = g.get_user(user)
+    print(g)
     repo = user.get_repo(repo)
+    print(repo)
     return repo
 """params are a singular repo object and a repo field attribute as a string
    use getattr function to obtain repo.attribute value 
@@ -58,15 +61,11 @@ def get_repo_languages_piechart(repo, panel_type, piechart_style):
     headers = {'Authorization':"Token "+access_token}
     this_style = getattr(sys.modules[__name__], piechart_style) 
  
-    #pie_chart = getattr(sys.modules[__name__], panel_type)(style=this_style)
-    #pie_chart = pygal.Pie(style=this_style)
     pie_chart = getattr(sys.modules[__name__], panel_type)(style=this_style)
     pie_chart.title = "Languages used in this repository"
-    print(repo)
+ 
     languages = requests.get(repo.languages_url, headers).json()
-    #languages = requests.get(repo['languages_url'], headers).json()
-    print('the repo is this one')
-    
+ 
     for lang in languages:
         size = languages[lang]
         pie_chart.add(lang, size)

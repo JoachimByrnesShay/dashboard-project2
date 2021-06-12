@@ -1,0 +1,11 @@
+@namespace svg "http://www.w3.org/2000/svg";
+
+:not(svg|*) {
+  all: unset;
+  display: revert;
+  box-sizing: border-box;
+}
+
+[default-styles] {
+  all: revert;
+}

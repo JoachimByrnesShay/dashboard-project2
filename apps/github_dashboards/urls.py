@@ -1,11 +1,13 @@
 from django.urls import path
-
+from django.contrib import admin
+from django.urls import path, re_path
 from apps.github_dashboards import views
 
 urlpatterns = [
     # CRUD views for ReadingLists
     #path('', views.homepage, name="home"),
     path('details/<int:dash_id>/', views.panel_details, name='panel_details'),
+    path('panels/<int:user_id>/', views.user_panels, name='user_panels'),
     # path('list/delete/<int:list_id>/', views.reading_list_delete),
     # path('list/<int:list_id>/', views.reading_list_details),
 

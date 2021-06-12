@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% block title %}
+Github Dashboard App - Panels
+{% endblock title %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</script>
+<!-- <script>
+    $('#id_panel_type').on('change', function() {
+    // Code here
+    var $this = $(this);
+    var text = "No Printer Selected";
+    if ($this.find('option:selected').index() == 0) {
+        // #text = $this.find('option:selected').text() + ' Selected';
+        $('#id_repo_name').prop('disabled', true);
+    }
+    // $('#printerInfo').html(text);
+}).change();
+</script> -->
+<script>
+    $(document).ready(function(){
+    $("select#id_panel_type").change(function(){
+        var selectedCountry = $(this).children("option:selected").val();
+        alert("You have selected the country - " + selectedCountry);
+        if (selectedCountry == 'TableOfRepos'){
+           // $("text#id_repo_name").prop('disabled', true);
+           // $("text#id_repo_name").each(function(){
+      //  $(this).attr('readonly','readonly');
+         $('#id_repo_name').hide();
+         $('#id_panel_style').hide();
+         $("label[for=id_repo_name]").hide()
+          $("label[for=id_panel_style]").hide()
+         
+//});
+        } else {
+            $('#id_repo_name').show();
+         $('#id_panel_style').show();
+         $("label[for=id_repo_name]").show()
+         $("label[for=id_panel_style]").show()
+        }
+    });
+});
+
+</script>
+<div class='row'>
+    <div class='col-4 mr-auto'>
+        <div class="card border rounded">
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <button class="btn btn-lg btn-primary btn-block">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class='dashboards col-8 ml-auto'>
+        <div class='row'>
+            {% for panel in panels %}
+            <a class="stretched-link col-3" href="/details/{{panel.id}}/">
+                <div class='col col-12 dashboard-panel card d-flex'>
+                    {% if panel.panel_type == 'Table' %}
+                    {{ hello }}
+                    {% else %}
+                    <h2>{{panel.github_username}}/{{panel.repo_name}}</h2>
+                    <h3 class='repo-description'>{{panel.repo_description}}</h3>
+                    <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg | safe}}">
+                    {% endif %}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -23,6 +23,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('apps.accounts.urls')),
+    path('', include('apps.github_dashboards.urls')),
  
     path('', views.home, name='home')
 ]

@@ -19,35 +19,45 @@
     {% endblock %}
 </head>
 
-<body>
-    <header>
-        <nav class="navbar navbar-dark bg-dark navbar-expand">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="{% url 'home' %}">Joachim Byrnes-Shay</a>
+<body class="{% block body-class %}{% endblock body-class %}">
+    <div class="container-fluid">
+        <header>
+            <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Joachim Byrnes-Shay</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav row">
+                        <span class='navspan main-links'>
+                            <li class="nav-item active">
+                                <a class="nav-link {{home_active}}" href="{% url 'home' %}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="panels/{{request.user.id}}/">Panels</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Dashboards</a>
+                            </li>
+                            <li class="nav-item users">
+                                <a class="nav-link" href="{% url 'view_all_users' %}">All Users</a>
+                            </li>
+                        </span>
+                        <span class='navspan auth-links'>
+                            {% if user.is_authenticated %}
+                            <li class="nav-item"><a class='nav-link {{pie_chart_active}}' href="{% url 'user_logout' %}">Logout</a></li>
+                            <li class="nav-item username"><a class='nav-link {{pie_chart_active}}' href=""><span class='content'>Hi {{user.username|title|truncatechars:15}}!</span> <img src="{{user.gravatar}}" width=25 height=25></a></li>
+                            {% else %}
+                            <li class="nav-item"><a class='nav-link {{pie_chart_active}}' href=" {% url 'user_login' %}">Login</a></li>
+                            <li class="nav-item"><a class='nav-link {{pie_chart_active}}' href="{% url 'user_register' %}">Register</a></li>
+                            {% endif %}
+                        </span>
+                    </ul>
                 </div>
-                {% block navbar %}
-                <ul class="nav navbar-nav ml-5 w-100">
-                    <!-- via rendered context from view, the ***_active templated variables below are utilized to insert the .active class as necessary per each views' templates -->
-                    <li class="nav-item"><a class='nav-link text-light {{home_active}}' href="{% url 'home' %}">Home</a></li>
-                    <li class="nav-item ml-5"><a class='nav-link text-light {{table_active}}' href="{% url 'view_all_users' %}">Users</a></li>
-                    <li class="nav-item ml-5"><a class='nav-link text-light {{bar_chart_active}}' href="#">Dashboards</a></li>
-                    <div class="auth-links">
-                        {% if user.is_authenticated %}
-                        <li class="nav-item ml-0"><a class='nav-link text-light {{pie_chart_active}}' href="{% url 'user_logout' %}">Logout</a></li>
-                        <li class="nav-item mr-3 uername"><a class='nav-link text-light {{pie_chart_active}}' href="">Hi {{user.username|title}}! <img class='gravatar' src="{{user.gravatar}}" width=25 height=25></a></li>
-                        <!-- <li class="nav-item gravatar"><a class='nav-link'><img src="{{user.gravatar}}" width=25 height=25></a></li> -->
-                        {% else %}
-                        <li class="nav-item ml-0"><a class='nav-link text-light {{pie_chart_active}}' href=" {% url 'user_login' %}">Login</a></li>
-                        <li class="nav-item"><a class='nav-link text-light {{pie_chart_active}}' href="{% url 'user_register' %}">Register</a></li>
-                        {% endif %}
-                    </div>
-                </ul>
-                {% endblock %}
-            </div>
-        </nav>
-    </header>
-    <div class="container">
+            </nav>
+        </header>
+    </div>
+    <div class="container-fluid">
         <!-- main content is inserted via content block in each view's template -->
         {% if messages %}
         {% for message in messages %}

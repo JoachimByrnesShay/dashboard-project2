@@ -11,12 +11,13 @@ from django.utils.safestring import mark_safe
 
 
 class PanelTypes(models.TextChoices):
-    PIE= 'Pie', 'pie chart'
-    BAR= 'Bar', 'bar chart'
-    HORIZONTALBAR = 'HorizontalBar', 'horizontal bar chart'
-    GAUGE = 'Gauge', 'gauge chart'
-    DOT = "Dot", 'dot chart'
-    TREEMAP = "Treemap", 'treemap chart'
+    TABLE='TableOfRepos', 'table- ALL repos for user'
+    PIE= 'Pie', 'pie chart- 1 repo'
+    BAR= 'Bar', 'bar chart- 1 repo'
+    HORIZONTALBAR = 'HorizontalBar', 'horizontal bar chart- 1 repo'
+    GAUGE = 'Gauge', 'gauge chart- 1 repo'
+    DOT = "Dot", 'dot chart- 1 repo'
+    TREEMAP = "Treemap", 'treemap chart- 1 repo'
 
 
 class DashboardPanel(models.Model):
@@ -40,7 +41,7 @@ class DashboardPanel(models.Model):
     
     github_username = models.CharField(max_length=100)
     repo_name = models.CharField(max_length=100)
-    repo_description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     # style_type = models.TextChoices('StyleType', "DefaultStyle DarkSolarizedStyle LightSolarizedStyle LightStyle CleanStyle \
     # RedBlueStyle DarkColorizedStyle LightColorizedStyle TurquoiseStyle LightGreenStyle DarkGreenStyle DarkGreenBlueStyle BlueStyle")
     panel_style = models.CharField(

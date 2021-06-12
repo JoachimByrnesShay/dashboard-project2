@@ -1,0 +1,26 @@
+.home-buttons {
+  background: hsla(200,50%,80%,.5);
+  padding: 3em;
+  border: 1px solid black;
+}
+
+.home-buttons a.btn {
+  margin: 1em;
+  display: inline-block;
+  width: 12em;
+  height: 4em;
+  text-align: left;
+  box-shadow: 5px 5px 3px grey;
+}
+
+.btn.blue-bg {
+  background: blue;
+}
+
+.btn.green-bg {
+  background: green;
+}
+
+.btn.red-bg {
+  background: red;
+}

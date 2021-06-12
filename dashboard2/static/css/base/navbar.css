@@ -1,0 +1,202 @@
+/*.navbar-brand {
+  font-size: 1em;
+}
+
+.navbar {
+  height: 5em;
+}
+
+.navbar-header {
+  position: absolute;
+  left: 0;
+  width: 20%;
+  padding-left: 3em;
+  height: 5em;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.navbar-nav {
+  position: absolute;
+  left: 20%;
+  width: 80%;
+  padding-left: 3em;
+  height: 5em;
+}
+
+.navbar-nav .nav-item .nav-link {
+  font-size: 1em;
+  padding: 0;
+  height: 5em;
+}
+*/
+
+.container-fluid, .navbar, .navbar-expand {
+  padding: 0;
+  margin: 0;
+}
+
+#navbarNav {
+  line-height: 20px;
+}
+
+/*.navbar {
+  height: 7em;
+}
+
+li.username a {
+}
+
+img.gravatar {
+  right: 20%;
+  position: absolute;
+  border-radius: .2em;
+  max-width: 100%;
+  padding-left: .5em;
+}
+
+.nav-item {
+  margin-right: .5em;
+  width: 5em;
+  display: inline-block;
+}
+
+.nav-item .nav-link {
+  position: static;
+  border-radius: .2em;
+  max-width: 100%;
+  padding-left: 0;
+}
+*/
+
+.navbar-nav {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 1.8em;
+  height: 2em;
+}
+
+.nav-link {
+  font-size: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  height: 100%;
+  margin: auto;
+}
+
+.active {
+  text-shadow: .4em -.3em .4em yellow;
+  font-weight: bold;
+  max-width: 100%;
+  /*text-transform: uppercase;
+*/
+  font-variant: small-caps;
+  box-shadow: 1em 1em .5 grey;
+}
+
+.navbar-nav:hover .nav-item:hover {
+  text-shadow: -.4em .3em .5em orange;
+  font-weight: bold;
+  width: content;
+}
+
+.navbar-nav:hover .nav-item:hover .nav-link {
+}
+
+.navbar-nav:hover .nav-item a.active {
+  text-shadow: none;
+  font-weight: normal;
+  text-transform: normal;
+  border: none;
+}
+
+.log {/*margin-left: 20em;
+*/
+}
+
+.log .nav-link {
+  margin-left: 0em;
+}
+
+.navspan {
+  display: flex;
+}
+
+.navspan .nav-link {
+}
+
+.main-links {
+}
+
+.navbar-nav {
+  padding-top: 1em;
+}
+
+.navbar-brand {
+  margin-left: 2em;
+}
+
+.navbar-nav {
+  display: flex;
+}
+
+.navbar-nav {
+}
+
+.main-links {
+  position: absolute;
+  left: 20em;
+}
+
+.auth-links .nav-item {
+  margin-right: 1em;
+  width: 10em;
+}
+
+.auth-links {
+  position: absolute;
+  left: 75%;
+}
+
+.username img {
+  margin-right: 2em;
+  border: red 5px solid;
+}
+
+.nav-item.username {
+  width: 100%;
+}
+
+.navbar-nav .nav-item.username:hover {
+  text-shadow: -.4em .3em .5em orange;
+  font-weight: bold;
+  text-transform: none;
+  font-variant: normal;
+}
+
+.main-links .users.nav-item {
+  margin-left: 3em;
+  width: 20ch;
+}
+
+.main-links .nav-item {
+}
+
+.main-links .nav-item {
+  margin-right: 1.5em;
+}
+
+.main-links .nav-item {
+  text-align: center;
+}
+
+.main-links .nav-item a {
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2);
+  width: 15ch;
+}
+
+body::before {
+  display: block;
+  content: '';
+  height: 4em; /* or whatever */
+}
