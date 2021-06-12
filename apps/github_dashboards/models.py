@@ -6,9 +6,10 @@ from django.conf import settings
 from django.utils import timezone
 from pygal.style import *
 from pygal import Bar, Pie, HorizontalBar, Gauge, Dot, Treemap
-import sys
+import sys, os
 from django.utils.safestring import mark_safe
-
+from github import Github
+from django.core.exceptions import ValidationError
 
 class PanelTypes(models.TextChoices):
     TABLE='TableOfRepos', 'table- ALL repos for user'
@@ -82,8 +83,25 @@ class DashboardPanel(models.Model):
         return self.github_username + '/' + self.repo_name
  
 
+    
+
     def clean(self):
-        self.svg = self.get_chart()
+        token = os.getenv('GH_ACCESS_TOKEN')
+        g = Github(token)
+       
+        try:
+            user = g.get_user(self.github_username)
+        except:
+             raise ValidationError('User does not exist on github')
+        # if repo:
+        try:
+            repo = user.get_repo(self.repo_name)
+        except:
+            raise ValidationError('Repo does not exist on github') 
+        try:
+            self.svg = self.get_chart()
+        except:
+            raise Exception('svg chart could not be built from this data')
 
 class PanelCollection(models.Model):
     creator = models.ForeignKey(

@@ -34,10 +34,10 @@
                                 <a class="nav-link {{home_active}}" href="{% url 'home' %}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="panels/{{request.user.id}}/">Panels</a>
+                                <a class="nav-link" href="{% url 'user_panels' request.user.id %}">Panels</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Dashboards</a>
+                                <a class="nav-link" href="{% url 'panel_collections' request.user.id %}">Dashboards</a>
                             </li>
                             <li class="nav-item users">
                                 <a class="nav-link" href="{% url 'view_all_users' %}">All Users</a>

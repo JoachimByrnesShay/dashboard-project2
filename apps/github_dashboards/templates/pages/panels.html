@@ -19,12 +19,13 @@ Github Dashboard App - Panels
     // $('#printerInfo').html(text);
 }).change();
 </script> -->
+<!-- https://www.tutorialrepublic.com/faq/how-to-get-the-value-of-selected-option-in-a-select-box-using-jquery.php -->
 <script>
     $(document).ready(function(){
     $("select#id_panel_type").change(function(){
-        var selectedCountry = $(this).children("option:selected").val();
-        alert("You have selected the country - " + selectedCountry);
-        if (selectedCountry == 'TableOfRepos'){
+        var selectedOption= $(this).children("option:selected").val();
+        alert("You have selected the country - " + selectedOption);
+        if (selectedOption == 'TableOfRepos'){
            // $("text#id_repo_name").prop('disabled', true);
            // $("text#id_repo_name").each(function(){
       //  $(this).attr('readonly','readonly');

@@ -8,6 +8,7 @@ urlpatterns = [
     #path('', views.homepage, name="home"),
     path('details/<int:dash_id>/', views.panel_details, name='panel_details'),
     path('panels/<int:user_id>/', views.user_panels, name='user_panels'),
+    path('dashboards/<int:user_id>/', views.panel_collections, name='panel_collections'),
     # path('list/delete/<int:list_id>/', views.reading_list_delete),
     # path('list/<int:list_id>/', views.reading_list_details),
 

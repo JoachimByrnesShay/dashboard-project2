@@ -20,6 +20,23 @@ def get_repos(username='JoachimByrnesShay'):
    
     return user.get_repos()
 
+def confirm_user_and_repo_exist(user,repo):
+        token = os.getenv('GH_ACCESS_TOKEN')
+        g = Github(token)
+       
+        # try:
+        #     user = g.get_user(user)
+        # except:
+        #     user = None
+        # if repo:
+        #     try:
+        #         repo = user.get_repo(repo)
+        #     except:
+        #         user = None
+        user = g.get_user(user)
+        repo = user.get_repo(repo)
+        return repo
+
 
 def get_repo(user,repo):
     token = os.getenv('GH_ACCESS_TOKEN')
