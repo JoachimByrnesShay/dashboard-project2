@@ -43,10 +43,12 @@ class UserEmailField(models.EmailField):
 
 class User(AbstractUser):
 
-    bio = models.TextField()
+    bio = models.TextField(blank=True, null=True)
+  
     #username = models.CharField(error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username'),
     username = UserNameField(max_length=200, unique=True)
     email = UserEmailField(unique=True)
+    
 
     def gravatar(self, size=None):
         GRAVATAR_URL = 'https://gravatar.com/avatar/%s?d=identicon%s'

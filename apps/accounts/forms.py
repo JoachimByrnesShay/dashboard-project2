@@ -1,7 +1,15 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
-
+ 
+from django.core.exceptions import ValidationError
 from apps.accounts.models import User
+
+from django.core.exceptions import ValidationError
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.forms import UserChangeForm
+
+
 
 class UserEditForm(forms.ModelForm):
     class Meta:
@@ -12,6 +20,16 @@ class UserEditForm(forms.ModelForm):
             'email',
             'bio',
         )
+    def clean_first_name(self):
+        if self.cleaned_data["first_name"].strip() == '':
+            raise ValidationError("First name is required.")
+       
+        return self.cleaned_data["first_name"]
+
+    def clean_last_name(self):
+        if self.cleaned_data["last_name"].strip() == '':
+            raise ValidationError("Last name is required.")
+        return self.cleaned_data["last_name"]
 
 class RegisterForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):

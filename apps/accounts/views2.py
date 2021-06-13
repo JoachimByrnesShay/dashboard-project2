@@ -8,9 +8,6 @@ from apps.accounts.forms import UserEditForm, RegisterForm
 from django.urls import reverse
 from apps.accounts.models import User
 from apps.github_dashboards.models import PanelCollection, DashboardPanel
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-
 
 def users_view_all(request):
     users = User.objects.all()
@@ -35,10 +32,9 @@ def user_edit(request):
     user = User.objects.get(id=request.user.id)
     # else:
     print('the info is here')
-    form = UserEditForm(instance=user)
-    if form.is_valid():
-        form.save()
+  
 
+    form = UserEditForm(request.POST, instance=user)
     print(form)
     context = {}
    
@@ -47,39 +43,15 @@ def user_edit(request):
     return render(request, 'user_myaccount.html', context)
 
 def user_save(request):
+    context = {}
     if request.method == "POST":
-        context = {}
         form = UserEditForm(request.POST, instance=request.user)
-       
-        print(request.POST)
-           
-        if  form.is_valid():
-            print("YES ITS VALID")
-            form.save()
-            print(form.errors)
-            return redirect('user_myaccount')
-        else:
-            print("NO IT ISNT")
-            print(form.errors)
-            context['form'] = form
-            return render(request, 'user_myaccount.html', context)
-
-
-def change_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  #
-            messages.success(request, 'Your password was successfully updated!')
-            return redirect('user_myaccount')
-        else:
-            messages.error(request, 'Please correct the error below.')
-    else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'change_password.html', {
-        'form': form
-    })
+            form.save()
+            #messages.success(request,)
+            #return HttpResponseRedirect('/user')
+    context['form']=form 
+    return render(request, 'user_myaccount.html', context)
 
 def user_register(request):
     if request.method == 'POST':
@@ -94,7 +66,7 @@ def user_register(request):
             pass
 
     else:
-        form = RegisterForm()
+        form = RegisterForm(instance=request.user)
 
     context = {
         'form': form,

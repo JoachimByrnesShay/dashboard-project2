@@ -1,13 +1,54 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
 {% block content %}
-<h2> Today's date: {% now "jS F Y" %}</h2>
-<h2> Time now: {% now "H:i a" %}</h2>
-<h1> Username: {{user.username}} </h1>
-<h2> firstname: {{user.first_name }}</h2>
-<h2> lastname: {{user.last_name}}</h2>
-<h2> bio: {{user.bio}}</h2>
-<h2> date joined: {{user.date_joined}}</h2>
-<h2> email: {{user.email }}</h2>
-<h2> last logged in: {{user.last_login}}</h2>
-{% endblock content %}
+<div class='row'>
+    <div class='col-3 card'>
+        <div class='card-body'>
+            <p>You have {{count_panels}} panels registered to your account</p>
+        </div>
+        <div class='card-body'>
+            <p>You have {{count_dashboards}} dashboards registered to your account</p>
+        </div>
+        <div class='card-body'>
+            <p>Your panels can be found at Panels link</p>
+        </div>
+        <div class='card-body'>
+            <p>Your dashboards can be found and edited at Dashboards link</p>
+        </div>
+    </div>
+    <div class='col-9 card'>
+        <div class='card-body'>
+            <div class='time'>
+                <h2> Today's date: {% now "jS F Y" %}</h2>
+                <h2> Time now: {% now "H:i a" %}</h2>
+            </div>
+        </div>
+        {% if request.POST %}
+        <form class="form" method="POST" action="{% url 'user_save' %}">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Save Edit</button>
+        </form>
+        {% else %}
+        <div class='card-body'>
+            <form class="form" method="POST" action="{% url 'user_edit' %}">
+                {% csrf_token %}
+                <input type='hidden'>
+                <button class='btn btn-warning' name='user_edit'>Edit user account information</button>
+            </form>
+            <form class="form" method="POST" action="{% url 'change_password' %}">
+                {% csrf_token %}
+                <input type='hidden'>
+                <button class='btn btn-warning' name='change_password'>Change password</button>
+            </form>
+            <h1> Username: {{user.username}} </h1>
+            <h2> firstname: {{user.first_name }}</h2>
+            <h2> lastname: {{user.last_name}}</h2>
+            <h2> bio: {{user.bio}}</h2>
+            <h2> date joined: {{user.date_joined}}</h2>
+            <h2> email: {{user.email }}</h2>
+            <h2> last logged in: {{user.last_login}}</h2>
+        </div>
+        {% endif %}
+    </div>
+    {% endblock content %}
