@@ -17,6 +17,15 @@ def users_view_all(request):
     }
     return render(request, 'users.html', context)#
 
+def user_myaccount(request):
+    user = User.objects.get(id=request.user.id)
+    context = {
+        'user': user,
+    }
+    return render(request,'user_myaccount.html', context)
+    
+
+
 def user_register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)

@@ -9,6 +9,7 @@ urlpatterns = [
     path('login/', views.user_login, name='user_login'),
     # path('edit-profile/', views.edit_profile, name='edit_profile'),
     path('users/', views.users_view_all, name='view_all_users'),
+    path('myaccount/', views.user_myaccount, name='user_myaccount'),
     # path('users/<username>/', views.view_profile, name='view_profile'),
  ]
 # from django.urls import path

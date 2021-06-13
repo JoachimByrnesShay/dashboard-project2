@@ -36,7 +36,6 @@
                             {% if user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'user_panels' request.user.id %}">Panels</a>
-                                }
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'panel_collections' request.user.id %}">Dashboards</a>
@@ -56,7 +55,7 @@
                         <span class='navspan auth-links'>
                             {% if user.is_authenticated %}
                             <li class="nav-item"><a class='nav-link {{pie_chart_active}}' href="{% url 'user_logout' %}">Logout</a></li>
-                            <li class="nav-item username"><a class='nav-link {{pie_chart_active}}' href=""><span class='content'>Hi {{user.username|title|truncatechars:15}}!</span> <img src="{{user.gravatar}}" width=25 height=25></a></li>
+                            <li class="nav-item username"><a class='nav-link {{pie_chart_active}}' href="{% url 'user_myaccount' %}"><span class='content'>Hi {{user.username|title|truncatechars:15}}!</span> <img src="{{user.gravatar}}" width=25 height=25></a></li>
                             {% else %}
                             <li class="nav-item"><a class='nav-link {{pie_chart_active}}' href=" {% url 'user_login' %}">Login</a></li>
                             <li class="nav-item"><a class='nav-link {{pie_chart_active}}' href="{% url 'user_register' %}">Register</a></li>
