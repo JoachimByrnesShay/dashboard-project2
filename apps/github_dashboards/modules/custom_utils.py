@@ -2,7 +2,7 @@
 import os, sys, requests, pygal
 from github import Github
 from pygal.style import *
-from .custom_forms import BlankGetRepoForm
+
 from pygal import Bar, Pie, HorizontalBar, Gauge, Dot, Treemap
 
 
@@ -23,16 +23,7 @@ def get_repos(username='JoachimByrnesShay'):
 def confirm_user_and_repo_exist(user,repo):
         token = os.getenv('GH_ACCESS_TOKEN')
         g = Github(token)
-       
-        # try:
-        #     user = g.get_user(user)
-        # except:
-        #     user = None
-        # if repo:
-        #     try:
-        #         repo = user.get_repo(repo)
-        #     except:
-        #         user = None
+  
         user = g.get_user(user)
         repo = user.get_repo(repo)
         return repo
@@ -60,16 +51,6 @@ def sortby_data(repo, sortby_value):
         return item.lower()
 
 
-"""get default repos and return svg barchart created via pygal using size attribute for repos"""
-def get_repos_size_barchart():
-    line_chart = pygal.Bar()
-    line_chart.title = 'Repos by size'
-    repos = get_repos()
-
-    for repo in repos:
-        line_chart.add(repo.name, repo.size)
-
-    return line_chart.render_data_uri()
 
 
 """param is a single repo object. returns an svg pichart created via pygal using languages data from repo.languages_url (convered to json object)"""
@@ -105,12 +86,3 @@ def user_exists(user):
     return user
 
 
-"""sets initial values as needed when new pichart form must be created after failed POST request 
-if the user is valid, the initial form data will retain the user_name submitted va POST and a specialized plaeholder value will appear in repo_name field.
-otherwise specialized placeholder values will appear both fields.  Placeholder content is set inside the BlankGetRepoForm class in custom_forms """
-def nonexistent_repo_piechart_form(user_name, repo_name):
-    initial = {}
-    
-    if user_exists(user_name):
-        initial['user_name'] = user_name
-    return BlankGetRepoForm(initial=initial)

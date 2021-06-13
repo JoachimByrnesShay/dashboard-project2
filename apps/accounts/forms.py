@@ -29,7 +29,6 @@ class RegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
 
-        #for fieldname in ['username', 'password1', 'password2']:
         self.fields['password2'].help_text = 'custom message about password confirm'
        
 

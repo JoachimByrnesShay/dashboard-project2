@@ -1,4 +1,13 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
 {% block content %}
+<h2> Today's date: {% now "jS F Y" %}</h2>
+<h2> Time now: {% now "H:i a" %}</h2>
+<h1> Username: {{user.username}} </h1>
+<h2> firstname: {{user.first_name }}</h2>
+<h2> lastname: {{user.last_name}}</h2>
+<h2> bio: {{user.bio}}</h2>
+<h2> date joined: {{user.date_joined}}</h2>
+<h2> email: {{user.email }}</h2>
+<h2> last logged in: {{user.last_login}}</h2>
 {% endblock content %}

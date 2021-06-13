@@ -25,12 +25,8 @@ class UserEmailField(models.EmailField):
         super(UserEmailField, self).__init__(*args, **kwargs)
 
     def get_prep_value(self, value):    
-
-        # the user entered email value can be printed before validation
-        
         print(value)
         return str(value).lower()
-    #def clean(self):
 
 
 # checks if domain user enters for email field is a real functioning domain

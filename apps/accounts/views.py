@@ -6,9 +6,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from apps.accounts.forms import UserEditForm, RegisterForm
 from django.urls import reverse
-# from apps.accounts.forms import UserEditForm, SignupForm
 from apps.accounts.models import User
-#from django.contrib.auth.forms import AuthenticationForm
+
 
 def users_view_all(request):
     users = User.objects.all()
@@ -25,7 +24,6 @@ def user_myaccount(request):
     return render(request,'user_myaccount.html', context)
     
 
-
 def user_register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -36,9 +34,6 @@ def user_register(request):
             return redirect('home')
         else: 
             pass
-           # print(list(form.errors.as_data().values()))
-           # print(form.errors.as_data())
-           # print(form.errors.as_list())
 
     else:
         form = RegisterForm()

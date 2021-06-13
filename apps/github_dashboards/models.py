@@ -42,7 +42,7 @@ class DashboardPanel(models.Model):
     
     github_username = models.CharField(max_length=100)
     repo_name = models.CharField(max_length=100)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField()
     # style_type = models.TextChoices('StyleType', "DefaultStyle DarkSolarizedStyle LightSolarizedStyle LightStyle CleanStyle \
     # RedBlueStyle DarkColorizedStyle LightColorizedStyle TurquoiseStyle LightGreenStyle DarkGreenStyle DarkGreenBlueStyle BlueStyle")
     panel_style = models.CharField(
