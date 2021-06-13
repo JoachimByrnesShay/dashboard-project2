@@ -33,6 +33,8 @@ def user_myaccount(request):
 
 def user_edit(request):
     user = User.objects.get(id=request.user.id)
+    count_dashboards = PanelCollection.objects.filter(creator=request.user).count()
+    count_panels = DashboardPanel.objects.filter(creator=request.user).count()
     # else:
     print('the info is here')
     form = UserEditForm(instance=user)
@@ -40,10 +42,12 @@ def user_edit(request):
         form.save()
 
     print(form)
-    context = {}
-   
-   
-    context['form']= form
+    context = {
+        'user': user,
+        'count_panels': count_panels,
+        'count_dashboards': count_dashboards,
+        'form':form,
+    }
     return render(request, 'user_myaccount.html', context)
 
 def user_save(request):

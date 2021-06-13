@@ -20,9 +20,13 @@ class PanelTypes(models.TextChoices):
     DOT = "Dot", 'dot chart- 1 repo'
     TREEMAP = "Treemap", 'treemap chart- 1 repo'
 
+class PanelSizes(models.TextChoices):
+    SMALL = 'S', 'small'
+    MEDIUM = 'M', 'medium'
+    LARGE = 'L', "large"
 
 class DashboardPanel(models.Model):
-    PanelSizes = models.TextChoices('PanelType', "Small Medium Large")
+    
 
     StyleTypes = models.TextChoices('StyleType', "DefaultStyle DarkSolarizedStyle LightSolarizedStyle LightStyle CleanStyle \
     RedBlueStyle DarkColorizedStyle LightColorizedStyle TurquoiseStyle LightGreenStyle DarkGreenStyle DarkGreenBlueStyle BlueStyle")
@@ -54,7 +58,7 @@ class DashboardPanel(models.Model):
     panel_size = models.CharField(
         max_length=20,
         choices=PanelSizes.choices,
-        default="Medium"
+        default="M"
     )
 
     created = models.DateTimeField(auto_now_add=True)

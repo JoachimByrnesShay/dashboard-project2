@@ -10,6 +10,7 @@ from django.utils.translation import gettext as _
 # Note: we need dnspython for this to work
 import dns.resolver, dns.exception
 from django.utils.safestring import mark_safe
+from .modules import user_utils
 # Custom User class which extends built-in User. Presently, just adds a "bio"
 # and a gravatar method. Feel free to add your own new fields here!
 #https://stackoverflow.com/questions/36330677/django-model-set-default-charfield-in-lowercase
@@ -66,26 +67,8 @@ class User(AbstractUser):
 
     def clean(self):
         # running this check before any other validations
-        def checkDomainExists(email):
-            print(email)
-            print(email.__class__)
-            try:
-                domain = email.split('@')[1]
-            except:
-                domain = ''
-            
-            try:
-                logger.debug('Checking domain %s', domain)
-
-                results = dns.resolver.query(domain, 'MX')
-
-            except dns.exception.DNSException as e:
-                logger.debug('Domain %s does not exist.', e)
-                raise \
-                    ValidationError(mark_safe("Email domain %s could not be found. <br/> Please enter a real email address."
-                                          % domain))
-            return email
-        checkDomainExists(self.email)
+        
+        user_utils.checkDomainExists(self.email)
         # Make sure the domain exists
         
        

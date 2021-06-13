@@ -5,7 +5,7 @@ from django.utils.safestring import mark_safe
 
 
 class DashboardPanelAdmin(admin.ModelAdmin):
-    list_display = ["id", "creator", "github_username", "repo_name", "description", "panel_style", "panel_type", "created", "modified"]
+    list_display = ["id", "creator", "github_username", "repo_name", "description", "panel_style", "panel_type", 'panel_size', "created", "modified"]
     list_display_links = ["github_username", "repo_name"]
     ordering = ('id',)
    
