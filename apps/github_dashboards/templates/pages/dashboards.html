@@ -9,16 +9,19 @@ Github Dashboard App - Panels
     <div class='col-4 mr-auto'>
         <div class="card border rounded">
             <div class="card-body">
+                {% if form %}
                 <form method="POST">
                     {% csrf_token %}
                     {% bootstrap_form form %}
                     <button class="btn btn-lg btn-primary btn-block">Save</button>
                 </form>
+                {% endif %}
             </div>
         </div>
     </div>
     <div class='dashboards col-8 ml-auto'>
         <div class='row dashboard_instance'>
+            {% if dashboards %}
             {% for dashboard in dashboards %}
             <a class="stretched-link col-3" href="/details/{{dashboard.id}}/">
                 <div class='col col-12 dashboard-panel card d-flex'>
@@ -28,6 +31,7 @@ Github Dashboard App - Panels
                 </div>
             </a>
             {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>

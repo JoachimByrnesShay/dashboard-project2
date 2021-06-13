@@ -24,7 +24,7 @@ Github Dashboard App - Panels
     $(document).ready(function(){
     $("select#id_panel_type").change(function(){
         var selectedOption= $(this).children("option:selected").val();
-        alert("You have selected the country - " + selectedOption);
+        alert("You have selected the option - " + selectedOption);
         if (selectedOption == 'TableOfRepos'){
            // $("text#id_repo_name").prop('disabled', true);
            // $("text#id_repo_name").each(function(){
@@ -49,16 +49,19 @@ Github Dashboard App - Panels
     <div class='col-4 mr-auto'>
         <div class="card border rounded">
             <div class="card-body">
+                {% if form %}
                 <form method="POST">
                     {% csrf_token %}
                     {% bootstrap_form form %}
                     <button class="btn btn-lg btn-primary btn-block">Save</button>
                 </form>
+                {% endif %}
             </div>
         </div>
     </div>
     <div class='dashboards col-8 ml-auto'>
         <div class='row'>
+            {% if panels %}
             {% for panel in panels %}
             <a class="stretched-link col-3" href="/details/{{panel.id}}/">
                 <div class='col col-12 dashboard-panel card d-flex'>
@@ -72,6 +75,7 @@ Github Dashboard App - Panels
                 </div>
             </a>
             {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>

@@ -25,75 +25,62 @@ class PanelCollectionForm(forms.ModelForm):
     class Meta:
         model = PanelCollection
         fields = ['title', 'description', 'panels']
-    # def clean(self):
-    # # To keep the main validation and error messages
-    #     super(DashboardPanelForm, self).clean()
-
-    # # Now it's time to add your custom validation
-    #     if len(self.cleaned_data['password']) < 10:
-    #          self._errors['password']='your password\'s length is too short'
-    #          # you may also use the below line to custom your error message, but it doesn't work with me for some reason
-    #          raise forms.ValidationError('Your password is too short')
-    #     token = os.getenv('GH_ACCESS_TOKEN')
-    #     g = Github(token)
-       
-    #     try:
-    #         user = g.get_user(self.github_username)
-    #     except:
-    #         raise Exception("user does not exist")
-    #     # if repo:
-    #     try:
-    #         repo = user.get_repo(self.repo_name)
-    #     except:
-    #         raise Exception("repo does not exist")
-
 
 """simple landing page view.  main content consists of additional button links for the repository data pages"""
 def home(request):
     context = {}
-    # if user:
     dashboards = DashboardPanel.objects.all()
     context['dashboards'] = dashboards
-    # #     auth.login(request, user)
-    # print(dashboards)
-
     # 'home_active' is a templated variable in template. set to 'active' to set home page nav link to active class
     context['home_active'] = 'active'
     return render(request, 'pages/home.html', context)
+
 
 def panel_details(request, dash_id):
     context = {}
     panel = DashboardPanel.objects.get(id=dash_id)
     context['panel'] = panel 
     return render(request, 'pages/details.html', context)
+
     
-def panel_collections(request, user_id):
+def panel_collections(request, user_id=None):
     dashboards = None
-    if request.POST:
-        form = PanelCollectionForm(request.POST)
-        if form.is_valid():
-            new_dashboard = form.save(commit=False)
-            new_dashboard.creator = User.objects.get(id=request.user.id)
-            new_dashboard.save()
-    else:
-        form = PanelCollectionForm()
-    if request.user:
+    form = None
+    if user_id:
+        if request.POST:
+            form = PanelCollectionForm(request.POST)
+            if form.is_valid():
+                new_dashboard = form.save(commit=False)
+                new_dashboard.creator = User.objects.get(id=request.user.id)
+                new_dashboard.save()
+        else:
+            form = PanelCollectionForm()
+       
         dashboards = PanelCollection.objects.filter(creator=request.user.id)
+    else:
+        dashboards = []
+
     context = {'form':form, 'dashboards':dashboards}
     return render(request,'pages/dashboards.html',context)
 
-def user_panels(request, user_id):
+
+def user_panels(request, user_id=None):
     panels = None
-    if request.POST:
-        form = DashboardPanelForm(request.POST)
-        if form.is_valid():
-            new_panel = form.save(commit=False)
-            new_panel.creator = User.objects.get(id=request.user.id)
-            new_panel.save()
-         
-    else: 
-        form = DashboardPanelForm()
-    if request.user:
+    form = None
+    if user_id:
+        if request.POST:
+            form = DashboardPanelForm(request.POST)
+
+            if form.is_valid():
+                new_panel = form.save(commit=False)
+                new_panel.creator = User.objects.get(id=request.user.id)
+                new_panel.save()
+             
+        else: 
+            form = DashboardPanelForm()
         panels = DashboardPanel.objects.filter(creator=request.user.id)
+    else:
+        panels = []
+
     context = {'panels': panels, 'form': form}
     return render(request, 'pages/panels.html', context)
