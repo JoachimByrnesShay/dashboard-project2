@@ -49,37 +49,14 @@ Github Dashboard App - Panels
                     {% endif %}
                 </a>
                 <!-- <a class='btn btn-warning' href="{% url 'delete_panel' panel.id %}">Delete</a> -->
-                <button class="btn" data-toggle="modal" data-target="#fm-modal-grid">Delete</button>
-                <div class="modal fade" id="fm-modal-grid" tabindex="-1" role="dialog" aria-labelledBy="fm-modal-grid" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button class="close" data-dismiss="modal" aria-label="Cerrar">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-12 col-sm-6">
-                                            <p>Warning! This is permanent! Are you sure you want to delete {{pane.repo_name}}?</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <form action="{% url 'delete_panel' panel.id %}" method="POST">
-                                    {% csrf_token %}
-                                    <button class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                                    <button class="btn btn-danger">Delete</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#fm-modal-grid">Delete</button>
+                {% include "snippets/delete_modal.html" %}
             </div>
-            {% endfor %} {% endif %} </div>
+            {% endfor %}
+            {% endif %}
+        </div>
     </div>
-</div> {% endblock content %} {% block page_javascript %} <script src="{% static 'javascript/panelcreationform.js' %}">
+</div>
+{% endblock content %} {% block page_javascript %} <script src="{% static 'javascript/panelcreationform.js' %}">
 </script>
 {% endblock page_javascript %}
