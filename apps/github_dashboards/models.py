@@ -58,7 +58,7 @@ class Panel(models.Model):
     panel_size = models.CharField(
         max_length=20,
         choices=PanelSizes.choices,
-        default="M"
+        default="S"
     )
 
     created = models.DateTimeField(auto_now_add=True)

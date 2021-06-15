@@ -59,7 +59,7 @@ def get_repo_languages_chart(repo, panel_type, chart_style):
     headers = {'Authorization':"Token "+access_token}
     this_style = getattr(sys.modules[__name__], chart_style) 
  
-    chart = getattr(sys.modules[__name__], panel_type)(style=this_style)
+    chart = getattr(sys.modules[__name__], panel_type)(style=this_style, width=400, height=200)
     chart.title = "Languages used in this repository"
  
     languages = requests.get(repo.languages_url, headers).json()

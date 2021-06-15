@@ -1,23 +1,10 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
 {% load static %}
-{% load widget_tweaks %}
 {% block title %}
 Github Dashboard App - Panels
 {% endblock title %}
 {% block content %}
-<!-- <script>
-    $('#id_panel_type').on('change', function() {
-    // Code here
-    var $this = $(this);
-    var text = "No Printer Selected";
-    if ($this.find('option:selected').index() == 0) {
-        // #text = $this.find('option:selected').text() + ' Selected';
-        $('#id_repo_name').prop('disabled', true);
-    }
-    // $('#printerInfo').html(text);
-}).change();
-</script> -->
 <!-- https://www.tutorialrepublic.com/faq/how-to-get-the-value-of-selected-option-in-a-select-box-using-jquery.php -->
 <div class='row'>
     <div class='col-4 mr-auto'>
@@ -26,7 +13,7 @@ Github Dashboard App - Panels
                 {% if form %}
                 <form method="POST">
                     {% csrf_token %}
-                    {% bootstrap_form form%}
+                    {% bootstrap_form form %}
                     <button class="btn btn-lg btn-primary btn-block">Save</button>
                 </form>
                 {% endif %}
@@ -37,28 +24,47 @@ Github Dashboard App - Panels
         <div class='row'>
             {% if panels %}
             {% for panel in panels %}
-            <div class='col col-3 dashboard-panel card d-flex'>
-                <a class="stretched-link col-12" href="{% url 'edit_panel' panel.id %}">
-                    {% if panel.panel_type == 'Table' %}
-                    {{ hello }}
-                    {% else %}
+            <div class='col-3 dashboard-panel card d-flex'>
+                <a class="col" href="{% url 'edit_panel' panel.id %}">
                     <h3 class=''>Panel Size: {{panel.panel_size}}</h3>
                     <h2>Repo: '{{panel.github_username}}/{{panel.repo_name}}'</h2>
                     <h3 class='repo-description'>Desc: {{panel.description}}</h3>
-                    <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg | safe}}">
-                    {% endif %}
+                    <h3>id: {{panel.id}}</h3>
+                    <img class='' src='{{panel.svg}}'>
                 </a>
+                <button class="mb-0 btn btn-danger modal-button flex-align-end" data-toggle="modal" data-target="#fm-modal-grid-{{panel.id}}">Delete</button>
+                <div class="modal" tabindex="-1" role="dialog" id="fm-modal-grid-{{panel.id}}">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Delete?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Warning. This action will be permanent. Confirm!</p>
+                            </div>
+                            <div class="modal-footer">
+                                <form action={% url 'delete_panel' panel.id %} method="POST">
+                                    {% csrf_token %}
+                                    <button class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <embed class='mb-0 stretched-link' type="image/svg+xml" src="{{ panel.svg | safe}}"> -->
                 <!-- <a class='btn btn-warning' href="{% url 'delete_panel' panel.id %}">Delete</a> -->
-                <button class="btn btn-danger" data-toggle="modal" data-target="#fm-modal-grid">Delete</button>
-                {% with URL_STRING="delete_panel" ID_STRING=panel.id %}
-                {% include "snippets/delete_modal.html" %}
-                {% endwith %}
             </div>
             {% endfor %}
             {% endif %}
         </div>
     </div>
 </div>
-{% endblock content %} {% block page_javascript %} <script src="{% static 'javascript/panelcreationform.js' %}">
+{% endblock content %}
+{% block page_javascript %}
+<script src="{% static 'javascript/panelcreationform.js' %}">
 </script>
 {% endblock page_javascript %}

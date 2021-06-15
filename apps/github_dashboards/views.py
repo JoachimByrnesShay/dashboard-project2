@@ -21,7 +21,7 @@ class PanelForm(forms.ModelForm):
     class Meta:
         model = Panel
 
-        fields = ['panel_type', 'github_username', 'repo_name', 'description', 'panel_style', 'panel_size']
+        fields = ['panel_type', 'github_username', 'repo_name', 'description', 'panel_style', 'panel_size', 'id']
 
 class PanelCollectionForm(forms.ModelForm):
     class Meta:
@@ -40,8 +40,8 @@ def home(request):
     return render(request, 'pages/home.html', context)
 
 def delete_panel(request, panel_id):
-    panel = Panel.objects.get(id=panel_id)
-    panel.delete()
+    this_panel = Panel.objects.get(id=panel_id)
+    this_panel.delete()
     messages.warning(request, 'Panel: ("panel.github.user_name/panel.repo_name") was successfully deleted!' )
     return redirect('user_panels', request.user.id)
 

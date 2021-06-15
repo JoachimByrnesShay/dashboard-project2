@@ -2,18 +2,12 @@
 
 /** dashboard styles **/
 
-.card {
+/*.card {
   position: relative;
 }
-
-.col {
-}
-
-.stretched-link {
-}
+*/
 
 .dashboards {
-  position: relative;
   background: green;
   border: 5px solid red;
 }
@@ -24,11 +18,13 @@
 }
 
 .repo-description {
-  height: 4em;
+}
+
+.dashboards .dashboard-panel {
+  padding: 2em;
 }
 
 .dashboards .dashboard-panel embed {
-  justify-self: flex-end;
 }
 
 .dashboards .dashboard-panel h2 {
