@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from apps.accounts.forms import UserEditForm, RegisterForm
 from django.urls import reverse
 from apps.accounts.models import User
-from apps.github_dashboards.models import PanelCollection, DashboardPanel
+from apps.github_dashboards.models import Panel, DashboardPanel
 
 def users_view_all(request):
     users = User.objects.all()

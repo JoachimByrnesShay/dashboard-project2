@@ -10,6 +10,7 @@ urlpatterns = [
     path('panels/', views.user_panels, name='user_panels'),
     path('edit_panel/<int:panel_id>/', views.edit_panel, name='edit_panel'), 
     path('dashboards/', views.panel_collections, name='panel_collections'),
-    path('delete/<int:panel_id>', views.delete_panel, name='delete_panel'),
+    path('delete_panel/<int:panel_id>/', views.delete_panel, name='delete_panel'),
+    path('delete_dashboard/<int:dashboard_id>/', views.delete_dashboard, name='delete_dashboard'),
     #path('table/', views.table, name='view_table'),
 ]

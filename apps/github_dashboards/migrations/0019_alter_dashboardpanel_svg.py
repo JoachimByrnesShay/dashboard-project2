@@ -14,6 +14,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='dashboardpanel',
             name='svg',
-            field=models.TextField(blank=True, default=apps.github_dashboards.models.DashboardPanel.get_chart, editable=False, null=True),
+            field=models.TextField(blank=True, default=apps.github_dashboards.models.Panel.get_chart, editable=False, null=True),
         ),
     ]

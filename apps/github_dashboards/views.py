@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 """from modules/*, custom modules containing utility fnctions and form classes"""
 from .modules import custom_utils
-from .models import DashboardPanel, PanelCollection
+from .models import Panel, PanelCollection
 from apps.accounts.models import User
 from django import forms
 from .modules import custom_utils
@@ -17,46 +17,55 @@ from github import Github
 """load any needed env variables"""
 load_dotenv()
 
-class DashboardPanelForm(forms.ModelForm):
+class PanelForm(forms.ModelForm):
     class Meta:
-        model = DashboardPanel
+        model = Panel
+
         fields = ['panel_type', 'github_username', 'repo_name', 'description', 'panel_style', 'panel_size']
 
 class PanelCollectionForm(forms.ModelForm):
     class Meta:
         model = PanelCollection
+       
+
         fields = ['title', 'description', 'panels']
 
 """simple landing page view.  main content consists of additional button links for the repository data pages"""
 def home(request):
     context = {}
-    dashboards = DashboardPanel.objects.all()
+    dashboards = Panel.objects.all()
     context['dashboards'] = dashboards
     # 'home_active' is a templated variable in template. set to 'active' to set home page nav link to active class
     context['home_active'] = 'active'
     return render(request, 'pages/home.html', context)
 
 def delete_panel(request, panel_id):
-    panel = DashboardPanel.objects.get(id=panel_id)
+    panel = Panel.objects.get(id=panel_id)
     panel.delete()
     messages.warning(request, 'Panel: ("panel.github.user_name/panel.repo_name") was successfully deleted!' )
     return redirect('user_panels', request.user.id)
 
+def delete_dashboard(request, dashboard_id):
+    dashboard = PanelCollection.objects.get(id=dashboard_id)
+    dashboard.delete()
+    messages.warning(request, 'Dashboard: ("dashboard.title") was successfully deleted!' )
+    return redirect('panel_collections', request.user.id)
+
 def edit_panel(request, panel_id):
     
     context = {}
-    panel = DashboardPanel.objects.get(id=panel_id)
+    panel = Panel.objects.get(id=panel_id)
     if request.POST:
-        form = DashboardPanelForm(request.POST, instance=panel)
+        form = PanelForm(request.POST, instance=panel)
         if form.is_valid():
             form.save()
         messages.success(request, 'Panel ("panel.github.user_name/panel.repo_name") was successfully updated!')
         return redirect('user_panels', request.user.id)
-    form = DashboardPanelForm(instance=panel)
+    form = PanelForm(instance=panel)
     if form.is_valid():
         form.save()
     context['form']= form
-    panels = DashboardPanel.objects.filter(creator=request.user.id)
+    panels = Panel.objects.filter(creator=request.user.id)
     context['panels']=panels
     print(context)
     context['panel_id']=panel_id
@@ -65,39 +74,46 @@ def edit_panel(request, panel_id):
 
 def panel_details(request, dash_id):
     context = {}
-    panel = DashboardPanel.objects.get(id=dash_id)
+    panel = Panel.objects.get(id=dash_id)
     context['panel'] = panel 
     return render(request, 'pages/details.html', context)
 
     
 def panel_collections(request, user_id=None):
-    dashboards = None
-    form = None
+   
+    
     if user_id:
+       
         if request.POST:
+            print(request.POST)
             form = PanelCollectionForm(request.POST)
             if form.is_valid():
                 new_dashboard = form.save(commit=False)
                 new_dashboard.creator = User.objects.get(id=request.user.id)
                 new_dashboard.save()
+                form.save_m2m()
+                messages.error(request, "Successfully created new panel collection!")
+
         else:
             form = PanelCollectionForm()
-       
-        dashboards = PanelCollection.objects.filter(creator=request.user.id)
+            
+        dashboards = PanelCollection.objects.filter(creator=request.user)
+        #print(dashboards)
+        
     else:
         dashboards = []
-
+        form = {}
     context = {'form':form, 'dashboards':dashboards}
     return render(request,'pages/dashboards.html',context)
 
 
 def user_panels(request, user_id=None):
-    panels = DashboardPanel.objects.filter(creator=request.user.id)
+    panels = Panel.objects.filter(creator=request.user.id)
     form = None  
     
     if user_id:
         if request.POST:
-            form = DashboardPanelForm(request.POST)
+            form = PanelForm(request.POST)
 
             if form.is_valid():
                 new_panel = form.save(commit=False)
@@ -106,7 +122,7 @@ def user_panels(request, user_id=None):
                 messages.success(request, "Successfully added panel: '[new_panel.github_username/new_panel.repo_name]'")
                 #return render(request, 'pages/panels.html', context)
         
-        form = DashboardPanelForm()
+        form = PanelForm()
         
     else:
         panels = []

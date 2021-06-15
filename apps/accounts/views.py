@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from apps.accounts.forms import UserEditForm, RegisterForm
 from django.urls import reverse
 from apps.accounts.models import User
-from apps.github_dashboards.models import PanelCollection, DashboardPanel
+from apps.github_dashboards.models import PanelCollection, Panel
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 
@@ -22,7 +22,7 @@ def users_view_all(request):
 def user_myaccount(request):
     user = User.objects.get(id=request.user.id)
     count_dashboards = PanelCollection.objects.filter(creator=request.user).count()
-    count_panels = DashboardPanel.objects.filter(creator=request.user).count()
+    count_panels = Panel.objects.filter(creator=request.user).count()
     context = {
         'user': user,
         'count_panels': count_panels,
@@ -34,7 +34,7 @@ def user_myaccount(request):
 def user_edit(request):
     user = User.objects.get(id=request.user.id)
     count_dashboards = PanelCollection.objects.filter(creator=request.user).count()
-    count_panels = DashboardPanel.objects.filter(creator=request.user).count()
+    count_panels = Panel.objects.filter(creator=request.user).count()
     # else:
     print('the info is here')
     form = UserEditForm(instance=user)

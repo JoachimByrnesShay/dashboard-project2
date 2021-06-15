@@ -13,7 +13,7 @@ from django.core.exceptions import ValidationError
 
 class PanelTypes(models.TextChoices):
     TABLE='TableOfRepos', 'table- ALL repos for user'
-    PIE= 'Pie', 'pie chart- 1 repo'
+    PIE= 'Pie', "pie chart- 1 repo\n"
     BAR= 'Bar', 'bar chart- 1 repo'
     HORIZONTALBAR = 'HorizontalBar', 'horizontal bar chart- 1 repo'
     GAUGE = 'Gauge', 'gauge chart- 1 repo'
@@ -25,7 +25,7 @@ class PanelSizes(models.TextChoices):
     MEDIUM = 'M', 'medium'
     LARGE = 'L', "large"
 
-class DashboardPanel(models.Model):
+class Panel(models.Model):
     
 
     StyleTypes = models.TextChoices('StyleType', "DefaultStyle DarkSolarizedStyle LightSolarizedStyle LightStyle CleanStyle \
@@ -117,8 +117,13 @@ class PanelCollection(models.Model):
 
     title = models.CharField(max_length=100)
     description=models.TextField(null=True, blank=True)
-    panels=models.ManyToManyField(DashboardPanel)
+    panels=models.ManyToManyField(Panel)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
-    def get_panels(self):
-        return mark_safe("<br>".join([" %s.../%s" % (p.github_username[0:5],p.repo_name) for p in self.panels.all()]))
+    def string_of_panels(self):
+       import itertools
+
+       #self_panels = set(panel for panel in self.panels.all())
+       self_panels = self.panels.all()
+        
+       return mark_safe("<br>".join([f"{panel.github_username}.../{panel.repo_name}" for panel in self_panels]))

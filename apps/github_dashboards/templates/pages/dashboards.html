@@ -23,13 +23,23 @@ Github Dashboard App - Panels
         <div class='row dashboard_instance'>
             {% if dashboards %}
             {% for dashboard in dashboards %}
-            <a class="stretched-link col-3" href="/details/{{dashboard.id}}/">
-                <div class='col col-12 dashboard-panel card d-flex'>
-                    <h2>{{dashboard.title}}</h2>
-                    <h3 class='dashboard-description'>{{dashboard.description}}</h3>
-                    <h4> {{dashboard.get_panels }} </h4>
-                </div>
-            </a>
+            <div class='col col-3 dashboard-panel card d-flex'>
+                <a class="stretched-link col-12" href="">
+                    {% if panel.panel_type == 'Table' %}
+                    {{ hello }}
+                    {% else %}
+                    <h3 class=''>panels: {{ dashboard.string_of_panels }}</h3>
+                    <h3 class=''>Title: {{dashboard.title}}</h3>
+                    <h2>Desc: '{{dashboard.description}}'</h2>
+                    <!-- <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg | safe}}"> -->
+                    <h3> created_at: {{dashboard.created}}</h3>
+                    {% endif %}
+                </a>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#fm-modal-grid">Delete</button>
+                {% with URL_STRING="delete_dashboard" ID_STRING=dashboard.id %}
+                {% include "snippets/delete_modal.html" %}
+                {% endwith %}
+            </div>
             {% endfor %}
             {% endif %}
         </div>

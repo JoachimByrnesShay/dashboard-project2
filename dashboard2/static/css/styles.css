@@ -34,6 +34,6 @@ body {
   font-family: var(--font-primary-family);
 }
 
-.bold {
-  font-style: bold;
+.bold form, .bold form input, .bold form textarea, .bold form select {
+  font-weight: bold;
 }

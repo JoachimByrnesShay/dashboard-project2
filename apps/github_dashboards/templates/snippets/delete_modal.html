@@ -11,7 +11,7 @@
                 <p>Warning. This action will be permanent. Confirm!</p>
             </div>
             <div class="modal-footer">
-                <form action="{% url 'delete_panel' panel.id %}" method="POST">
+                <form action={% url URL_STRING ID_STRING %} method="POST">
                     {% csrf_token %}
                     <button class="btn btn-primary" data-dismiss="modal">Cancel</button>
                     <button class="btn btn-danger">Delete</button>
@@ -19,3 +19,4 @@
             </div>
         </div>
     </div>
+</div>
