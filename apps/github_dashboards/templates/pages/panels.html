@@ -37,23 +37,49 @@ Github Dashboard App - Panels
         <div class='row'>
             {% if panels %}
             {% for panel in panels %}
-            <a class="stretched-link col-3" href="{% url 'edit_panel' panel.id %}">
-                <div class='col col-12 dashboard-panel card d-flex'>
+            <div class='col col-3 dashboard-panel card d-flex'>
+                <a class="stretched-link col-12" href="{% url 'edit_panel' panel.id %}">
                     {% if panel.panel_type == 'Table' %}
                     {{ hello }}
                     {% else %}
-                    <h2>{{panel.github_username}}/{{panel.repo_name}}</h2>
-                    <h3 class='repo-description'>{{panel.repo_description}}</h3>
+                    <h3 class=''>Panel Size: {{panel.panel_size}}</h3>
+                    <h2>Repo: '{{panel.github_username}}/{{panel.repo_name}}'</h2>
+                    <h3 class='repo-description'>Desc: {{panel.description}}</h3>
                     <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg | safe}}">
                     {% endif %}
+                </a>
+                <!-- <a class='btn btn-warning' href="{% url 'delete_panel' panel.id %}">Delete</a> -->
+                <button class="btn" data-toggle="modal" data-target="#fm-modal-grid">Delete</button>
+                <div class="modal fade" id="fm-modal-grid" tabindex="-1" role="dialog" aria-labelledBy="fm-modal-grid" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button class="close" data-dismiss="modal" aria-label="Cerrar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6">
+                                            <p>Warning! This is permanent! Are you sure you want to delete {{pane.repo_name}}?</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{% url 'delete_panel' panel.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </a>
-            {% endfor %}
-            {% endif %}
-        </div>
+            </div>
+            {% endfor %} {% endif %} </div>
     </div>
-</div>
-{% endblock content %}
-{% block page_javascript %}
-<script src="{% static 'javascript/panelcreationform.js' %}"></script>
+</div> {% endblock content %} {% block page_javascript %} <script src="{% static 'javascript/panelcreationform.js' %}">
+</script>
 {% endblock page_javascript %}

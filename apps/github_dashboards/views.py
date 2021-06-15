@@ -36,6 +36,12 @@ def home(request):
     context['home_active'] = 'active'
     return render(request, 'pages/home.html', context)
 
+def delete_panel(request, panel_id):
+    panel = DashboardPanel.objects.get(id=panel_id)
+    panel.delete()
+    messages.warning(request, 'Panel: ("panel.github.user_name/panel.repo_name") was successfully deleted!' )
+    return redirect('user_panels', request.user.id)
+
 def edit_panel(request, panel_id):
     
     context = {}
@@ -86,9 +92,9 @@ def panel_collections(request, user_id=None):
 
 
 def user_panels(request, user_id=None):
-    
+    panels = DashboardPanel.objects.filter(creator=request.user.id)
     form = None  
-    panels = None
+    
     if user_id:
         if request.POST:
             form = DashboardPanelForm(request.POST)
@@ -97,10 +103,11 @@ def user_panels(request, user_id=None):
                 new_panel = form.save(commit=False)
                 new_panel.creator = User.objects.get(id=request.user.id)
                 new_panel.save()
-             
-        else: 
-            form = DashboardPanelForm()
-        panels = DashboardPanel.objects.filter(creator=request.user.id)
+                messages.success(request, "Successfully added panel: '[new_panel.github_username/new_panel.repo_name]'")
+                #return render(request, 'pages/panels.html', context)
+        
+        form = DashboardPanelForm()
+        
     else:
         panels = []
 
