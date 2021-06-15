@@ -45,14 +45,16 @@ class Panel(models.Model):
     )
     
     github_username = models.CharField(max_length=100)
-    repo_name = models.CharField(max_length=100)
+    repo_name = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField()
     # style_type = models.TextChoices('StyleType', "DefaultStyle DarkSolarizedStyle LightSolarizedStyle LightStyle CleanStyle \
     # RedBlueStyle DarkColorizedStyle LightColorizedStyle TurquoiseStyle LightGreenStyle DarkGreenStyle DarkGreenBlueStyle BlueStyle")
     panel_style = models.CharField(
         max_length=40,
         choices=StyleTypes.choices,
-        default="DefaultStyle",
+        default="",
+        null = True,
+        blank = True,
     )
    
     panel_size = models.CharField(
@@ -84,12 +86,15 @@ class Panel(models.Model):
         return repo
 
     def __str__(self):
-        return self.github_username + '/' + self.repo_name
+        if self.repo_name:
+            return self.github_username + '/' + self.repo_name
+        else:
+            return self.github_username
  
 
     
 
-    def clean(self):
+    def clean_repo_name(self):
         token = os.getenv('GH_ACCESS_TOKEN')
         g = Github(token)
        
@@ -102,12 +107,18 @@ class Panel(models.Model):
             repo = user.get_repo(self.repo_name)
         except:
             raise ValidationError('Repo does not exist on github') 
-        try:
+    def clean(self):
+        if self.repo_name != 'TableOfRepos':
             self.svg = self.get_chart()
-        except:
-            raise Exception('svg chart could not be built from this data')
+        else:
+            self.svg = ''
+        # except:
+        #     raise Exception('svg chart could not be built from this data')
 
-class PanelCollection(models.Model):
+    # def save(self):
+    #     if not self.get('repo_name')
+
+class PanelsCollection(models.Model):
     creator = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 """from modules/*, custom modules containing utility fnctions and form classes"""
 from .modules import custom_utils
-from .models import Panel, PanelCollection
+from .models import Panel, PanelsCollection
 from apps.accounts.models import User
 from django import forms
 from .modules import custom_utils
@@ -22,10 +22,66 @@ class PanelForm(forms.ModelForm):
         model = Panel
 
         fields = ['panel_type', 'github_username', 'repo_name', 'description', 'panel_style', 'panel_size', 'id']
+    
+    #https://stackoverflow.com/questions/18330622/django-modelform-conditional-validation
+    def __init__(self, *args, **kwargs):
+        super(PanelForm, self).__init__(*args, **kwargs)
+        panel_type = self.data.get("panel_type")
+        self.fields['panel_style'].initial = 'DefaultStyle'
 
-class PanelCollectionForm(forms.ModelForm):
+        if panel_type == 'TableOfRepos':
+           
+            self.fields['repo_name'].readonly = True 
+            self.fields['repo_name'].widget.can_change_related = False
+            self.fields['repo_name'].required = False
+            self.fields['repo_name'].widget.attrs['disabled'] = True
+
+
+    # def save(self, commit=True):
+    #     instance = super().save(commit=False)
+    #     if instance.panel_type == 'TableOfRepos':
+    #         instance.repo_name = ''
+    #         instance.panel_style = ''
+
+    #     if commit:
+    #         instance.save()
+    #         self.save_m2m()
+        # return instance
+#form.fields['tank'].initial = 123
+    # def get_list_display_links(self, request, list_display):
+    #     super().get_list_display_links(request, list_display)
+    #     return None
+    # def changelist_view(self, request, extra_context=None):
+    #    resp = super(PanelForm, self).changelist_view(request, extra_context)
+    #    panel_type = self.data.get("panel_type")
+
+        # self.data = self.data.copy()
+        # #cleaned_data = super(PanelForm, self).clean()
+        # panel_type = self.data.get("panel_type")
+        # if panel_type == 'TableOfRepos':
+        #     self.fields['repo_name'].required = False
+        #     self.fields['repo_name'].widget.attrs['disabled'] = True
+        #     # self.fields['repo_name'].widget.attrs['readonly'] = True
+        #     self.fields['panel_style'].required = False
+        #     self.fields['panel_style'].widget.attrs['disabled'] = True
+        #     # self.fields['panel_style'].widget.attrs['readonly'] = True
+        #     self.fields.pop('panel_style')
+        # self.data = self.data.copy()
+        # #cleaned_data = super(PanelForm, self).clean()
+        # panel_type = self.data.get("panel_type")
+        # panel_type = self.data.get("panel_type")
+
+        # if panel_type == 'TableOfRepos':
+        #     del self.fields['panel_style']
+        #     del self.fields['repo_name']
+
+    
+
+  
+
+class PanelsCollectionForm(forms.ModelForm):
     class Meta:
-        model = PanelCollection
+        model = PanelsCollection
        
 
         fields = ['title', 'description', 'panels']
@@ -41,12 +97,15 @@ def home(request):
 
 def delete_panel(request, panel_id):
     this_panel = Panel.objects.get(id=panel_id)
+    
+    repo_name = '' if this_panel.repo_name == 'TableOfRepos' else this_panel.repo_name
+    user_name = this_panel.github_username
     this_panel.delete()
-    messages.warning(request, 'Panel: ("panel.github.user_name/panel.repo_name") was successfully deleted!' )
+    messages.warning(request, f"Panel: {user_name}/{repo_name} was successfully deleted!" )
     return redirect('user_panels', request.user.id)
 
 def delete_dashboard(request, dashboard_id):
-    dashboard = PanelCollection.objects.get(id=dashboard_id)
+    dashboard = PanelsCollection.objects.get(id=dashboard_id)
     dashboard.delete()
     messages.warning(request, 'Dashboard: ("dashboard.title") was successfully deleted!' )
     return redirect('panel_collections', request.user.id)
@@ -59,7 +118,8 @@ def edit_panel(request, panel_id):
         form = PanelForm(request.POST, instance=panel)
         if form.is_valid():
             form.save()
-        messages.success(request, 'Panel ("panel.github.user_name/panel.repo_name") was successfully updated!')
+        repo_name = '' if panel.github_username is None else panel.github_username
+        messages.success(request, f"Panel '{panel.github_username}/{repo_name}' was successfully updated!")
         return redirect('user_panels', request.user.id)
     form = PanelForm(instance=panel)
     if form.is_valid():
@@ -86,7 +146,7 @@ def panel_collections(request, user_id=None):
        
         if request.POST:
             print(request.POST)
-            form = PanelCollectionForm(request.POST)
+            form = PanelsCollectionForm(request.POST)
             if form.is_valid():
                 new_dashboard = form.save(commit=False)
                 new_dashboard.creator = User.objects.get(id=request.user.id)
@@ -95,9 +155,9 @@ def panel_collections(request, user_id=None):
                 messages.error(request, "Successfully created new panel collection!")
 
         else:
-            form = PanelCollectionForm()
+            form = PanelsCollectionForm()
             
-        dashboards = PanelCollection.objects.filter(creator=request.user)
+        dashboards = PanelsCollection.objects.filter(creator=request.user)
         #print(dashboards)
         
     else:
@@ -119,9 +179,10 @@ def user_panels(request, user_id=None):
                 new_panel = form.save(commit=False)
                 new_panel.creator = User.objects.get(id=request.user.id)
                 new_panel.save()
-                messages.success(request, "Successfully added panel: '[new_panel.github_username/new_panel.repo_name]'")
+                repo_name = '' if new_panel.repo_name == None else new_panel.repo_name
+                messages.success(request, f"Successfully added this {new_panel.panel_type}: '{new_panel.github_username}/{repo_name}'")
                 #return render(request, 'pages/panels.html', context)
-        
+            print(form.errors)
         form = PanelForm()
         
     else:
