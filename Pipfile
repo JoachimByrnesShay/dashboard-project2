@@ -20,6 +20,7 @@ dj-database-url = "*"
 whitenoise = "*"
 gunicorn = "*"
 django-userforeignkey = "*"
+django-widget-tweaks = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

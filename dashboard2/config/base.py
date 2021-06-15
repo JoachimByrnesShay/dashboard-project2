@@ -25,6 +25,7 @@ THIRD_PARTY_APPS = [
     'bootstrap4',
     'mathfilters',
     'django_userforeignkey',
+    'widget_tweaks'
    
 ]
 

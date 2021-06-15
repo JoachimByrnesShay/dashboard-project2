@@ -73,7 +73,7 @@ class DashboardPanel(models.Model):
         piechart_style = self.panel_style
         chart_type= self.panel_type
 
-        chart = custom_utils.get_repo_languages_piechart(repo, chart_type, piechart_style)
+        chart = custom_utils.get_repo_languages_chart(repo, chart_type, piechart_style)
 
         return chart
 

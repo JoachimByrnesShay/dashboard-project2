@@ -7,3 +7,5 @@ def panel_to_column_size(value): # Only one argument.
     return dic[value]
 
 register.filter('panel_to_column_size', panel_to_column_size)
+
+

@@ -54,7 +54,7 @@
                         </span>
                         <span class='navspan auth-links'>
                             {% if user.is_authenticated %}
-                            <li class="nav-item"><a class='nav-link {{pie_chart_active}}' href="{% url 'user_logout' %}">Logout</a></li>
+                            <li class=" nav-item"><a class='nav-link {{pie_chart_active}}' href="{% url 'user_logout' %}">Logout</a></li>
                             <li class="nav-item username"><a class='nav-link {{pie_chart_active}}' href="{% url 'user_myaccount' %}"><span class='content'>Hi {{user.username|title|truncatechars:15}}!</span> <img src="{{user.gravatar}}" width=25 height=25></a></li>
                             {% else %}
                             <li class="nav-item"><a class='nav-link {{pie_chart_active}}' href=" {% url 'user_login' %}">Login</a></li>

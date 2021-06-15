@@ -90,7 +90,8 @@ img.gravatar {
   max-width: 100%;
   /*text-transform: uppercase;
 */
-  font-variant: small-caps;
+  /*font-variant: small-caps;
+*/
   box-shadow: 1em 1em .5 grey;
 }
 
@@ -169,14 +170,15 @@ img.gravatar {
 
 .navbar-nav .nav-item.username:hover {
   text-shadow: -.4em .3em .5em orange;
-  font-weight: bold;
+ /*font-weight: bold;
+*/
   text-transform: none;
   font-variant: normal;
 }
 
-.main-links .users.nav-item {
-  margin-left: 3em;
-  width: 20ch;
+.main-links .users.nav-item {/*margin-left: 3em;
+*/
+  width: 15ch;
 }
 
 .main-links .nav-item {

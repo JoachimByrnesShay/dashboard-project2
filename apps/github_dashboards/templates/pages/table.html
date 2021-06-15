@@ -7,15 +7,11 @@ Github Dashboard App - Home
 {% load panels_extras %}
 {% block content %}
 <div class='row dashboards justify-content-between'>
-    {% for dash in dashboards %}
     <div class="col-{{dash.panel_size | panel_to_column_size }} dashboard-panel card d-flex">
-        {{ dash.panel_type }}
         {% if dash.panel_type == 'Table' %}
         {{ hello }}
-        {% else %}
-        <h2>{{dash.github_username}}/{{dash.repo_name}}</h2>
-        <h3 class='repo-description'>{{dash.repo_description}}</h3>
-        <embed class='mb-0' type="image/svg+xml" src="{{ dash.svg }}">
+        <h2>{{dash.github_username}}</h2>
+        <h3 class='repo-description'>{{dash.description}}</h3>
         {% endif %}
     </div>
     {% endfor %}

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
 {% load static %}
+{% load widget_tweaks %}
 {% block title %}
 Github Dashboard App - Panels
 {% endblock title %}
@@ -21,11 +22,11 @@ Github Dashboard App - Panels
 <div class='row'>
     <div class='col-4 mr-auto'>
         <div class="card border rounded">
-            <div class="card-body">
+            <div class="card-body bold">
                 {% if form %}
                 <form method="POST">
                     {% csrf_token %}
-                    {% bootstrap_form form %}
+                    {% bootstrap_form form%}
                     <button class="btn btn-lg btn-primary btn-block">Save</button>
                 </form>
                 {% endif %}
@@ -36,7 +37,7 @@ Github Dashboard App - Panels
         <div class='row'>
             {% if panels %}
             {% for panel in panels %}
-            <a class="stretched-link col-3" href="/details/{{panel.id}}/">
+            <a class="stretched-link col-3" href="{% url 'edit_panel' panel.id %}">
                 <div class='col col-12 dashboard-panel card d-flex'>
                     {% if panel.panel_type == 'Table' %}
                     {{ hello }}

@@ -10,6 +10,7 @@ from apps.accounts.models import User
 from django import forms
 from .modules import custom_utils
 import os
+from django.contrib import messages
 from github import Github
 #from .modules import custom_forms
 
@@ -35,6 +36,26 @@ def home(request):
     context['home_active'] = 'active'
     return render(request, 'pages/home.html', context)
 
+def edit_panel(request, panel_id):
+    
+    context = {}
+    panel = DashboardPanel.objects.get(id=panel_id)
+    if request.POST:
+        form = DashboardPanelForm(request.POST, instance=panel)
+        if form.is_valid():
+            form.save()
+        messages.success(request, 'Panel ("panel.github.user_name/panel.repo_name") was successfully updated!')
+        return redirect('user_panels', request.user.id)
+    form = DashboardPanelForm(instance=panel)
+    if form.is_valid():
+        form.save()
+    context['form']= form
+    panels = DashboardPanel.objects.filter(creator=request.user.id)
+    context['panels']=panels
+    print(context)
+    context['panel_id']=panel_id
+    return render(request, 'pages/panels.html', context)
+    return render(request, 'pages/panels.html', context)
 
 def panel_details(request, dash_id):
     context = {}
@@ -65,8 +86,9 @@ def panel_collections(request, user_id=None):
 
 
 def user_panels(request, user_id=None):
+    
+    form = None  
     panels = None
-    form = None
     if user_id:
         if request.POST:
             form = DashboardPanelForm(request.POST)

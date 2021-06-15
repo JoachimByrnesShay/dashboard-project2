@@ -54,22 +54,22 @@ def sortby_data(repo, sortby_value):
 
 
 """param is a single repo object. returns an svg pichart created via pygal using languages data from repo.languages_url (convered to json object)"""
-def get_repo_languages_piechart(repo, panel_type, piechart_style):
+def get_repo_languages_chart(repo, panel_type, chart_style):
     access_token = os.getenv('GH_ACCESS_TOKEN')
     headers = {'Authorization':"Token "+access_token}
-    this_style = getattr(sys.modules[__name__], piechart_style) 
+    this_style = getattr(sys.modules[__name__], chart_style) 
  
-    pie_chart = getattr(sys.modules[__name__], panel_type)(style=this_style)
-    pie_chart.title = "Languages used in this repository"
+    chart = getattr(sys.modules[__name__], panel_type)(style=this_style)
+    chart.title = "Languages used in this repository"
  
     languages = requests.get(repo.languages_url, headers).json()
  
     for lang in languages:
         size = languages[lang]
-        pie_chart.add(lang, size)
+        chart.add(lang, size)
  
-    pie = pie_chart.render_data_uri()
-    return pie
+    rendered_chart = chart.render_data_uri()
+    return rendered_chart
 
 
 """check if requested user exists as a github public repo user, return None if not"""

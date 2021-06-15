@@ -33,3 +33,7 @@ body {
   background: var(--color-lightblue);
   font-family: var(--font-primary-family);
 }
+
+.bold {
+  font-style: bold;
+}
