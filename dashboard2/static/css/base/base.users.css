@@ -3,12 +3,12 @@
   font-family: sans-serif;
 }
 
-.users a:hover {
+/*.users a:hover {
   text-decoration: none;
   text-shadow: .5em .45em .1em hsla(200,50%,40%,.5);
   color: white;
 }
-
+*/
 .users a {
   font-family: sans-serif;
 }

@@ -20,7 +20,6 @@ load_dotenv()
 class PanelForm(forms.ModelForm):
     class Meta:
         model = Panel
-
         fields = ['panel_type', 'github_username', 'repo_name', 'description', 'panel_style', 'panel_size', 'id']
     
     #https://stackoverflow.com/questions/18330622/django-modelform-conditional-validation
@@ -30,10 +29,10 @@ class PanelForm(forms.ModelForm):
         self.fields['panel_style'].initial = 'DefaultStyle'
 
         if panel_type == 'TableOfRepos':
-           
-            self.fields['repo_name'].readonly = True 
-            self.fields['repo_name'].widget.can_change_related = False
             self.fields['repo_name'].required = False
+            self.fields['repo_name'].readonly = True 
+            #self.fields['repo_name'].widget.can_change_related = False
+            
             self.fields['repo_name'].widget.attrs['disabled'] = True
 
 
@@ -82,8 +81,6 @@ class PanelForm(forms.ModelForm):
 class PanelsCollectionForm(forms.ModelForm):
     class Meta:
         model = PanelsCollection
-       
-
         fields = ['title', 'description', 'panels']
 
 """simple landing page view.  main content consists of additional button links for the repository data pages"""
@@ -97,7 +94,7 @@ def home(request):
 
 def delete_panel(request, panel_id):
     this_panel = Panel.objects.get(id=panel_id)
-    
+     
     repo_name = '' if this_panel.repo_name == 'TableOfRepos' else this_panel.repo_name
     user_name = this_panel.github_username
     this_panel.delete()
@@ -140,10 +137,8 @@ def panel_details(request, dash_id):
 
     
 def panel_collections(request, user_id=None):
-   
-    
     if user_id:
-       
+        
         if request.POST:
             print(request.POST)
             form = PanelsCollectionForm(request.POST)
@@ -163,12 +158,12 @@ def panel_collections(request, user_id=None):
     else:
         dashboards = []
         form = {}
-    context = {'form':form, 'dashboards':dashboards}
+    context = {'form':form, 'dashboards':dashboards, 'dashboards_active': 'active'}
     return render(request,'pages/dashboards.html',context)
 
 
 def user_panels(request, user_id=None):
-    panels = Panel.objects.filter(creator=request.user.id)
+    
     form = None  
     
     if user_id:
@@ -176,17 +171,46 @@ def user_panels(request, user_id=None):
             form = PanelForm(request.POST)
 
             if form.is_valid():
+                print('form_valid')
                 new_panel = form.save(commit=False)
                 new_panel.creator = User.objects.get(id=request.user.id)
                 new_panel.save()
                 repo_name = '' if new_panel.repo_name == None else new_panel.repo_name
                 messages.success(request, f"Successfully added this {new_panel.panel_type}: '{new_panel.github_username}/{repo_name}'")
-                #return render(request, 'pages/panels.html', context)
+                return redirect('user_panels', user_id=request.user.id)
+
             print(form.errors)
-        form = PanelForm()
-        
+            print(form.cleaned_data['repo_name'])
+        else:
+
+            form = PanelForm()
+        panels = Panel.objects.filter(creator=request.user.id)
     else:
         panels = []
 
-    context = {'panels': panels, 'form': form}
+    context = {'panels': panels, 'form': form, 'panels_active': 'active'}
     return render(request, 'pages/panels.html', context)
+
+# def user_panels(request, user_id=None):
+#     panels = Panel.objects.filter(creator=request.user.id)
+#     form = None  
+    
+#     if user_id:
+#         if request.POST:
+#             form = PanelForm(request.POST)
+
+#             if form.is_valid():
+#                 new_panel = form.save(commit=False)
+#                 new_panel.creator = User.objects.get(id=request.user.id)
+#                 new_panel.save()
+#                 repo_name = '' if new_panel.repo_name == None else new_panel.repo_name
+#                 messages.success(request, f"Successfully added this {new_panel.panel_type}: '{new_panel.github_username}/{repo_name}'")
+#                 #return render(request, 'pages/panels.html', context)
+#             print(form.errors)
+#         form = PanelForm()
+        
+#     else:
+#         panels = []
+
+#     context = {'panels': panels, 'form': form}
+#     return render(request, 'pages/panels.html', context)

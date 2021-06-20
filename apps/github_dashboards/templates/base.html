@@ -30,25 +30,25 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav row">
                         <span class='navspan main-links'>
-                            <li class="nav-item active">
-                                <a class="nav-link {{home_active}}" href="{% url 'home' %}">Home</a>
+                            <li class="nav-item {{home_active}}">
+                                <a class="nav-link" href="{% url 'home' %}">Home</a>
                             </li>
                             {% if user.is_authenticated %}
-                            <li class="nav-item">
+                            <li class="nav-item {{panels_active}}">
                                 <a class="nav-link" href="{% url 'user_panels' request.user.id %}">Panels</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item {{dashboards_active}}">
                                 <a class="nav-link" href="{% url 'panel_collections' request.user.id %}">Dashboards</a>
                             </li>
                             {% else %}
-                            <li class="nav-item">
+                            <li class="nav-item {{panels_active}}">
                                 <a class="nav-link" href="{% url 'user_panels' %}">Panels</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item {{dashboards_active}}">
                                 <a class="nav-link" href="{% url 'panel_collections' %}">Dashboards</a>
                             </li>
                             {% endif %}
-                            <li class="nav-item users">
+                            <li class="nav-item users {{users_active}}">
                                 <a class="nav-link" href="{% url 'view_all_users' %}">All Users</a>
                             </li>
                         </span>

@@ -21,6 +21,7 @@ whitenoise = "*"
 gunicorn = "*"
 django-userforeignkey = "*"
 django-widget-tweaks = "*"
+logger = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

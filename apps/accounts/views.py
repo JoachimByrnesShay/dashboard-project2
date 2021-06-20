@@ -16,6 +16,7 @@ def users_view_all(request):
     users = User.objects.all()
     context = {
         'users':users,
+        'users_active': 'active', 
     }
     return render(request, 'users.html', context)#
 

@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 import logging
 logger = logging.getLogger(__name__)
-from django.utils.translation import gettext as _
+from django.utils.translation import ugettext as _
 # Note: we need dnspython for this to work
 import dns.resolver, dns.exception
 from django.utils.safestring import mark_safe
