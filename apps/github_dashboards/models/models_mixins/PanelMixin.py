@@ -37,7 +37,7 @@ class PanelMixin:
         
 
     def clean_svg(self):
-        if self.repo_name != 'TableOfRepos':
+        if self.repo_name:
             self.svg = self.get_chart()
         else:
             self.svg = ''
@@ -55,3 +55,8 @@ class PanelMixin:
          # without try,exception logic in clean_svg, clean_repo_name must be called before clean_svg
         self.clean_repo_name()
         self.clean_svg()
+
+    def save(self):
+        self.clean_repo_name()
+        self.clean_svg()
+        return self

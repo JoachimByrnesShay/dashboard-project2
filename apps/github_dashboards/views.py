@@ -12,6 +12,10 @@ from .modules import custom_utils
 import os
 from django.contrib import messages
 from github import Github
+from .modules.custom_utils import clean_repo_name
+from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError
+from django.core import validators
 #from .modules import custom_forms
 
 """load any needed env variables"""
@@ -30,8 +34,56 @@ class PanelForm(forms.ModelForm):
         panel_type = self.data.get("panel_type")
         self.fields['panel_style'].initial = 'DefaultStyle'
 
-        if panel_type == 'TableOfRepos':
-            self.fields['repo_name'].required = False
+
+    def __init__(self, *args, **kwargs):
+        super(PanelForm, self).__init__(*args, **kwargs)
+        panel_type = self.data.get("panel_type")
+        self.fields['panel_style'].initial = 'DefaultStyle'
+
+
+    # def clean_github_username(self):
+    #     name = self.cleaned_data['github_username']
+    #     token = os.getenv('GH_ACCESS_TOKEN')
+    
+    #     g = Github(token)
+        
+    #     try:
+    #         user = g.get_user(name)
+    #     except:
+    #         print('bad user')
+    #         raise forms.ValidationError('User really does not exist on github')
+
+
+    # def clean(self):
+    #     # u = self.cleaned_data['github_username']
+    #     # r = self.cleaned_data['repo_name']
+    #     # t = self.cleaned_data['panel_type']
+    #     cleaned_data = super(PanelForm, self).clean()
+    # #if cleaned_data.get('start_time') >= cleaned_data.get('end_time'):
+    #     u = cleaned_data['github_username']
+    #     r =  cleaned_data['repo_name']
+    #     t = cleaned_data['panel_type']
+    #     #raise ValidationError("blah blah")
+    #     token = os.getenv('GH_ACCESS_TOKEN')
+    
+    #     g = Github(token)
+        
+    #     try:
+    #         user = g.get_user(u)
+    #     except:
+    #         print('bad user')
+    #         raise forms.ValidationError('User does not exist on github')
+    #     # if repo:
+      
+    #     if  t != 'TableOfRepos':
+    #         try:
+    #             repo = user.get_repo(r)
+    #         except:
+    #             raise forms.ValidationError('Repo does not exist on github') 
+
+        
+        # if panel_type == 'TableOfRepos':
+        #     self.fields['repo_name'].required = False
         #     self.fields['repo_name'].readonly = True 
         #     #self.fields['repo_name'].widget.can_change_related = False
             
@@ -117,26 +169,31 @@ def delete_dashboard(request, dashboard_id):
     return redirect('panel_collections', request.user.id)
 
 def edit_panel(request, panel_id):
-    
+    #panels = sorted(Panel.objects.filter(creator=request.user.id), key=lambda panel: panel.id)
+    panels = Panel.objects.filter(creator=request.user.id).order_by('id')
     context = {}
     panel = Panel.objects.get(id=panel_id)
+    form = PanelForm(instance=panel)
     if request.POST:
         form = PanelForm(request.POST, instance=panel)
         if form.is_valid():
             form.save()
-        repo_name = '' if panel.github_username is None else panel.github_username
-        messages.success(request, f"Panel '{panel.github_username}/{repo_name}' was successfully updated!")
-        return redirect('user_panels', request.user.id)
-    form = PanelForm(instance=panel)
-    if form.is_valid():
-        form.save()
+            #panel.save()
+            repo_name = '' if panel.github_username is None else panel.github_username
+            messages.success(request, f"Panel '{panel.github_username}/{repo_name}' was successfully updated!")
+            return redirect('user_panels', request.user.id)
+        #print(form.errors)
+    # else:
+    #     form = PanelForm(instance=panel)
+    # if form.is_valid():
+    #     form.save()
     context['form']= form
 
     
-    panels = Panel.objects.filter(creator=request.user.id)
+    #panels = Panel.objects.filter(creator=request.user.id)
     context['panels']=panels
     print(context)
-    context['panel_id']=panel_id
+    #context['panel_id']=panel_id
     return render(request, 'pages/panels.html', context)
     return render(request, 'pages/panels.html', context)
 
@@ -176,7 +233,8 @@ def panel_collections(request, user_id=None):
 def user_panels(request, user_id=None):
     
     form = None  
-    panels = Panel.objects.filter(creator=request.user.id)
+    #panels = sorted(Panel.objects.filter(creator=request.user.id), key=lambda panel: panel.id)
+    panels = Panel.objects.filter(creator=request.user.id).order_by('id')
     if user_id:
         if request.POST:
             form = PanelForm(request.POST)

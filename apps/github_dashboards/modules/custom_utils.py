@@ -8,6 +8,24 @@ from pygal import Bar, Pie, HorizontalBar, Gauge, Dot, Treemap
 
 """get all github repos via api for single user. default value for username
 this is the only usecase for the current version of the app"""
+def clean_repo_name(self):
+    token = os.getenv('GH_ACCESS_TOKEN')
+    
+    g = Github(token)
+    
+    try:
+        user = g.get_user(self.github_username)
+    except:
+         raise ValidationError('User does not exist on github')
+    # if repo:
+  
+    if self.panel_type != 'TableOfRepos':
+        try:
+            repo = user.get_repo(self.repo_name)
+        except:
+            raise ValidationError('Repo does not exist on github') 
+
+                
 def get_repos(username='JoachimByrnesShay'):
     url = "https://api.github.com/users/{username}/repos"
     token = os.getenv('GH_ACCESS_TOKEN')

@@ -12,7 +12,7 @@ Github Dashboard App - Panels
         <div class="card border rounded">
             <div class="card-body bold">
                 {% if form %}
-                <form method="POST">
+                <form method="POST" action="?">
                     {% csrf_token %}
                     {% bootstrap_form form %}
                     <button class="btn btn-lg btn-primary btn-block">Save</button>
@@ -29,7 +29,7 @@ Github Dashboard App - Panels
                 <a class="col" href="{% url 'edit_panel' panel.id %}">
                     <h3> Panel Type: {{panel.panel_type }}</h3>
                     <h3 class=''>Panel Size: {{panel.panel_size}}</h3>
-                   <h2>Repo: '{{panel.github_username}}/{{panel.repo_name|none_to_empty_str}}'</h2>
+                    <h2>Repo: '{{panel.github_username}}/{{panel.repo_name|none_to_empty_str}}'</h2>
                     <h3 class='repo-description'>Desc: {{panel.description}}</h3>
                     <h3>id: {{panel.id}}</h3>
                     {% if panel.svg %}

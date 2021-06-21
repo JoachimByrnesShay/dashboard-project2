@@ -65,3 +65,7 @@ class Panel(models.Model, PanelMixin):
 
     def clean(self):
        PanelMixin.clean(self)
+
+
+    def update(self):
+       PanelMixin.save(self)
