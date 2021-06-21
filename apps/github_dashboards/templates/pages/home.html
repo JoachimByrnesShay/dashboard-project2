@@ -11,6 +11,7 @@ Github Dashboard App - Home
     <div class="col-{{dash.panel_size | panel_to_column_size }} dashboard-panel card d-flex">
         {{ dash.panel_type }}
         <h2>{{dash.github_username}}/{{dash.repo_name | none_to_empty_str }}</h2>
+        <h2>{{ dash }}</h2>
         <h3 class='repo-description'>{{dash.repo_description}}</h3>
         {% if dash.panel_type == 'Table' %}
         {{ hello }}

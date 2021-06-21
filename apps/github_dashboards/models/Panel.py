@@ -1,18 +1,9 @@
 from django.db import models
 from apps.accounts.models import User
-import apps.github_dashboards.modules.custom_utils as custom_utils
-from django.db import models
-from apps.accounts.models import User
-
-# Create your models here.
 from django.conf import settings
 from django.utils import timezone
-from pygal.style import *
-from pygal import Bar, Pie, HorizontalBar, Gauge, Dot, Treemap
-import sys, os
-from django.utils.safestring import mark_safe
-from github import Github
-from django.core.exceptions import ValidationError
+from .models_mixins.PanelMixin import PanelMixin
+
 
 class PanelTypes(models.TextChoices):
     TABLE='TableOfRepos', 'table- ALL repos for user'
@@ -28,9 +19,8 @@ class PanelSizes(models.TextChoices):
     MEDIUM = 'M', 'medium'
     LARGE = 'L', "large"
 
-
-class Panel(models.Model):
-
+class Panel(models.Model, PanelMixin):
+   
     StyleTypes = models.TextChoices('StyleType', "DefaultStyle DarkSolarizedStyle LightSolarizedStyle LightStyle CleanStyle \
     RedBlueStyle DarkColorizedStyle LightColorizedStyle TurquoiseStyle LightGreenStyle DarkGreenStyle DarkGreenBlueStyle BlueStyle")
     creator = models.ForeignKey(
@@ -40,6 +30,7 @@ class Panel(models.Model):
         blank=True
     )
     
+    #creator = UserForeignKey(auto_user=True, on_delete=models.CASCADE)
     panel_type = models.CharField(
         max_length = 100,
         choices=PanelTypes.choices,
@@ -47,7 +38,7 @@ class Panel(models.Model):
     )
     
     github_username = models.CharField(max_length=100)
-    repo_name = models.CharField(max_length=100)
+    repo_name = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField()
     panel_style = models.CharField(
         max_length=40,
@@ -66,43 +57,11 @@ class Panel(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
-    def get_chart(self):
-        repo = custom_utils.get_repo(self.github_username, self.repo_name)
- 
-        piechart_style = getattr(sys.modules[__name__], self.panel_style)
-        piechart_style = getattr(sys.modules[__name__], self.panel_style)
-        piechart_style = self.panel_style
-        chart_type= self.panel_type
-
-        chart = custom_utils.get_repo_languages_chart(repo, chart_type, piechart_style)
-
-        return chart
-
     svg = models.TextField(blank=True, null=True, editable=False)
 
-    def repo_get(self):
-        repo = custom_utils.get_repo(self.github_username, self.repo_name)
-        return repo
-
     def __str__(self):
-        if self.repo_name:
-            return self.github_username + '/' + self.repo_name
-        else:
-            return self.github_username
- 
-
-    def clean_svg(self):
-        custom_utils.make_no_svg(self)
-        
+       return PanelMixin.__str__(self)
+       
 
     def clean(self):
-        custom_utils.check_valid_user_and_repo_name(self)
-
-
-
-    
-        # except:
-        #     raise Exception('svg chart could not be built from this data')
-
-    # def save(self):
-    #     if not self.get('repo_name')
+       PanelMixin.clean(self)

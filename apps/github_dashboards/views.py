@@ -24,6 +24,7 @@ class PanelForm(forms.ModelForm):
     
     #https://stackoverflow.com/questions/18330622/django-modelform-conditional-validation
 
+
     def __init__(self, *args, **kwargs):
         super(PanelForm, self).__init__(*args, **kwargs)
         panel_type = self.data.get("panel_type")
@@ -31,11 +32,18 @@ class PanelForm(forms.ModelForm):
 
         if panel_type == 'TableOfRepos':
             self.fields['repo_name'].required = False
-            self.fields['repo_name'].readonly = True 
-            #self.fields['repo_name'].widget.can_change_related = False
+        #     self.fields['repo_name'].readonly = True 
+        #     #self.fields['repo_name'].widget.can_change_related = False
             
-            self.fields['repo_name'].widget.attrs['disabled'] = True
+        #     self.fields['repo_name'].widget.attrs['disabled'] = True
+            #self.fields['repo_name'].disabled = True
          
+        # else:
+        #     #self.fields['repo_name'].widget.attrs['disabled'] = False
+        #    #self.fields['repo_name'].required = True
+        #     self.fields['repo_name'].required = True
+        #     self.fields['repo_name'].readonly = False
+        #     self.fields['repo_name'].disabled = False
 
     # def save(self, commit=True):
     #     instance = super().save(commit=False)
@@ -123,6 +131,8 @@ def edit_panel(request, panel_id):
     if form.is_valid():
         form.save()
     context['form']= form
+
+    
     panels = Panel.objects.filter(creator=request.user.id)
     context['panels']=panels
     print(context)
@@ -176,12 +186,13 @@ def user_panels(request, user_id=None):
                 new_panel = form.save(commit=False)
                 new_panel.creator = User.objects.get(id=request.user.id)
                 new_panel.save()
-                repo_name = '' if new_panel.repo_name == None else new_panel.repo_name
-                messages.success(request, f"Successfully added this {new_panel.panel_type}: '{new_panel.github_username}/{new_panel.repo_name}'")
+                #repo_name = '' if new_panel.repo_name == None else new_panel.repo_name
+                #messages.success(request, f"Successfully added this {new_panel.panel_type}: '{new_panel.github_username}/{new_panel.repo_name}'")
+                messages.success(request, f"Successfully added this {new_panel.panel_type}: '{new_panel}")
                 return redirect('user_panels', user_id=request.user.id)
 
             print(form.errors)
-            #print(form.cleaned_data['repo_name'])
+            print(form.cleaned_data['repo_name'])
         else:
 
             form = PanelForm()
