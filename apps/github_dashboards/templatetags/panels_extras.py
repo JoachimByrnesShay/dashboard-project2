@@ -9,8 +9,10 @@ def panel_to_column_size(value): # Only one argument.
 register.filter('panel_to_column_size', panel_to_column_size)
 
 
-def de_none(value):
+def none_to_empty_str(value):
     if value == None:
         return ''
+    else:
+        return value
 
-register.filter('de_none', de_none)
+register.filter('none_to_empty_str', none_to_empty_str)

@@ -66,9 +66,11 @@ class Panel(models.Model):
 
     def get_chart(self):
         repo = custom_utils.get_repo(self.github_username, self.repo_name)
+        print(repo.get_contents("README.md"))
         piechart_style = self.panel_style
         chart_type= self.panel_type
         chart = custom_utils.get_repo_languages_chart(repo, chart_type, piechart_style)
+        print(chart)
         return chart
 
     svg = models.TextField(blank=True, null=True, editable=False)
@@ -81,18 +83,7 @@ class Panel(models.Model):
             return self.github_username
  
 
-    def clean_svg(self):
-        if self.repo_name != 'TableOfRepos':
-            self.svg = self.get_chart()
-        else:
-            self.svg = ''
-
     def clean_repo_name(self):
-        print('cleaning repo name')
-        
-
-    def clean(self):
-        print('clean clean')
         token = os.getenv('GH_ACCESS_TOKEN')
         
         g = Github(token)
@@ -108,6 +99,18 @@ class Panel(models.Model):
                 repo = user.get_repo(self.repo_name)
             except:
                 raise ValidationError('Repo does not exist on github') 
+        
+
+    def clean_svg(self):
+        if self.repo_name != 'TableOfRepos':
+            self.svg = self.get_chart()
+        else:
+            self.svg = ''
+       
+    def clean(self):
+        # without try,exception logic in clean_svg, clean_repo_name must be called before clean_svg
+        self.clean_repo_name()
+        self.clean_svg()
  
 
 class PanelsCollection(models.Model):

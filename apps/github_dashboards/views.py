@@ -23,6 +23,7 @@ class PanelForm(forms.ModelForm):
         fields = ['panel_type', 'github_username', 'repo_name', 'description', 'panel_style', 'panel_size', 'id']
     
     #https://stackoverflow.com/questions/18330622/django-modelform-conditional-validation
+
     def __init__(self, *args, **kwargs):
         super(PanelForm, self).__init__(*args, **kwargs)
         panel_type = self.data.get("panel_type")
@@ -34,7 +35,7 @@ class PanelForm(forms.ModelForm):
             #self.fields['repo_name'].widget.can_change_related = False
             
             self.fields['repo_name'].widget.attrs['disabled'] = True
-
+         
 
     # def save(self, commit=True):
     #     instance = super().save(commit=False)
@@ -165,7 +166,7 @@ def panel_collections(request, user_id=None):
 def user_panels(request, user_id=None):
     
     form = None  
-    
+    panels = Panel.objects.filter(creator=request.user.id)
     if user_id:
         if request.POST:
             form = PanelForm(request.POST)
@@ -176,15 +177,15 @@ def user_panels(request, user_id=None):
                 new_panel.creator = User.objects.get(id=request.user.id)
                 new_panel.save()
                 repo_name = '' if new_panel.repo_name == None else new_panel.repo_name
-                messages.success(request, f"Successfully added this {new_panel.panel_type}: '{new_panel.github_username}/{repo_name}'")
+                messages.success(request, f"Successfully added this {new_panel.panel_type}: '{new_panel.github_username}/{new_panel.repo_name}'")
                 return redirect('user_panels', user_id=request.user.id)
 
             print(form.errors)
-            print(form.cleaned_data['repo_name'])
+            #print(form.cleaned_data['repo_name'])
         else:
 
             form = PanelForm()
-        panels = Panel.objects.filter(creator=request.user.id)
+        
     else:
         panels = []
 

@@ -4,6 +4,7 @@
 {% block title %}
 Github Dashboard App - Panels
 {% endblock title %}
+{% load panels_extras %}
 {% block content %}
 <!-- https://www.tutorialrepublic.com/faq/how-to-get-the-value-of-selected-option-in-a-select-box-using-jquery.php -->
 <div class='row'>
@@ -28,7 +29,7 @@ Github Dashboard App - Panels
                 <a class="col" href="{% url 'edit_panel' panel.id %}">
                     <h3> Panel Type: {{panel.panel_type }}</h3>
                     <h3 class=''>Panel Size: {{panel.panel_size}}</h3>
-                    <h2>Repo: '{{panel.github_username}}/{{panel.repo_name}}'</h2>
+                   <h2>Repo: '{{panel.github_username}}/{{panel.repo_name|none_to_empty_str}}'</h2>
                     <h3 class='repo-description'>Desc: {{panel.description}}</h3>
                     <h3>id: {{panel.id}}</h3>
                     {% if panel.svg %}
