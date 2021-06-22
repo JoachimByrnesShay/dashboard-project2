@@ -26,7 +26,14 @@
             {% if repo.size < 1024 %} {{repo.size}} kb {% else %} {{repo.size|div:1024|floatformat:2}} MB {% endif %} </span> </td> <td><span class='table-cell'>{{repo.created_at}}</span></td>
     <td><span class='table-cell'>{{repo.language}}</span><span class='language-icon'></span><i class="programming lang-{{repo.language|lower}}"></i></td>
     {% if dash.panel_size == 'L' %}
-    <td><a class='btn btn-success' href={{repo.html_url}}>View</a></td>
+    <td>
+        <!--https://css-tricks.com/nested-links/-->
+        <!-- <div class='btn btn-success position-absolute' onclick="window.location='{{repo.html_url}}'" style=" right: 1em; margin-top: -.6em;cursor: pointer;z-index:10" tabindex='1'>View</div> -->
+        <form action="{{repo.html_url}}" method="get" class="position-relative" style="z-index:20;">
+            {% csrf_token %}
+            <button class='btn btn-success'>View</button>
+        </form>
+    </td>
     {% endif %}
 </tr>
 {% endfor %}

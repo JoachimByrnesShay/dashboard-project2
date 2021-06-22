@@ -19,6 +19,11 @@ def elem_height(value):
 
 register.filter('elem_height', elem_height)
 
+def github_urlify(repo_url):
+    return "https" + "%3A;"+"//" + repo_url
+
+register.filter('github_urlify', github_urlify)
+
 def none_to_empty_str(value):
     if value == None:
         return ''
