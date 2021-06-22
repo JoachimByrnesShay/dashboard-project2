@@ -1,52 +1,89 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
+{% block title %}
+Github Dashboard App - MyAccount
+{% endblock title %}
 {% block content %}
-<div class='row'>
-    <div class='col-3 card'>
-        <div class='card-body'>
-            <p>You have {{count_panels}} panels registered to your account</p>
+<div class='row font-weight-bold' id='myaccount'>
+    <div class='col-3'>
+        <div class='card'>
+            <div class='card-body'>
+                <p>You have {{count_panels}} panels registered to your account</p>
+            </div>
         </div>
-        <div class='card-body'>
-            <p>You have {{count_dashboards}} dashboards registered to your account</p>
+        <div class='card'>
+            <div class='card-body'>
+                <p>You have {{count_dashboards}} dashboards registered to your account</p>
+            </div>
         </div>
-        <div class='card-body'>
-            <p>Your panels can be found at Panels link</p>
+        <div class='card'>
+            <div class='card-body'>
+                <p>Your panels can be found at Panels link</p>
+            </div>
         </div>
-        <div class='card-body'>
-            <p>Your dashboards can be found and edited at Dashboards link</p>
+        <div class='card'>
+            <div class='card-body'>
+                <p>Your dashboards can be found and edited at Dashboards link</p>
+            </div>
         </div>
     </div>
-    <div class='col-9 card'>
-        <div class='card-body'>
-            <div class='time'>
-                <h2> Today's date: {% now "jS F Y" %}</h2>
-                <h2> Time now: {% now "H:i a" %}</h2>
+    <div class='col-9'>
+        <div class='card'>
+            <div class='card-body'>
+                <p> Today's date: {% now "jS F Y" %}<br>Time now: {% now "H:i a" %}</p>
             </div>
         </div>
         {% if request.POST %}
+        <a class='btn btn-warning border w-100' href="{% url 'user_edit' %}">Cancel edit</a>
         <form class="form" method="POST" action="{% url 'user_save' %}">
             {% csrf_token %}
             {% bootstrap_form form %}
             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Save Edit</button>
         </form>
         {% else %}
-        <div class='card-body'>
         <form class="form" method="POST" action="{% url 'user_edit' %}">
-    {% csrf_token %}
-    <input type='hidden'>
-    <button class='btn btn-warning' name='user_edit'>Edit user account information</button>
-</form>
-           <!--  <a class='btn btn-warning' href="{% url 'user_edit' %}" name='user_edit'>Edit user account information</a> -->
-            <a class='btn btn-warning' href="{% url 'change_password' %}" name='change_password'>Change password</a>
-            
-            <h1> Username: {{user.username}} </h1>
-            <h2> firstname: {{user.first_name }}</h2>
-            <h2> lastname: {{user.last_name}}</h2>
-            <h2> bio: {{user.bio}}</h2>
-            <h2> date joined: {{user.date_joined}}</h2>
-            <h2> email: {{user.email }}</h2>
-            <h2> last logged in: {{user.last_login}}</h2>
+            {% csrf_token %}
+            <input type='hidden'>
+            <button class='btn btn-warning w-100 border' name='user_edit'>Edit user account information</button>
+        </form>
+        <!--  <a class='btn btn-warning' href="{% url 'user_edit' %}" name='user_edit'>Edit user account information</a> -->
+        <a class='btn btn-warning border w-100' href="{% url 'change_password' %}">Change password</a>
+        <div class='card'>
+            <div class='card-body'>
+                <p> Username:<br> {{user.username}} </p>
+            </div>
+        </div>
+        <div class='card'>
+            <div class='card-body'>
+                <p> Firstname:<br> {{user.first_name }}</p>
+            </div>
+        </div>
+        <div class='card'>
+            <div class='card-body'>
+                <p> Lastname:<br> {{user.last_name}}</p>
+            </div>
+        </div>
+        <div class='card'>
+            <div class='card-body'>
+                <p> Bio:<br> {{user.bio}}</p>
+            </div>
+        </div>
+        <div class='card'>
+            <div class='card-body'>
+                <p> Email:<br> {{user.email }}</p>
+            </div>
+        </div>
+        <div class='card'>
+            <div class='card-body'>
+                <p> Date Joined:<br> {{user.date_joined}}</p>
+            </div>
+        </div>
+        <div class='card'>
+            <div class='card-body'>
+                <p> Last Logged In:<br> {{user.last_login}}</p>
+            </div>
         </div>
         {% endif %}
     </div>
-    {% endblock content %}
+</div>
+{% endblock content %}

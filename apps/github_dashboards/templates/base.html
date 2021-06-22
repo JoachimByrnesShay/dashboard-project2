@@ -28,8 +28,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav row">
-                        <span class='navspan main-links'>
+                    <div class="navbar-nav row">
+                        <ul class='navspan main-links'>
                             <li class="nav-item {{home_active}}">
                                 <a class="nav-link" href="{% url 'home' %}">Home</a>
                             </li>
@@ -51,17 +51,17 @@
                             <li class="nav-item users {{users_active}}">
                                 <a class="nav-link" href="{% url 'view_all_users' %}">All Users</a>
                             </li>
-                        </span>
-                        <span class='navspan auth-links'>
+                        </ul>
+                        <ul class='navspan auth-links'>
                             {% if user.is_authenticated %}
                             <li class=" nav-item"><a class='nav-link {{pie_chart_active}}' href="{% url 'user_logout' %}">Logout</a></li>
-                            <li class="nav-item username"><a class='nav-link {{pie_chart_active}}' href="{% url 'user_myaccount' %}"><span class='content'>Hi {{user.username|title|truncatechars:15}}!</span> <img src="{{user.gravatar}}" width=25 height=25></a></li>
+                            <li class="nav-item username"><a class='nav-link {{pie_chart_active}}' href="{% url 'user_myaccount' %}"><span class='content'>Hi {{user.username|title|truncatechars:15}}!</span> <img src="{{user.gravatar}}" width=25 height=25 alt='gravatar of logged in user'></a></li>
                             {% else %}
                             <li class="nav-item"><a class='nav-link {{pie_chart_active}}' href=" {% url 'user_login' %}">Login</a></li>
                             <li class="nav-item"><a class='nav-link {{pie_chart_active}}' href="{% url 'user_register' %}">Register</a></li>
                             {% endif %}
-                        </span>
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </nav>
         </header>
