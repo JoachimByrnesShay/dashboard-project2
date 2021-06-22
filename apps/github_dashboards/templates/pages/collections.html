@@ -6,13 +6,13 @@ Github Dashboard App - PanelCollections
 {% endblock title %}
 {% block content %}
 <div class='row'>
-    <div class='col-4 mr-auto'>
-        <div class="card border rounded">
+    <div class='col-5 mr-auto'>
+        <div class="card border rounded font-weight-bold">
             <div class="card-body">
                 {% if form %}
                 <form method="POST">
                     {% csrf_token %}
-                    <a class='btn btn-primary w-100 mb-3' href="{% url 'panel_collections' request.user.id %}">Click for blank form </a>
+                    <a class='btn btn-primary w-100 mb-3' href="{% url 'user_collections' request.user.id %}">Click for blank form </a>
                     {% bootstrap_form form %}
                     <button class="btn btn-lg btn-primary btn-block">Save</button>
                 </form>
@@ -20,11 +20,10 @@ Github Dashboard App - PanelCollections
             </div>
         </div>
     </div>
-    <div class='dashboards col-8 ml-auto'>
+    <div class='dashboards col-7 ml-auto'>
         <div class='row dashboard_instance'>
-            {% if collections %}
             {% for collection in collections %}
-            <div class='col col-3 dashboard-panel card d-flex'>
+            <div class='col col-3 dashboard-panel card d-flex shadow'>
                 <a class="stretched-link col-12" href="">
                     <h3 class=''>panels: {{ collection.string_of_panels }}</h3>
                     <h3 class=''>Title: {{collection.title}}</h3>
@@ -60,7 +59,6 @@ Github Dashboard App - PanelCollections
                 </div>
             </div>
             {% endfor %}
-            {% endif %}
         </div>
     </div>
 </div>

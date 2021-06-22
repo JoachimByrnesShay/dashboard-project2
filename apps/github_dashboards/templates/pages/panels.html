@@ -26,7 +26,7 @@ Github Dashboard App - Panels
         <div class='row'>
             {% if panels %}
             {% for panel in panels %}
-            <div class='col-3 dashboard-panel card d-flex'>
+            <div class='col-{{panel.panel_size | panel_to_column_size}} dashboard-panel card d-flex shadow'>
                 <a class="stretched-link col" href="">
                     <h3> Panel Type: {{panel.panel_type }}</h3>
                     <h3 class=''>Panel Size: {{panel.panel_size}}</h3>

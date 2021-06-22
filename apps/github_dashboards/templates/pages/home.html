@@ -8,7 +8,7 @@ Github Dashboard App - Home
 {% block content %}
 <div class='row dashboards justify-content-between'>
     {% for dash in dashboards %}
-    <div class="col-{{dash.panel_size | panel_to_column_size }} dashboard-panel card d-flex">
+    <div class="col-{{dash.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow">
         {{ dash.panel_type }}
         <h2>{{dash.github_username}}/{{dash.repo_name | none_to_empty_str }}</h2>
         <h2>{{ dash }}</h2>

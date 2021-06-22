@@ -13,12 +13,44 @@
   --font-primary-family: 'Montserrat';
 }
 
+.btn-primary {
+  background-color: hsla(10,80%,35%,.6);
+  color: midnightblue;
+  border: 1px solid blue;
+  font-weight: normal;
+  color: rgb(240,240,240);
+  color: rgb(0,0,0);
+  color: rgb(220,200,200);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: hsla(0,70%,25%,.8);
+  font-weight: bold;
+}
+
+.account-form {
+  background: white;
+}
+
+.account-form input, .account-form textarea {
+  background: floralwhite;
+  color: black;
+  font-weight: 800;
+  border: 2px solid silver;
+  box-shadow: 2px 2px 5px 0.5;
+}
+
 body {
   margin: 0;
   padding: 0;
 }
 
 /** general styles **/
+
+ul.navspan {
+  list-style-type: none;
+}
 
 .dashboard-panel a.stretched-link:hover {
   text-decoration: none;
@@ -56,4 +88,21 @@ body {
 #myaccount .card-body {
   padding: 0.5em 0 0 0.5em;
   border: 2px solid blue;
+}
+
+form input {
+  font-weight: 900;
+}
+
+header nav.navbar {
+  background: hsla(220,30%,40%,0.8);
+}
+
+header nav.navbar a {
+  color: hsla(30,80%,80%,0.9);
+  color: rgb(255,255,255);
+}
+
+header nav.navbar li a:hover {
+  color: hsla(155,20%,85%,1.0);
 }

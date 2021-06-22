@@ -91,22 +91,26 @@ def edit_panel(request, panel_id):
 def edit_collection(request, collection_id):
     print(collection_id)
     context = {}
-    
+    collections = PanelsCollection.objects.filter(creator=request.user.id)
     collection = PanelsCollection.objects.get(id=collection_id)
     print(collection)
+    
+    form = PanelsCollectionForm(instance=collection)
     if request.POST:
         form = PanelsCollectionForm(request.POST, instance=collection)
         if form.is_valid():
-            # this_collection = form.save(commit=False)
-            # this_collection.save()
-            # form.save_m2m()
+            this_collection = form.save(commit=False)
+            this_collection.save()
+            form.save_m2m()
             form.save()
             messages.success(request, f"Dashboard '{collection.title}' was successfully updated!")
-            return redirect('panel_collections')
-        else:
-            return render(request, 'pages/collections.html', {'form': form})   
-    form = PanelsCollectionForm(instance=collection)
-    collections = PanelsCollection.objects.filter(creator=request.user.id)#.order_by('id')
+            
+            #return render(request, 'pages/collections.html', context)
+            return redirect('user_collections')
+        
+            #return render(request, 'pages/collections.html', {'form': form})   
+    
+    #.order_by('id')
     context['form'] = form 
     context['collections'] = collections
     context['user_id'] = request.user.id
@@ -127,7 +131,7 @@ def panel_details(request, dash_id):
 
 
 @login_required
-def panel_collections(request, user_id=None):
+def user_collections(request, user_id=None):
     form = PanelsCollectionForm()
     if user_id:
        
@@ -171,9 +175,9 @@ def user_panels(request, user_id=None):
                 new_panel.save()
                 messages.success(request, f"Successfully added this {new_panel.panel_type}: '{new_panel}")
                 
-                context['user_id'] = request.user.id
+                #context['user_id'] = request.user.id
                
-                return redirect('user_panels', context)
+                return redirect('user_panels')
 
     else:
         panels = []

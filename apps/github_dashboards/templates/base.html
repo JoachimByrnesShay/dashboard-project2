@@ -23,7 +23,7 @@
 <body class="{% block body-class %}{% endblock body-class %}">
     <div class="container-fluid">
         <header>
-            <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar fixed-top navbar-expand-lg">
                 <a class="navbar-brand" href="#">Joachim Byrnes-Shay</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -38,15 +38,15 @@
                             <li class="nav-item {{panels_active}}">
                                 <a class="nav-link" href="{% url 'user_panels' request.user.id %}">Panels</a>
                             </li>
-                            <li class="nav-item {{dashboards_active}}">
-                                <a class="nav-link" href="{% url 'panel_collections' request.user.id %}">Dashboards</a>
+                            <li class="nav-item {{collections_active}}">
+                                <a class="nav-link" href="{% url 'user_collections' request.user.id %}">Collections</a>
                             </li>
                             {% else %}
                             <li class="nav-item {{panels_active}}">
                                 <a class="nav-link" href="{% url 'user_panels' %}">Panels</a>
                             </li>
-                            <li class="nav-item {{dashboards_active}}">
-                                <a class="nav-link" href="{% url 'panel_collections' %}">Dashboards</a>
+                            <li class="nav-item {{collections_active}}">
+                                <a class="nav-link" href="{% url 'user_collections' %}">Collections</a>
                             </li>
                             {% endif %}
                             <li class="nav-item users {{users_active}}">

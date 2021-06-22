@@ -152,7 +152,7 @@
 }
 
 .main-links .nav-item a {
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 255, .2);
+  box-shadow: 5px 5px 2px 1px rgba(45, 25,100, .2);
   width: 15ch;
 }
 

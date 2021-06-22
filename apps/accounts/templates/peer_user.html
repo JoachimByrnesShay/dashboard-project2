@@ -6,17 +6,17 @@ Github Dashboard App - Peer
 {% endblock title %}
 {% load panels_extras %}
 {% block content %}
-<h1> {{user.username | title}}</h1>
+<h1> {{other_user.username | title}} <img src="{{other_user.gravatar}}" width=25 height=25 alt='gravatar of peer user'></a></h1>
 <div class='card font-weight-bold'>
     <div class='card-body'>
-        <p>{{user.username | title | make_quote }} joined on {{user.date_joined}}</p>
-        <p>{{user.username | title }}'s Bio:</p>
-        <p class='peer-bio'>{{user.bio | no_bio}}</p>
+        <p>{{other_user.username | title | make_quote }} joined on {{other_user.date_joined}}</p>
+        <p>{{other_user.username | title }}'s Bio:</p>
+        <p class='peer-bio'>{{other_user.bio | no_bio}}</p>
     </div>
 </div>
 <div class='row dashboards justify-content-between'>
     <div class='col-9'>
-        <h4>{{user.username | title }}'s Panels</h4>
+        <h4>{{other_user.username | title }}'s Panels</h4>
         {% for panel in panels %}
         <div class="col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-inline-block">
             <div class='card-body'>
@@ -30,7 +30,7 @@ Github Dashboard App - Peer
         {% endfor %}
     </div>
     <div class='col-3'>
-        <h4>{{user.username | title }}'s Dashboards</h4>
+        <h4>{{other_user.username | title }}'s Dashboards</h4>
         {% for dashboard in dashboards %}
         {{ dashboard.title }}
         {% endfor %}

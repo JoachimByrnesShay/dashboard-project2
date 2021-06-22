@@ -37,7 +37,7 @@ def peer_user(request, user_id):
     user = User.objects.get(id=user_id)
     dashboards = PanelsCollection.objects.filter(creator=user)
     panels = Panel.objects.filter(creator=user)
-    context = {'user': user, 'panels': panels, 'dashboards': dashboards}
+    context = {'other_user': user, 'panels': panels, 'dashboards': dashboards}
     return render(request, 'peer_user.html', context)
 
 @login_required
