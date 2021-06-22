@@ -63,10 +63,10 @@ def delete_panel(request, panel_id):
     return redirect('user_panels', request.user.id)
 
 @login_required
-def delete_dashboard(request, dashboard_id):
-    dashboard = PanelsCollection.objects.get(id=dashboard_id)
-    dashboard.delete()
-    messages.warning(request, 'Dashboard: ("dashboard.title") was successfully deleted!' )
+def delete_collection(request, collection_id):
+    collection = PanelsCollection.objects.get(id=collection_id)
+    collection.delete()
+    messages.warning(request, 'Collection: ("collection.title") was successfully deleted!' )
     return redirect('panel_collections', request.user.id)
 
 @login_required
@@ -87,6 +87,36 @@ def edit_panel(request, panel_id):
     context['panels']=panels
     return render(request, 'pages/panels.html', context)
 
+@login_required
+def edit_collection(request, collection_id):
+    print(collection_id)
+    context = {}
+    
+    collection = PanelsCollection.objects.get(id=collection_id)
+    print(collection)
+    if request.POST:
+        form = PanelsCollectionForm(request.POST, instance=collection)
+        if form.is_valid():
+            # this_collection = form.save(commit=False)
+            # this_collection.save()
+            # form.save_m2m()
+            form.save()
+            messages.success(request, f"Dashboard '{collection.title}' was successfully updated!")
+            return redirect('panel_collections')
+        else:
+            return render(request, 'pages/collections.html', {'form': form})   
+    form = PanelsCollectionForm(instance=collection)
+    collections = PanelsCollection.objects.filter(creator=request.user.id)#.order_by('id')
+    context['form'] = form 
+    context['collections'] = collections
+    context['user_id'] = request.user.id
+    return render(request, 'pages/collections.html',context)   
+
+
+    
+
+    
+
 
 def panel_details(request, dash_id):
     context = {}
@@ -94,30 +124,31 @@ def panel_details(request, dash_id):
     context['panel'] = panel 
     return render(request, 'pages/details.html', context)
 
+
+
 @login_required
 def panel_collections(request, user_id=None):
+    form = PanelsCollectionForm()
     if user_id:
-        
+       
         if request.POST:
             print(request.POST)
             form = PanelsCollectionForm(request.POST)
             if form.is_valid():
-                new_dashboard = form.save(commit=False)
-                new_dashboard.creator = User.objects.get(id=request.user.id)
-                new_dashboard.save()
+                new_collection = form.save(commit=False)
+                new_collection.creator = User.objects.get(id=request.user.id)
+                new_collection.save()
                 form.save_m2m()
                 messages.error(request, "Successfully created new panel collection!")
 
-        else:
-            form = PanelsCollectionForm()
+       
             
-        dashboards = PanelsCollection.objects.filter(creator=request.user)
+            
+    collections = PanelsCollection.objects.filter(creator=request.user)
         
-    else:
-        dashboards = []
-        form = {}
-    context = {'form':form, 'dashboards':dashboards, 'dashboards_active': 'active'}
-    return render(request,'pages/dashboards.html',context)
+ 
+    context = {'form':form, 'collections':collections, 'collections_active': 'active'}
+    return render(request,'pages/collections.html',context)
 
 
 @login_required

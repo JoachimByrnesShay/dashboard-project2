@@ -20,6 +20,11 @@ body {
 
 /** general styles **/
 
+.dashboard-panel a.stretched-link:hover {
+  text-decoration: none;
+  background-color: lightyellow;
+}
+
 .peer-bio {
   border: 1px solid black;
   font-weight: 500;

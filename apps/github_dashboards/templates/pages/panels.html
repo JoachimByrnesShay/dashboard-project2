@@ -27,7 +27,7 @@ Github Dashboard App - Panels
             {% if panels %}
             {% for panel in panels %}
             <div class='col-3 dashboard-panel card d-flex'>
-                <a class="col" href="">
+                <a class="stretched-link col" href="">
                     <h3> Panel Type: {{panel.panel_type }}</h3>
                     <h3 class=''>Panel Size: {{panel.panel_size}}</h3>
                     <h2>Repo: '{{panel.github_username}}/{{panel.repo_name|none_to_empty_str}}'</h2>
@@ -37,9 +37,9 @@ Github Dashboard App - Panels
                     <img class='mb-3' src='{{panel.svg}}'>
                     {% endif %}
                 </a>
-                <div class='row'>
-                    <a href="{% url 'edit_panel' panel.id %}" class="border mb-0 btn btn-sm p-2 btn-danger col-6 h6">Edit</a>
-                    <button class="border mb-0 btn btn-sm btn-danger modal-button col-6" data-toggle="modal" data-target="#fm-modal-grid-{{panel.id}}">Delete</button>
+                <div class='row justify-content-around'>
+                    <a href="{% url 'edit_panel' panel.id %}" class="border ml-2 mb-0 btn btn-sm p-2 btn-danger col-5">Edit</a>
+                    <button class="border mr-2 mb-0 btn btn-sm btn-danger modal-button p-2 col-5" data-toggle="modal" data-target="#fm-modal-grid-{{panel.id}}">Delete</button>
                 </div>
                 <div class="modal" tabindex="-1" role="dialog" id="fm-modal-grid-{{panel.id}}">
                     <div class="modal-dialog" role="document">

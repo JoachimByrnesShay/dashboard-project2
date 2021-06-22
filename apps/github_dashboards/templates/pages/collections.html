@@ -12,6 +12,7 @@ Github Dashboard App - PanelCollections
                 {% if form %}
                 <form method="POST">
                     {% csrf_token %}
+                    <a class='btn btn-primary w-100 mb-3' href="{% url 'panel_collections' request.user.id %}">Click for blank form </a>
                     {% bootstrap_form form %}
                     <button class="btn btn-lg btn-primary btn-block">Save</button>
                 </form>
@@ -21,22 +22,21 @@ Github Dashboard App - PanelCollections
     </div>
     <div class='dashboards col-8 ml-auto'>
         <div class='row dashboard_instance'>
-            {% if dashboards %}
-            {% for dashboard in dashboards %}
+            {% if collections %}
+            {% for collection in collections %}
             <div class='col col-3 dashboard-panel card d-flex'>
                 <a class="stretched-link col-12" href="">
-                    {% if panel.panel_type == 'Table' %}
-                    {{ hello }}
-                    {% else %}
-                    <h3 class=''>panels: {{ dashboard.string_of_panels }}</h3>
-                    <h3 class=''>Title: {{dashboard.title}}</h3>
-                    <h2>Desc: '{{dashboard.description}}'</h2>
+                    <h3 class=''>panels: {{ collection.string_of_panels }}</h3>
+                    <h3 class=''>Title: {{collection.title}}</h3>
+                    <h2>Desc: '{{collection.description}}'</h2>
                     <!-- <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg | safe}}"> -->
-                    <h3> created_at: {{dashboard.created}}</h3>
-                    {% endif %}
+                    <h3> created_at: {{collection.created}}</h3>
                 </a>
-                <button class="btn btn-danger" data-toggle="modal" data-target="#fm-modal-grid-{{dashboard.id}}">Delete</button>
-                <div class="modal" tabindex="-1" role="dialog" id="fm-modal-grid-{{dashboard.id}}">
+                <div class='row justify-content-around'>
+                    <a href="{% url 'edit_collection' collection.id %}" class="p-2 border ml-2 mb-0 btn btn-sm btn-danger col-5">Edit</a>
+                    <button class="p-2 border mr-2 mb-0 btn btn-sm btn-danger modal-button col-5" data-toggle="modal" data-target="#fm-modal-grid-{{collection.id}}">Delete</button>
+                </div>
+                <div class="modal" tabindex="-1" role="dialog" id="fm-modal-grid-{{collection.id}}">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -49,7 +49,7 @@ Github Dashboard App - PanelCollections
                                 <p>Warning. This action will be permanent. Confirm!</p>
                             </div>
                             <div class="modal-footer">
-                                <form action={% url 'delete_dashboard' dashboard.id %} method="POST">
+                                <form action={% url 'delete_collection' collection.id %} method="POST">
                                     {% csrf_token %}
                                     <button class="btn btn-primary" data-dismiss="modal">Cancel</button>
                                     <button class="btn btn-danger">Delete</button>
