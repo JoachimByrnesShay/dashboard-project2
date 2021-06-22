@@ -6,17 +6,18 @@ Github Dashboard App - Home
 {% endblock title %}
 {% load panels_extras %}
 {% block content %}
-<div class='row dashboards justify-content-between'>
+<div class='row dashboards justify-content-between position-relative align-items-start'>
     {% for dash in dashboards %}
-    <div class="col-{{dash.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow">
-        {{ dash.panel_type }}
+    <div class="col-{{dash.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow align-items-start">
         <h2>{{dash.github_username}}/{{dash.repo_name | none_to_empty_str }}</h2>
         <h2>{{ dash }}</h2>
         <h3 class='repo-description'>{{dash.repo_description}}</h3>
         {% if dash.panel_type == 'TableOfRepos' %}
-        <table class="table" id='table-{{dash.id}}'>
+        {% with tablerepos=dash.get_repos %}
+        <table class="table w-100" id='table-{{dash.id}}' style="font-size:{{dash.panel_size|dynamic_font_size}}em;">
             {% include 'snippets/table.html' %}
         </table>
+        {% endwith %}
         {% else %}
         <embed class='mb-0' type="image/svg+xml" src="{{ dash.svg }}">
         {% endif %}

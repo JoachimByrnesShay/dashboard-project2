@@ -26,7 +26,7 @@ def clean_repo_name(self):
             raise ValidationError('Repo does not exist on github') 
 
                 
-def get_repos(username='JoachimByrnesShay'):
+def get_repos(username):
     url = "https://api.github.com/users/{username}/repos"
     token = os.getenv('GH_ACCESS_TOKEN')
     #print('token is here')

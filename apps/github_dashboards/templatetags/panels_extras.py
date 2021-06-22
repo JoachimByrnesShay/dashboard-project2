@@ -8,6 +8,16 @@ def panel_to_column_size(value): # Only one argument.
 
 register.filter('panel_to_column_size', panel_to_column_size)
 
+def dynamic_font_size(value):
+    dic = {'S': 4, 'M': 6, 'L': 12}
+    return str(dic[value]*0.06)
+register.filter('dynamic_font_size', dynamic_font_size)
+
+def elem_height(value):
+     dic = {'S': 4, 'M': 6, 'L': 12}
+     return str(dic[value] * 0.06)
+
+register.filter('elem_height', elem_height)
 
 def none_to_empty_str(value):
     if value == None:

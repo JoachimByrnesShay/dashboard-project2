@@ -12,6 +12,12 @@ class PanelMixin:
     def is_table(self):
         return self.panel_type == 'TableOfRepos'
 
+    def get_repos(self):
+        if self.is_table():
+            return custom_utils.get_repos(self.github_username)
+        else:
+            return None
+
         
     def get_chart(self):
        
@@ -21,6 +27,8 @@ class PanelMixin:
         chart = custom_utils.get_repo_languages_chart(repo, chart_type, piechart_style)
         return chart
 
+
+    
 
     def clean_repo_name(self):
         token = os.getenv('GH_ACCESS_TOKEN')
