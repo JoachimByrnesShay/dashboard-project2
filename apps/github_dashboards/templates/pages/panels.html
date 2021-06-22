@@ -14,6 +14,7 @@ Github Dashboard App - Panels
                 {% if form %}
                 <form method="POST" action="?">
                     {% csrf_token %}
+                    <a class='btn btn-primary w-100 mb-3' href="{% url 'user_panels' %}">Click for blank form </a>
                     {% bootstrap_form form %}
                     <button class="btn btn-lg btn-primary btn-block">Save</button>
                 </form>
@@ -26,17 +27,20 @@ Github Dashboard App - Panels
             {% if panels %}
             {% for panel in panels %}
             <div class='col-3 dashboard-panel card d-flex'>
-                <a class="col" href="{% url 'edit_panel' panel.id %}">
+                <a class="col" href="">
                     <h3> Panel Type: {{panel.panel_type }}</h3>
                     <h3 class=''>Panel Size: {{panel.panel_size}}</h3>
                     <h2>Repo: '{{panel.github_username}}/{{panel.repo_name|none_to_empty_str}}'</h2>
                     <h3 class='repo-description'>Desc: {{panel.description}}</h3>
                     <h3>id: {{panel.id}}</h3>
                     {% if panel.svg %}
-                    <img class='' src='{{panel.svg}}'>
+                    <img class='mb-3' src='{{panel.svg}}'>
                     {% endif %}
                 </a>
-                <button class="mb-0 btn btn-danger modal-button flex-align-end" data-toggle="modal" data-target="#fm-modal-grid-{{panel.id}}">Delete</button>
+                <div class='row'>
+                    <a href="{% url 'edit_panel' panel.id %}" class="border mb-0 btn btn-sm p-2 btn-danger col-6 h6">Edit</a>
+                    <button class="border mb-0 btn btn-sm btn-danger modal-button col-6" data-toggle="modal" data-target="#fm-modal-grid-{{panel.id}}">Delete</button>
+                </div>
                 <div class="modal" tabindex="-1" role="dialog" id="fm-modal-grid-{{panel.id}}">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">

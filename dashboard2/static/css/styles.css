@@ -20,6 +20,12 @@ body {
 
 /** general styles **/
 
+.peer-bio {
+  border: 1px solid black;
+  font-weight: 500;
+  padding: .5em;
+}
+
 h1 {
   background: #Acc1d9;
   padding: .2em 0.4em .2em 0.4em;

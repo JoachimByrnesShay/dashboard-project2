@@ -9,6 +9,10 @@ from apps.github_dashboards.modules import custom_utils
 
 class PanelMixin:
 
+    def is_table(self):
+        return self.panel_type == 'TableOfRepos'
+
+        
     def get_chart(self):
        
         repo = custom_utils.get_repo(self.github_username, self.repo_name)

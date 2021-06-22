@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+{% block title %}
+Github Dashboard App - Peer
+{% endblock title %}
+{% load panels_extras %}
+{% block content %}
+<h1> {{user.username | title}}</h1>
+<div class='card font-weight-bold'>
+    <div class='card-body'>
+        <p>{{user.username | title | make_quote }} joined on {{user.date_joined}}</p>
+        <p>{{user.username | title }}'s Bio:</p>
+        <p class='peer-bio'>{{user.bio | no_bio}}</p>
+    </div>
+</div>
+<div class='row dashboards justify-content-between'>
+    <div class='col-9'>
+        <h4>{{user.username | title }}'s Panels</h4>
+        {% for panel in panels %}
+        <div class="col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-inline-block">
+            <div class='card-body'>
+                {% if panel.is_table %}
+                {% else %}
+                <h6>{{panel}}</h6>
+                <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg }}">
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class='col-3'>
+        <h4>{{user.username | title }}'s Dashboards</h4>
+        {% for dashboard in dashboards %}
+        {{ dashboard.title }}
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

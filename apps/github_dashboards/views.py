@@ -10,6 +10,7 @@ from apps.accounts.models import User
 from django import forms
 from .modules import custom_utils
 import os
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from github import Github
 from .modules.custom_utils import clean_repo_name
@@ -20,6 +21,7 @@ from django.core import validators
 
 """load any needed env variables"""
 load_dotenv()
+
 
 class PanelForm(forms.ModelForm):
     class Meta:
@@ -50,6 +52,7 @@ def home(request):
     context['home_active'] = 'active'
     return render(request, 'pages/home.html', context)
 
+@login_required
 def delete_panel(request, panel_id):
     this_panel = Panel.objects.get(id=panel_id)
      
@@ -59,15 +62,18 @@ def delete_panel(request, panel_id):
     messages.warning(request, f"Panel: {user_name}/{repo_name} was successfully deleted!" )
     return redirect('user_panels', request.user.id)
 
+@login_required
 def delete_dashboard(request, dashboard_id):
     dashboard = PanelsCollection.objects.get(id=dashboard_id)
     dashboard.delete()
     messages.warning(request, 'Dashboard: ("dashboard.title") was successfully deleted!' )
     return redirect('panel_collections', request.user.id)
 
+@login_required
 def edit_panel(request, panel_id):
     panels = Panel.objects.filter(creator=request.user.id).order_by('id')
     context = {}
+    context['panels_active'] = 'active'
     panel = Panel.objects.get(id=panel_id)
     form = PanelForm(instance=panel)
     if request.POST:
@@ -88,7 +94,7 @@ def panel_details(request, dash_id):
     context['panel'] = panel 
     return render(request, 'pages/details.html', context)
 
-    
+@login_required
 def panel_collections(request, user_id=None):
     if user_id:
         
@@ -114,11 +120,16 @@ def panel_collections(request, user_id=None):
     return render(request,'pages/dashboards.html',context)
 
 
+@login_required
 def user_panels(request, user_id=None):
-    
-    form = None  
+    panels_active = 'active'
     panels = Panel.objects.filter(creator=request.user.id).order_by('id')
-    if user_id:
+    context = {}
+    
+   
+    
+    form = PanelForm()
+    if request.user.id:
         if request.POST:
             form = PanelForm(request.POST)
 
@@ -128,17 +139,16 @@ def user_panels(request, user_id=None):
                 new_panel.creator = User.objects.get(id=request.user.id)
                 new_panel.save()
                 messages.success(request, f"Successfully added this {new_panel.panel_type}: '{new_panel}")
-                return redirect('user_panels', user_id=request.user.id)
+                
+                context['user_id'] = request.user.id
+               
+                return redirect('user_panels', context)
 
-            print(form.errors)
-            print(form.cleaned_data['repo_name'])
-        else:
-
-            form = PanelForm()
-        
     else:
         panels = []
-
-    context = {'panels': panels, 'form': form, 'panels_active': 'active'}
+    context['panels'] = panels
+    context['form'] = form
+    context['panels_active'] = panels_active
+   # context = {'panels': panels, 'form': form, 'panels_active': 'active'}
     return render(request, 'pages/panels.html', context)
 
