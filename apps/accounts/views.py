@@ -36,8 +36,6 @@ def user_edit(request):
     user = User.objects.get(id=request.user.id)
     count_dashboards = PanelsCollection.objects.filter(creator=request.user).count()
     count_panels = Panel.objects.filter(creator=request.user).count()
-    # else:
-    print('the info is here')
     form = UserEditForm(instance=user)
     if form.is_valid():
         form.save()
@@ -92,7 +90,7 @@ def user_register(request):
 
         if form.is_valid():
             user = form.save()
-            messages.success(request, 'Great job! You are registered!')
+            messages.success(request, 'Welcome! You are now registered!')
             login(request, user)
             return redirect('home')
         else: 
@@ -109,7 +107,7 @@ def user_register(request):
 
 def user_logout(request):
     logout(request)
-    messages.success(request, "Even better!  You are now logged out!")
+    messages.success(request, "See you soon!  You are now logged out!")
     return redirect('home')
 
 
@@ -118,6 +116,7 @@ def user_login(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             login(request, form.get_user())
+            messages.success(request, "You are now logged in!")
             return redirect('home')
     else:
         form = AuthenticationForm()
