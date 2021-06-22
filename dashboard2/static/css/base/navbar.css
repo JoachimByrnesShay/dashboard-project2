@@ -31,6 +31,10 @@
 }
 */
 
+input, textarea {
+  font-weight: 900;
+}
+
 .container-fluid, .navbar, .navbar-expand {
   padding: 0;
   margin: 0;

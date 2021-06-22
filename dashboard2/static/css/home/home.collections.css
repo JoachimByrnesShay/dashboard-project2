@@ -9,7 +9,9 @@
 
 .dashboards {
   background: beige;
-  border: 5px solid red;
+  border: 1px solid red;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(121,50,9,0.05926120448179273) 35%, rgba(0,212,255,1) 100%);
 }
 
 .dashboard-panel {
@@ -17,22 +19,41 @@
   width: 100%;
 }
 
+.btn-success {
+  background: blue;
+}
+
 .repo-description {
 }
 
 .dashboards .dashboard-panel {
   padding: .5em;
+  border: 1px solid black;
+  background: beige;
+  font-weight: bold;
+  font-variant: small-caps;
+  /*background: rgba(0,212,255,1);background: linear-gradient(90deg, rgba(20,75,36,1) 0%, rgba(0,212,255,1) 35%, rgba(121,50,9,0.05926120448179273) 100%);
+*/
+  text-shadow: 7px 5px 4px white, 2px 2px 2px powderblue, 5px 3px 5px black;
+  letter-spacing: 2px;
+}
+
+.dashboards .dashboard-panel:hover {
+  background: rgba(0,212,255,1);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,.5) 25%, rgba(141,50,9,0.05926120448179273) 90%);
+  color: white;
+  text-shadow: 10px 5px 7px white, 2px 2px 1px powderblue, 3px 3px 2px black;
 }
 
 .dashboards .dashboard-panel embed {
 }
 
 .dashboards .dashboard-panel h2 {
-  color: blue;
-  font-size: .9em;
+  font-size: 1em;
+  font-weight: bold;
 }
 
 .dashboards .dashboard-panel h3 {
-  color: red;
-  font-size: .9em;
+  font-size: 1em;
+  font-weight: bold;
 }

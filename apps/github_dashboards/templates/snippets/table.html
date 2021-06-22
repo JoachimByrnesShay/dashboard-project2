@@ -1,0 +1,29 @@
+<!-- mathfilters provides a divide filter, utilized below to determine if repo.size should display in kb or MB -->
+{% load mathfilters %}
+<!-- programing-language-icons stylesheet provided by abranhe.  templating and filter and necessary classes are utilized to display programming language icon below -->
+{% block css-extra %}
+<link href="https://languages.abranhe.com/logos.css" rel="stylesheet">
+{% endblock %}
+<h6 class='text-center'>A tabular view of Github repositories</h6>
+{% csrf_token %}
+<thead class="bg-dark text-white">
+    <tr>
+        <th scope="col">
+            Name
+        </th>
+        <th scope="col">Size</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Language</th>
+        <th scope="col"></th>
+    </tr>
+</thead>
+{% for repo in repos %}
+<tr>
+    <td class="font-weight-bold"><span class='table-cell'>{{repo.name}}</span></td>
+    <td><span class='table-cell'>
+            <!-- use tags, mathfilters and built-in django filters to display in kb if repo.size < 1024, MB if > 1024 -->
+            {% if repo.size < 1024 %} {{repo.size}} kb {% else %} {{repo.size|div:1024|floatformat:2}} MB {% endif %} </span> </td> <td><span class='table-cell'>{{repo.created_at}}</span></td>
+    <td><span class='table-cell'>{{repo.language}}</span><span class='language-icon'></span><i class="programming lang-{{repo.language|lower}}"></i></td>
+    <td><a class='btn btn-success' href={{repo.html_url}}>View</a></td>
+</tr>
+{% endfor %}

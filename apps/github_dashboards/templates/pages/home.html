@@ -13,11 +13,14 @@ Github Dashboard App - Home
         <h2>{{dash.github_username}}/{{dash.repo_name | none_to_empty_str }}</h2>
         <h2>{{ dash }}</h2>
         <h3 class='repo-description'>{{dash.repo_description}}</h3>
-        {% if dash.panel_type == 'Table' %}
-        {{ hello }}
+        {% if dash.panel_type == 'TableOfRepos' %}
+        <table class="table" id='table-{{dash.id}}'>
+            {% include 'snippets/table.html' %}
+        </table>
         {% else %}
         <embed class='mb-0' type="image/svg+xml" src="{{ dash.svg }}">
         {% endif %}
+        <a class='stretched-link' href=''></a>
     </div>
     {% endfor %}
 </div>

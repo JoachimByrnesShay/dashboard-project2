@@ -7,15 +7,15 @@ Github Dashboard App - Peer
 {% load panels_extras %}
 {% block content %}
 <h1> {{other_user.username | title}} <img src="{{other_user.gravatar}}" width=25 height=25 alt='gravatar of peer user'></a></h1>
-<div class='card font-weight-bold'>
-    <div class='card-body'>
+<div class='ml-0 mr-0 card font-weight-bold'>
+    <div class='card-body w-100'>
         <p>{{other_user.username | title | make_quote }} joined on {{other_user.date_joined}}</p>
         <p>{{other_user.username | title }}'s Bio:</p>
         <p class='peer-bio'>{{other_user.bio | no_bio}}</p>
     </div>
 </div>
-<div class='row dashboards justify-content-between'>
-    <div class='col-9'>
+<div class='row m-0 dashboards justify-content-between'>
+    <div class='col-9 border'>
         <h4>{{other_user.username | title }}'s Panels</h4>
         {% for panel in panels %}
         <div class="col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-inline-block">
@@ -29,7 +29,7 @@ Github Dashboard App - Peer
         </div>
         {% endfor %}
     </div>
-    <div class='col-3'>
+    <div class='col-3 border'>
         <h4>{{other_user.username | title }}'s Dashboards</h4>
         {% for dashboard in dashboards %}
         {{ dashboard.title }}
