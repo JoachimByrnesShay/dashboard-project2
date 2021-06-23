@@ -60,7 +60,7 @@ class PanelMixin:
         if self.repo_name:
             return self.github_username + '/' + self.repo_name
         else:
-            return self.github_username
+            return self.github_username + '/'
  
 
     def clean(self):

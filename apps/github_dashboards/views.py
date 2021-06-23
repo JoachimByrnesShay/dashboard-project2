@@ -17,6 +17,8 @@ from .modules.custom_utils import clean_repo_name
 from django.core.exceptions import ValidationError
 from django.core.exceptions import ValidationError
 from django.core import validators
+from django.http import HttpResponseRedirect
+
 #from .modules import custom_forms
 
 """load any needed env variables"""
@@ -31,10 +33,10 @@ class PanelForm(forms.ModelForm):
     #https://stackoverflow.com/questions/18330622/django-modelform-conditional-validation
 
 
-    def __init__(self, *args, **kwargs):
-        super(PanelForm, self).__init__(*args, **kwargs)
-        panel_type = self.data.get("panel_type")
-        self.fields['panel_style'].initial = 'DefaultStyle'
+    # def __init__(self, *args, **kwargs):
+    #     super(PanelForm, self).__init__(*args, **kwargs)
+    #     panel_type = self.data.get("panel_type")
+    #     #self.fields['panel_style'].initial = 'DefaultStyle'
 
   
 
@@ -46,8 +48,8 @@ class PanelsCollectionForm(forms.ModelForm):
 """simple landing page view.  main content consists of additional button links for the repository data pages"""
 def home(request):
     context = {}
-    dashboards = Panel.objects.all()
-    context['dashboards'] = dashboards
+    panels = Panel.objects.all()
+    context['panels'] = panels
     # 'home_active' is a templated variable in template. set to 'active' to set home page nav link to active class
     context['home_active'] = 'active'
     return render(request, 'pages/home.html', context)
@@ -187,3 +189,19 @@ def user_panels(request, user_id=None):
    # context = {'panels': panels, 'form': form, 'panels_active': 'active'}
     return render(request, 'pages/panels.html', context)
 
+
+def show_panel(request, panel_id):
+    panel = Panel.objects.get(id=panel_id)
+    context = {}
+
+    context['panel'] = panel
+
+    return render(request, 'pages/show_panel.html', context)
+
+def show_collection(request, collection_id):
+    collection = PanelsCollection.objects.get(id=collection_id)
+    context = {}
+    context['collection'] = collection 
+    panels = collection.panels.all()
+    context['panels'] = panels
+    return render(request, 'pages/show_collection.html', context)

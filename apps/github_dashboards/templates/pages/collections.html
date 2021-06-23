@@ -24,7 +24,7 @@ Github Dashboard App - PanelCollections
         <div class='row dashboard_instance'>
             {% for collection in collections %}
             <div class='col col-3 dashboard-panel card d-flex shadow'>
-                <a class="stretched-link col-12" href="">
+                <a class="stretched-link col-12" href="{% url 'show_collection' collection.id %}">
                     <h3 class=''>panels: {{ collection.string_of_panels }}</h3>
                     <h3 class=''>Title: {{collection.title}}</h3>
                     <h2>Desc: '{{collection.description}}'</h2>

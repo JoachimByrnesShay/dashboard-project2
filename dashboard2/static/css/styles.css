@@ -17,6 +17,45 @@
   padding: 0;
 }
 
+#myaccount p, #myaccount span {
+  padding: 0;
+  margin: 0;
+}
+
+#myaccount span {
+  background: lightblue;
+  border-radius: 3px;
+  color: black;
+  padding: .2em .5em .2em .5em;
+  font-size: 1.1em;
+}
+
+#myaccount {
+  background: steelblue;
+}
+
+#myaccount .btn {
+  background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #ffffff 42%, #b49fda 79%, #7ac5d8 100%);
+  color: black;
+  text-shadow: 2px 2px 2px white, 2px 2px 3px blue;
+  font-weight: bold;
+  font-size: 1.3em;
+  width: 90%;
+  border-radius: 0;
+  border: 1px solid blue;
+}
+
+#myaccount div .card-body {
+  background: cornsilk;
+  background: rgba(0,212,255,1);
+  background: linear-gradient(90deg, rgba(200,75,36,1) 0%, rgba(20,212,255,1) 35%, rgba(240,50,9,0.05926120448179273) 100%);
+  background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+  background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
+  background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
+  background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%);
+  padding-bottom: .7em;
+}
+
 .btn-primary {
   background-color: hsla(10,80%,35%,.6);
   color: midnightblue;

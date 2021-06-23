@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% block title %}
+Github Dashboard App -Show Panel
+{% endblock title %}
+{% load panels_extras %}
+{% load cache %}
+{% block content %}
+<a class='btn btn-danger' href="{{ request.META.HTTP_REFERER }}"> return to previous</a>
+<div class='card'>
+    <div class='card-body'>
+        <h1 class='h6'>About this panel:</h1>
+        <h2>Panel creator: {{panel.creator}}</h2>
+        <h2>Date panel created: {{panel.created}}</h2>
+        <h2>Panel size (applies only in grouped views): {{panel.panel_size}}</h2>
+        <h2>Panel type: {{panel.panel_type}}</h2>
+        <h2>Panel description: {{panel.description}}</h2>
+    </div>
+</div>
+<div class='row dashboards justify-content-between position-relative align-items-start'>
+    <div class=" col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow align-items-start">
+        <h2>{{ panel }}</h2>
+        <h3 class='repo-description'>{{panel.repo_description}}</h3>
+        {% if panel.panel_type == 'TableOfRepos' %}
+        {% cache 180 default panel.id %}
+        {% with tablerepos=panel.get_repos %}
+        <table class="table w-100" id='table-{{panel.id}}' style="font-size:{{panel.panel_size|dynamic_font_size}}em;">
+            {% include 'snippets/table.html' %}
+        </table>
+        {% endwith %}
+        {% endcache %}
+        {% else %}
+        <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg }}">
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% block title %}
+Github Dashboard App -Show Panel
+{% endblock title %}
+{% load panels_extras %}
+{% load cache %}
+{% block content %}
+<a class='btn btn-danger' href="{% url 'user_collections' %}"> return to previous</a>
+<div class='card'>
+    <div class='card-body'>
+        <h1 class='h6'>About this collection:</h1>
+        <h2>collection creator: {{collection.creator}}</h2>
+        <h2>collection title: {{collection.title }}</h2>
+        <h2>collection description: {{collection.description}}</h2>
+        <h2>Date collection created: {{collection.created}}</h2>
+    </div>
+</div>
+<div class='row dashboards justify-content-between position-relative align-items-start'>
+    {% for panel in panels %}
+    <div class=" col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow align-items-start">
+        <!--  <h2>{{ collection }}</h2> -->
+        <h3 class='repo-description'>{{panel.repo_description}}</h3>
+        {% if panel.panel_type == 'TableOfRepos' %}
+        {% cache 180 default panel.id %}
+        {% with tablerepos=panel.get_repos %}
+        <table class="table w-100" id='table-{{panel.id}}' style="font-size:{{panel.panel_size|dynamic_font_size}}em;">
+            {% include 'snippets/table.html' %}
+        </table>
+        {% endwith %}
+        {% endcache %}
+        {% else %}
+        <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg }}">
+        {% endif %}
+        <a class='stretched-link' href="{% url 'show_panel' panel.id %}"></a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

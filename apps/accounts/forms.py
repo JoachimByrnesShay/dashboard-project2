@@ -47,6 +47,6 @@ class RegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
 
-        self.fields['password2'].help_text = 'custom message about password confirm'
+        self.fields['password2'].help_text = 'Enter password a second time.'
        
 

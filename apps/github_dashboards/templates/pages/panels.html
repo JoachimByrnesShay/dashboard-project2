@@ -27,7 +27,7 @@ Github Dashboard App - Panels
             {% if panels %}
             {% for panel in panels %}
             <div class='col-{{panel.panel_size | panel_to_column_size}} dashboard-panel card d-flex shadow'>
-                <a class="stretched-link col" href="">
+                <a class="stretched-link col" href="{% url 'show_panel' panel_id=panel.id %}">
                     <h3> Panel Type: {{panel.panel_type }}</h3>
                     <h3 class=''>Panel Size: {{panel.panel_size}}</h3>
                     <h2>Repo: '{{panel.github_username}}/{{panel.repo_name|none_to_empty_str}}'</h2>

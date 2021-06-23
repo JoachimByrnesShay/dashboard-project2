@@ -43,9 +43,10 @@ class Panel(models.Model, PanelMixin):
     panel_style = models.CharField(
         max_length=40,
         choices=StyleTypes.choices,
-        default="",
+        default="DefaultStyle",
         null = True,
-        blank = True,
+        blank = False,
+       
     )
    
     panel_size = models.CharField(

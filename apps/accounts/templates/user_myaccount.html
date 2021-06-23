@@ -30,7 +30,8 @@ Github Dashboard App - MyAccount
     <div class='col-9 font-weight-bold'>
         <div class='card'>
             <div class='card-body'>
-                <p> Today's date: {% now "jS F Y" %}<br>Time now: {% now "H:i a" %}</p>
+                <p> Today's date:</p> <span>{% now "jS F Y" %}</span>
+                <p>Time now:</p><span> {% now "H:i a" %}</span>
             </div>
         </div>
         {% if request.POST %}
@@ -50,37 +51,39 @@ Github Dashboard App - MyAccount
         <a class='btn btn-primary border w-100' href="{% url 'change_password' %}">Change password</a>
         <div class='card'>
             <div class='card-body'>
-                <p> Username:<br> {{user.username}} </p>
+                <p> Username:</p>
+                <span> {{user.username}} </span>
             </div>
         </div>
         <div class='card'>
             <div class='card-body'>
-                <p> Firstname:<br> {{user.first_name }}</p>
+                <p> Firstname:</p>
+                <span> {{user.first_name }}</span>
             </div>
         </div>
         <div class='card'>
             <div class='card-body'>
-                <p> Lastname:<br> {{user.last_name}}</p>
+                <p> Lastname:</p><span> {{user.last_name}}</span>
             </div>
         </div>
         <div class='card'>
             <div class='card-body'>
-                <p> Bio:<br> {{user.bio}}</p>
+                <p> Bio:</p><span> {{user.bio}}</span>
             </div>
         </div>
         <div class='card'>
             <div class='card-body'>
-                <p> Email:<br> {{user.email }}</p>
+                <p> Email:</p><span> {{user.email }}</span>
             </div>
         </div>
         <div class='card'>
             <div class='card-body'>
-                <p> Date Joined:<br> {{user.date_joined}}</p>
+                <p> Date Joined:</p><span> {{user.date_joined}}</span>
             </div>
         </div>
         <div class='card'>
             <div class='card-body'>
-                <p> Last Logged In:<br> {{user.last_login}}</p>
+                <p> Last Logged In:</p><span> {{user.last_login}}</span>
             </div>
         </div>
         {% endif %}
