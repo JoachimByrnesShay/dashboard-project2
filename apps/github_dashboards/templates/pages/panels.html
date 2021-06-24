@@ -30,7 +30,7 @@ Github Dashboard App - Panels
                 <a class="stretched-link col" href="{% url 'show_panel' panel_id=panel.id %}">
                     <h3> Panel Type: {{panel.panel_type }}</h3>
                     <h3 class=''>Panel Size: {{panel.panel_size}}</h3>
-                    <h2>Repo: '{{panel.github_username}}/{{panel.repo_name|none_to_empty_str}}'</h2>
+                    <h2>Repo: '{{panel}}'</h2>
                     <h3 class='repo-description'>Desc: {{panel.description}}</h3>
                     <h3>id: {{panel.id}}</h3>
                     {% if panel.svg %}

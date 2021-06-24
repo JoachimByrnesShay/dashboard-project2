@@ -1,136 +1,51 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import Panel, PanelsCollection
-from django.utils.safestring import mark_safe
 
 
-# class PanelAdmin(admin.ModelAdmin):
-#     list_display = ["id", "creator", "github_username", "repo_name", "description", "panel_style", "panel_type", 'panel_size', "created", "modified"]
-#     list_display_links = ["github_username"]
 
-#     ordering = ('id',)
-#     # def has_add_permission(self, request, obj=None):
-#     #     return False
-#     last = False
-#     def get_form(self, request, obj=None,**kwargs):
-#         form = super(PanelAdmin, self).get_form(request, obj, **kwargs)
-#         #super(PanelAdmin,self).__init__(request,*args, **kwargs)
-#         print(obj)
-#         if form.base_fields.get('repo_name') == 'TableOfRepos':
-#             print('yes')
-#             last = True
-#         else:
-#             print('no')
-#             last = False
-#         #if form.base_fields['panel_type'] == "TableOfRepos":
-#         #   last = True 
-#         return form
-
-    # def has_change_permission(self, request, obj=None):
-    #     return False
+""" modeladmin class for panel """
 class PanelAdmin(admin.ModelAdmin):
+    # in case of tables, repo_name and panel_style will be empty/null.  use empty_value_display to customize appearance of empty values in admin panel
+    empty_value_display = '-----------'
+    # define fields to display at admin/github_dashboards/panel/""
     list_display = ["id", "creator", "github_username", "repo_name", "description", "panel_style", "panel_type", 'panel_size', "created", "modified"]
-    #fields = ["creator", "github_username", "repo_name", "description", "panel_style", "panel_type", 'panel_size']
+    # only this field is a link for the individual panel, links to admin/github_dashboards/panel/{panel.id}/change/""
     list_display_links = ["github_username"]
+    # order display of panel data by id
+    ordering = ('id',)
+
+    #instantiate editable_objs as empty list.  this list is utilized in get_readonly_fields and get_queryset below
     editable_objs = [] 
 
-    ordering = ('id',)
-    # def has_change_permission(self, request, obj=None):
-    #     #return obj is None or obj.owner == request.user
-    #     return obj in self.editable_objs
+    # for admin display, adds repo_name and panel_style to readonly_fields if instance is not found in editable_objs.  editable_objs will be all panels which are not table type.
     def get_readonly_fields(self, request, obj=None):
         if obj not in self.editable_objs:
             return self.readonly_fields + ('repo_name','panel_style',)
         return self.readonly_fields
-    # def not_edit(self, request, obj=None):
-    #     if obj not in self.editable_objs:
-    #         form = super(PanelAdmin, self).get_form(request, obj, **kwargs)
-    #         form.base_fields['repo_name'].readonly= True 
 
+    # overrides get_queryset method, sets self.editable_objs to be only those panel objects which are not 'TableOfRepos'.  i.e., only includes PyGal chart type panels.
     def get_queryset(self, request):
-        # Stores all the BankAccount instances that the logged in user is owner of
         self.editable_objs = Panel.objects.exclude(panel_type='TableOfRepos')
         return super(PanelAdmin, self).get_queryset(request)
 
 
+    # if admin user uses admin panel to change a non-table to a table, sets repo_name and panel_style to null in that case
     def save_model(self, request, obj, form, change):
         if obj.panel_type == 'TableOfRepos':
             obj.repo_name = ''
             obj.panel_style = ''
         obj.save()
-    # def get_form(self, request, obj=None, **kwargs):
-    #     form = super(PanelAdmin, self).get_form(request, obj=obj, **kwargs)
-    #     if form.base_fields['panel_type'] == "TableOfRepos":
-    #         d
-            
-    #     return form
-
-# def get_form(self, request, obj=None, **kwargs):
-#     if request.user.is_superuser:   
-#         return EmployerSuperUserForm
-#     else:
-#         return EmployerForm
-#         self.fields=['employer_verified']
-#     def __init__(self):
-#         form = super(PanelAdmin, self).get_form(request, obj, **kwargs)
-#         i
-            
-    # def get_readonly_fields(self, request, obj=None):
-    #     if self.obj.pk:
-    #         return ['description', 'city_code', 'customer']
-    #     else:
-    #         return []
-    # def get_form(self, request, obj=None, **kwargs):
-        
-        
-    #     #elf.data = self.data.copy()
-    #     #cleaned_data = super(PanelForm, self).clean()
-    #       #     self.exclude('repo_name',)
-    #     form = super(PanelAdmin, self).get_form(request, obj, **kwargs)
-    #    #if obj.objects.filter("panel_type"=="TableOfRepos"):
-    #     if form.base_fields['panel_type'] == "TableOfRepos":
-    #         model = Step
-    #    exclude = ['parent']
-    #    readonly_fields=('parent', )
-    #     #     self.exclude('panel_type',)
-     
-    #     # return form
-    #         form.base_fields['repo_name'] = None
-    #         form.base_fields['panel_style'].value = None
-    #         form.base_fields['panel_style'].widget.initial_value = "something"
-    #     # #     form.base_fields['repo_name'].disabled = True
-    #     # # #     # this will hide the null option for the parent field
-    #     # #     #form.base_fields["repo_name"].widget.attrs['readonly'] = True
-    #     # #     form.base_fields['repo_name'].widget.attrs['disabled'] = 'disabled'
-    #     # #     #form.base_fields["panel_style"].widget.attrs['readonly'] = True
-    #     # #     form.base_fields['panel_style'].widget.attrs['disabled'] = True
-    #     # #field = form.base_fields["your_foreign_key_field"]
-    #     #     field1.widget.can_add_related = False
-    #     #     field1.widget.can_change_related = False
-    #     #     field1.widget.can_delete_related = False
-    #     #     field2.widget.can_add_related = False
-    #     #     field2.widget.can_change_related = False
-    #     #     field2.widget.can_delete_related = False
-    #     # return form
-
-    #     return form
-    # def formfield_for_repo_name(self, *args, **kwargs):
-    #     formfield = super().formfield_for_repo_name(*args, **kwargs)
-
-    #     formfield.widget.can_delete_related = False
-    #     formfield.widget.can_change_related = False
-    #     # formfield.widget.can_add_related = False  # can change this, too
-    #     # formfield.widget.can_view_related = False  # can change this, too
-
-    #     return formfield
-
-class PanelsCollectionAdmin(admin.ModelAdmin):
-    empty_value_display = '-empty-'
-  
-    list_display = ["creator", "title", "description", "string_of_panels", "created", "modified"]
-    list_display_links = ["title", "description"]
-
     
 
+# modeladmin class for panelscollection
+class PanelsCollectionAdmin(admin.ModelAdmin):
+    # string_of_panels is not a model field but is a panelscollection instance method which returns <br> separated html text 
+    # with each line a {github_username}/, + {repo_name} except for tables, with truncation to 10 chars for username, renders this as a field in admin display for each panelscollection
+    list_display = ["creator", "title", "description", "string_of_panels", "created", "modified"]
+    # only 'title' field is a link to edit individual panelscollection
+    list_display_links = ["title"]
+
+    
 admin.site.register(Panel, PanelAdmin)
 admin.site.register(PanelsCollection, PanelsCollectionAdmin)

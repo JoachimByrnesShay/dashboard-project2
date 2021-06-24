@@ -2,13 +2,14 @@ from django.core.exceptions import ValidationError
 import logging
 logger = logging.getLogger(__name__)
 from django.utils.translation import ugettext as _
-# Note: we need dnspython for this to work
 import dns.resolver, dns.exception
 from django.utils.safestring import mark_safe
 
+
+""" called from the clean() method of custom user model.  upon user registration or update of email address on user account edit page, will
+check if email domain exists. if not, will not validate.technique from dokterbob at https://gist.github.com/dokterbob/876648"""
+
 def checkDomainExists(email):
-    print(email)
-    print(email.__class__)
     try:
         domain = email.split('@')[1]
     except:

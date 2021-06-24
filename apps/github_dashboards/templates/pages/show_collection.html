@@ -17,7 +17,7 @@ Github Dashboard App -Show Panel
         <h2>Date collection created: {{collection.created}}</h2>
     </div>
 </div>
-<div class='row dashboards justify-content-between position-relative align-items-start'>
+<div class='ml-0 mr-0 row dashboards justify-content-between position-relative align-items-start'>
     {% for panel in panels %}
     <div class=" col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow align-items-start">
         <!--  <h2>{{ collection }}</h2> -->
