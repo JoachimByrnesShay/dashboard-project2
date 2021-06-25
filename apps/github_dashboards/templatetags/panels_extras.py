@@ -9,19 +9,11 @@ def panel_to_column_size(value):
 
 register.filter('panel_to_column_size', panel_to_column_size)
 
-# returns value to be used in template inline style as font size of element according to boostrap column size per panel size, used only for tables in certain templates
-def dynamic_font_size(value):
+# utilized for dynamically sizing fontsize and tr,th height within tables (only in certain templates) based upon table.panel_size, returns value to be used in template inline style  according to boostrap column size per panel size
+def resize_from_columns(value):
     dic = {'S': 4, 'M': 6, 'L': 12}
     return str(dic[value]*0.06)
-register.filter('dynamic_font_size', dynamic_font_size)
-
-
-# returns value to be used in template inline style as height of element according to boostrap column size per panel size, used only for tables in certain templates
-def elem_height(value):
-     dic = {'S': 4, 'M': 6, 'L': 12}
-     return str(dic[value] * 0.06)
-
-register.filter('elem_height', elem_height)
+register.filter('resize_from_columns', resize_from_columns)
 
 # returns 'danger' if message.tags is 'error', to use alert-danager bootstrap class in template in that case, used in template for bootstrap style
 def message_to_bootstrap(value):
@@ -51,3 +43,6 @@ register.filter('no_bio', no_bio)
 
 
 
+# {% block othercss %}
+# <link href="https://languages.abranhe.com/logos.css" rel="stylesheet">
+# {% endblock othercss %}

@@ -3,10 +3,8 @@
 import os
 import sys
 
-
 def main():
     """Run administrative tasks."""
-   # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dashboard2.settings')
     if 'DYNO' in os.environ:
         # Is being run on Heroku, use production as default settings
         default_settings_file = 'dashboard2.config.production'

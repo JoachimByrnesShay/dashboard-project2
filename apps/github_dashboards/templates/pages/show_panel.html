@@ -7,30 +7,47 @@ Github Dashboard App -Show Panel
 {% load panels_extras %}
 {% load cache %}
 {% block content %}
-<a class='btn btn-danger' href="{{ request.META.HTTP_REFERER }}"> return to previous</a>
 <div class='card'>
-    <div class='card-body'>
-        <h1 class='h6'>About this panel:</h1>
-        <h2>Panel creator: {{panel.creator}}</h2>
-        <h2>Date panel created: {{panel.created}}</h2>
-        <h2>Panel size (applies only in grouped views): {{panel.panel_size}}</h2>
-        <h2>Panel type: {{panel.panel_type}}</h2>
-        <h2>Panel description: {{panel.description}}</h2>
+    <div class='card-body font-weight-bold'>
+        <h1 class='h4 font-weight-bold'>Panel Display for panel: <mark>"{{panel}}"</mark>:</h1>
+        {% if request.META.HTTP_REFERER %}
+        <!-- if there is META.HTTP_REFERER data, use it, otherwise as would occur if user refreshes current page- redirect to 'home'-avoids non-functioning 'return prev' link -->
+        <a class='h4 btn btn-danger' href="{{ request.META.HTTP_REFERER }}"> return to previous</a>
+        {% else %}
+        <a class='h4 btn btn-danger' href="{% url 'home' %}"> return to previous</a>
+        {% endif %}
+        <h2 class='h5'><span class='font-weight-bold'>Type:</span> <mark>{{panel.panel_type}}</mark><span class='font-weight-bold'>,&nbsp;Size:</span> <mark>{{panel.panel_size}}</mark></h2>
+        <h2 class='h5'><span class='font-weight-bold'>Description:</span> <mark>{{panel.description}}</mark></h2>
+        <h2 class='h5'><span class='font-weight-bold'>Creator:</span> <mark>{{panel.creator}}</mark></h2>
+        <h2 class='h5'><span class='font-weight-bold'>Created:</span> <mark>{{panel.created}}</mark></h2>
+        {% if panel.is_table %}
+        <h2 class='h5'>Tables display in full size on this page, display in designated size on home page and if part of a collection, on collections page</h2>
+        {% endif %}
     </div>
 </div>
-<div class='ml-0 mr-0 row dashboards justify-content-between position-relative align-items-start'>
-    <div class=" col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow align-items-start">
+<!-- <div class='ml-0 mr-0 row dashboards justify-content-between position-relative align-items-start'> -->
+<div class='ml-0 mr-0 row dashboards justify-content-between'>
+    {% if panel.is_table %}
+    <!-- for tables only- in show_panel template only, they will be in full 12-column display regardless of panel_size value.  
+     as all templates displaying tables use the same table snippet html which includes dynamic sizing on table and tr font-size and tr height using custom filters encoded in inline styles in the snippet, important_table.css with !important styles is loaded for purposes of this templates -->
+    {% block othercss %}
+    <link rel="stylesheet" href="{% static 'css/important_table.css' %}" />
+    {% endblock othercss %}
+    <div class="col dashboard-panel card shadow">
         <h2>{{ panel }}</h2>
-        <h3 class='repo-description'>{{panel.repo_description}}</h3>
-        {% if panel.panel_type == 'TableOfRepos' %}
-        {% cache 180 default panel.id %}
+        <h3 class='repo-description'>{{panel.description}}</h3>
+        {% cache 60 default panel.id request %}
         {% with tablerepos=panel.get_repos %}
-        <table class="table w-100" id='table-{{panel.id}}' style="font-size:{{panel.panel_size|dynamic_font_size}}em;">
-            {% include 'snippets/table.html' %}
+        <table class="" id='table-{{panel.id}}' style="font-size:{{panel.panel_size|resize_from_columns}}em;">
+            {% include 'snippets/table.html' with show_panel_size='large' %}
         </table>
         {% endwith %}
         {% endcache %}
-        {% else %}
+    </div>
+    {% else %}
+    <div class="col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow align-self-start">
+        <h2>{{ panel }}</h2>
+        <h3 class='repo-description'>{{panel.repo_description}}</h3>
         <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg }}">
         {% endif %}
     </div>

@@ -1,5 +1,5 @@
 ### backend django final HW, kickstartcoding
-### June 10, 2021
+### June 24, 2021
 #### joachim byrnes-shay
 #### complete dashboard app
 

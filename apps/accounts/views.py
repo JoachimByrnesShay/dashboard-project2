@@ -26,12 +26,12 @@ def users_view_all(request):
 @login_required
 def user_myaccount(request):
     user = User.objects.get(id=request.user.id)
-    count_dashboards = PanelsCollection.objects.filter(creator=request.user).count()
+    count_collections = PanelsCollection.objects.filter(creator=request.user).count()
     count_panels = Panel.objects.filter(creator=request.user).count()
     context = {
         'user': user,
         'count_panels': count_panels,
-        'count_dashboards': count_dashboards,
+        'count_collections': count_collections,
     }
     return render(request,'myaccount.html', context)
     
@@ -39,9 +39,9 @@ def user_myaccount(request):
 def user_peer(request, user_id):
 
     user = User.objects.get(id=user_id)
-    dashboards = PanelsCollection.objects.filter(creator=user)
+    collections = PanelsCollection.objects.filter(creator=user)
     panels = Panel.objects.filter(creator=user)
-    context = {'other_user': user, 'panels': panels, 'dashboards': dashboards}
+    context = {'other_user': user, 'panels': panels, 'collections': collections}
     return render(request, 'user_peer.html', context)
 
 """user_edit url is linked from myaccount.html and is utilized to populate user_edit form for logged-in-user."""

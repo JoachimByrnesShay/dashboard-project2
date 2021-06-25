@@ -4,6 +4,7 @@ import os
 
 from dotenv import load_dotenv
 import dj_database_url
+
 db_password = os.getenv('DB_PASSWORD')
 
 DEBUG = False
