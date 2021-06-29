@@ -15,6 +15,10 @@ def resize_from_columns(value):
     return str(dic[value]*0.12)
 register.filter('resize_from_columns', resize_from_columns)
 
+def panels_no_truncate(collection):
+    return collection.string_of_panels(truncate=False)
+register.filter('panels_no_truncate', panels_no_truncate)
+
 # returns 'danger' if message.tags is 'error', to use alert-danager bootstrap class in template in that case, used in template for bootstrap style
 def message_to_bootstrap(value):
     dic = {'error': 'danger'}

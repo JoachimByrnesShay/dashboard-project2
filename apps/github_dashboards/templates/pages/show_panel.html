@@ -36,7 +36,7 @@ Github Dashboard App -Show Panel
                         <tr>
                             <th>Created:</th>
                             <td>{{panel.created|date:"Y-m-d"}}</td>
-                            <td>{{panel.created|date:"h:A"}}</td>
+                            <td>{{panel.created|date:"h:m:A"}}</td>
                         </tr>
                     </table>
                 </div>
@@ -71,7 +71,7 @@ Github Dashboard App -Show Panel
         <link rel="stylesheet" href="{% static 'css/important_table.css' %}" />
         {% endblock othercss %}
         <div class="col dashboard-panel card shadow">
-            <h2>{{ panel }}</h2>
+            <h2 class='font-weight-bold'>{{ panel }}</h2>
             <h3 class='repo-description'>{{panel.description}}</h3>
             {% cache 300 default panel.id request %}
             {% with tablerepos=panel.get_repos %}
@@ -83,7 +83,7 @@ Github Dashboard App -Show Panel
         </div>
         {% else %}
         <div class="col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow align-self-start">
-            <h2>{{ panel }}</h2>
+            <h2 class='font-weight-bold'>{{ panel }}</h2>
             <h3 class='repo-description'>{{panel.repo_description}}</h3>
             <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg }}">
             {% endif %}

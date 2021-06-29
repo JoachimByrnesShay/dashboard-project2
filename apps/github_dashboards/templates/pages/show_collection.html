@@ -16,6 +16,7 @@ Github Dashboard App -Show Panel
         <div class='card-body'>
             <h1 class='h4 text-uppercase font-weight-bold'>About this collection:</h1>
             <h3 class='h6 mark p-1'>{{panels|length}} panels in this collection</h3>
+            <p class='h6 border w-50 bg-secondary text-light font-weight-normal pl-2 pt-1 pb-1'>{{ collection|panels_no_truncate }}</p>
             <h3 class='h6 mark p-1'>creator: {{collection.creator}}</h2>
                 <h3 class='h6 mark p-1'>title: {{collection.title }}</h2>
                     <h3 class='h6 mark p-1'>description: {{collection.description}}</h2>
@@ -26,7 +27,8 @@ Github Dashboard App -Show Panel
         {% for panel in panels %}
         <div class=" col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow align-items-start">
             <!--  <h2>{{ collection }}</h2> -->
-            <h3 class='repo-description'>{{panel.repo_description}}</h3>
+            <h3 class='h5 font-weight-bold'>{{panel}}</h3>
+            <h3 class='repo-description'>{{panel.description}}</h3>
             {% if panel.panel_type == 'TableOfRepos' %}
             {% cache 300 default panel.id %}
             {% with tablerepos=panel.get_repos %}

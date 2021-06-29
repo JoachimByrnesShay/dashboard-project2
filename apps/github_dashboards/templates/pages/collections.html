@@ -7,7 +7,8 @@ Github Dashboard App - PanelCollections
 {% block content %}
 <div id='my-collections'>
     <div class='row'>
-        <div class='col-5 mr-auto'>
+        <h2 class='h5 mark mt-1 mb-2 bg-danger text-white mr-auto ml-auto'>Click body of panel to see detailed view; click edit to edit selected panel in form; click delete to destroy </h2>
+        <div class='col-4 mr-auto'>
             <div class="card form-card border rounded font-weight-bold">
                 <div class="card-body">
                     {% if form %}
@@ -21,8 +22,8 @@ Github Dashboard App - PanelCollections
                 </div>
             </div>
         </div>
-        <div class='dashboards col-7 ml-auto'>
-            <div class='row dashboard_instance'>
+        <div class='dashboards col-8 ml-auto'>
+            <div class='row align-items-end dashboard_instance'>
                 {% for collection in collections %}
                 <div class='col col-4 dashboard-panel card d-flex shadow'>
                     <a class="stretched-link col-12" href="{% url 'show_collection' collection.id %}">
