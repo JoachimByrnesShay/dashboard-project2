@@ -3,9 +3,9 @@
 #### joachim byrnes-shay
 #### complete dashboard app,  GITHUB REPOSITORY STATISTICS with Pygal charts and custom tables
 
-#### heroku url: [link](http://dashboard-project2.herokuapp.com/)
+#### heroku url: http://dashboard-project2.herokuapp.com/
 
-#### github url: [link](https://github.com/JoachimByrnesShay/dashboard_project2)
+#### github url: https://github.com/JoachimByrnesShay/dashboard_project2
 
 
 github repository statistics
@@ -50,6 +50,6 @@ color styles are not utilized for the custom table option, which is html table a
 
 * in the user app (user/forms.py),helper text has been custom defined, including for username and and email
 
-* usernames have been rendered case-insensitive in this app (meaning, BILL == bill) to reflect a more typical real-life usage which restricts BILL and bill from coexisting in the app.  This is handled at the model level by custom overriding models.CharField for username, and utilizing the get_prep_value method internal to it.  For purposes of this app, emails also must be unique per user account and uniqueness also takes into account case-insensitivyt (BILL@gmail == bill@gmail).  This is similarly handled at the model level with a cstom models.EmailField inheritance.  Helper text reflects this, as well as that email domain must exist.
+* usernames have been rendered case-insensitive in this app (meaning, BILL == bill) to reflect a more typical real-life usage which restricts BILL and bill from coexisting in the app.  This is handled at the model level by custom overriding models.CharField for username, and utilizing the get_prep_value method internal to it.  For purposes of this app, emails also must be unique per user account and uniqueness also takes into account case-insensitivity (BILL@gmail == bill@gmail).  This is similarly handled at the model level with a cstom models.EmailField inheritance.  Helper text reflects this, as well as that email domain must exist.
 
 * Some work has been done in github_dashboards/admin.py.   PanelsCollectionAdmin class in admin.py uses ‘string_of_panels” method defined for the PanelsCollection class in models to represent <br> separated group of username/reponame being used for the panelcollection, using some truncation of the string data to simplify the presentation, which is conditional per the user passing a falsey argument or not (Default is true == truncate).  While this is used for superficial reference displays elsewhere in the app, it was conceived for usage in admin panel, to give an at glance view on a collection line of what panels compose that collection.
