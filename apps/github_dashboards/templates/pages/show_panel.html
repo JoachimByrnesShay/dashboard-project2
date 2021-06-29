@@ -73,7 +73,7 @@ Github Dashboard App -Show Panel
         <div class="col dashboard-panel card shadow">
             <h2>{{ panel }}</h2>
             <h3 class='repo-description'>{{panel.description}}</h3>
-            {% cache 60 default panel.id request %}
+            {% cache 300 default panel.id request %}
             {% with tablerepos=panel.get_repos %}
             <table class="" id='table-{{panel.id}}' style="font-size:{{panel.panel_size|resize_from_columns}}em;">
                 {% include 'snippets/table.html' with show_panel_size='large' %}

@@ -9,10 +9,10 @@ Github Dashboard App - Panels
 <div id='my-panels'>
     <div class='row'>
         <div class='col-4 ml-0 mr-0'>
-            <div class="card border rounded">
+            <div class="card form-card border rounded">
                 <div class="card-body bold">
                     {% if form %}
-                    <form method="POST" action="?">
+                    <form class='form' method="POST" action="?">
                         {% csrf_token %}
                         <a class='btn btn-primary w-100 mb-3' href="{% url 'user_panels' %}">Click for blank form </a>
                         {% bootstrap_form form %}

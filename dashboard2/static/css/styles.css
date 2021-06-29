@@ -254,6 +254,10 @@ mark, .mark {/*border-radius: 5px;
 
 /* panels */
 
+#my-panels .form-card, #my-collections .form-card {
+  background: hsl(220,50%,90%);
+}
+
 .panel-display {
   background: hsl(220,50%,75%);
   color: black;
@@ -373,4 +377,21 @@ mark, .mark {/*border-radius: 5px;
 
 .btn-primary {
   background: blue;
+}
+
+/* registration */
+
+#register .card {
+  background: white;
+  border-radius: 1em;
+}
+
+#register form li, #register form small, #register form ul {
+  color: midnightblue !important;
+  padding: 0;
+  margin: .2em 0 0 0;
+}
+
+#register form input {
+  background: hsl(220,50%,90%);
 }

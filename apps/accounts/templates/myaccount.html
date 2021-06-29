@@ -9,12 +9,12 @@ Github Dashboard App - MyAccount
         <div class='col-3'>
             <div class='card'>
                 <div class='card-body'>
-                    <p>You have {{count_panels}} panels registered to your account</p>
+                    <p>You have {% firstof count_panels '0' %} panels registered to your account</p>
                 </div>
             </div>
             <div class='card'>
                 <div class='card-body'>
-                    <p>You have {{count_collections}} collections registered to your account</p>
+                    <p>You have {% firstof count_collections '0' %} collections registered to your account</p>
                 </div>
             </div>
             <div class='card'>

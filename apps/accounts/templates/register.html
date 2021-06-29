@@ -8,12 +8,12 @@ Github Dashboard App - Register
 {% with form_title="Register" %}
 <div id='register'>
     <div class="row justify-content-center">
-        <div class='card'>
+        <div class='card pt-4 mt-5'>
             <div class="m-auto col-sm-9 col-md-7 col-lg-7">
                 <form class="form-register" method="POST">
                     {% csrf_token %}
                     {% bootstrap_form form %}
-                    <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">{{ form_title }}</button>
+                    <button class="btn btn-lg btn-primary btn-block text-uppercase mb-4" type="submit">{{ form_title }}</button>
                 </form>
             </div>
         </div>

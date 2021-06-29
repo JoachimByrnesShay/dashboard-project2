@@ -28,7 +28,7 @@ Github Dashboard App -Show Panel
             <!--  <h2>{{ collection }}</h2> -->
             <h3 class='repo-description'>{{panel.repo_description}}</h3>
             {% if panel.panel_type == 'TableOfRepos' %}
-            {% cache 180 default panel.id %}
+            {% cache 300 default panel.id %}
             {% with tablerepos=panel.get_repos %}
             <table class="table w-100" id='table-{{panel.id}}' style="font-size:{{panel.panel_size|resize_from_columns}}em;">
                 {% include 'snippets/table.html' %}

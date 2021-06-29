@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('github_dashboards', '0007_alter_dashboardpanel_creator'),
+        ('github_dashboards', '0006_panelscollection'),
     ]
 
     operations = [
