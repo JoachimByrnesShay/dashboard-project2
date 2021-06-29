@@ -2,17 +2,19 @@
 {% load static %}
 {% load bootstrap4 %}
 {% block title %}
-Github Dashboard App - Peer
+Github Dashboard App - All Users
 {% endblock title %}
 {% load panels_extras %}
 {% load cache %}
 {% block content %}
+<!-- displaying publicly visible info-  visible to anonymous users as well - about any individual user registered with the app -->
 <div id='user-peer'>
     <h1> {{other_user.username | title}} <a><img src="{{other_user.gravatar}}" width=25 height=25 alt='gravatar of peer user'></a></h1>
     <div class='row ml-0 mr-0 card font-weight-bold'>
         <div class='card-body w-100'>
             <p>"{{other_user.username | title }}" joined on {{other_user.date_joined}}</p>
             <p>{{other_user.username | title }}'s Bio:</p>
+            <!-- gratuitious practice usage of custom template tag/filter.  if there is no bio for the other_user, return a string saying so -->
             <p class='peer-bio'>{{other_user.bio | no_bio}}</p>
         </div>
     </div>
@@ -27,7 +29,7 @@ Github Dashboard App - Peer
                         {% if panel.is_table %}
                         <p class='h2'>A TABLE</p>
                         {% else %}
-                        <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg }}">
+                        <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg | safe }}">
                         {% endif %}
                         <p class='panel-details'>Click to View Details</p>
                         <a href="{% url 'show_panel' panel.id %}" class='stretched-link'></a>
@@ -41,17 +43,16 @@ Github Dashboard App - Peer
             <div class='row dashboards d-flex justify-content-around'>
                 {% for collection in collections%}
                 <div class='col-5 dashboard-panel card m-0 p-1 w-100 shadow'>
-                    <a class="stretched-link" href="{% url 'show_collection' collection.id %}">
-                        <h3 class='h6 mt-2'>{{collection.panel_count}} panels in collection</h3>
-                        <hr>
-                        <h3 class='h6'>Title: {{collection.title}}</h3>
-                        <h3 class='h6'>Desc: '{{collection.description}}'</h3>
-                        <!-- <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg | safe}}"> -->
-                        <h3 class='h6'> created_at: {{collection.created}}</h3>
-                        <hr>
-                        <h3 class='h4 panel-details'>CLICK TO VIEW DETAILS</h3>
-                        <hr>
-                    </a>
+                    <a class="stretched-link" href="{% url 'show_collection' collection.id %}"></a>
+                    <!-- using Count and annotated query in view to obtain num of panels in collection -->
+                    <h3 class='h6 mt-2'>{{collection.panel_count}} panels in collection</h3>
+                    <hr>
+                    <h3 class='h6'>Title: {{collection.title}}</h3>
+                    <h3 class='h6'>Desc: '{{collection.description}}'</h3>
+                    <h3 class='h6'> created_at: {{collection.created}}</h3>
+                    <hr>
+                    <h3 class='h4 panel-details'>CLICK TO VIEW DETAILS</h3>
+                    <hr>
                 </div>
                 {% endfor %}
             </div>

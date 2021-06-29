@@ -31,6 +31,7 @@ Github Dashboard App - Panels
                     <a class="stretched-link col" href="{% url 'show_panel' panel_id=panel.id %}">
                         <h3 class='h5 mb-0'> Panel Type: {{panel.panel_type }}</h3>
                         <h3 class='h5 mb-0'>Panel Size: {{panel.panel_size}}</h3>
+                        <!-- tweak text if table- where github user name is used but no repo-names, vs other kind of panel -->
                         <h3 class='h5 mb-0'>{% if panel.is_table %}Github User: {% else %}Repo: {% endif %}
                             '{{panel}}'
                         </h3>
@@ -46,6 +47,7 @@ Github Dashboard App - Panels
                         <h3 class='h3 mt-5 border panel-details text-center'>CLICK TO VIEW</h3>
                     </a>
                     <div class='row justify-content-around'>
+                        <!-- edit and delete buttons/links have been given additional functionality via bootstrap modal, employing modal as a confirmation screen.  edit is passed a URL and thus is coded as an anchor.  delete button's fuunctionality is supplied by modal, and its url is within the modal-footer code-->
                         <a href="{% url 'edit_panel' panel.id %}" class="border ml-2 mb-0 btn btn-sm p-2 btn-danger col-5">Edit</a>
                         <button class="border mr-2 mb-0 btn btn-sm btn-danger modal-button p-2 col-5" data-toggle="modal" data-target="#fm-modal-grid-{{panel.id}}">Delete</button>
                     </div>
@@ -71,8 +73,6 @@ Github Dashboard App - Panels
                             </div>
                         </div>
                     </div>
-                    <!-- <embed class='mb-0 stretched-link' type="image/svg+xml" src="{{ panel.svg | safe}}"> -->
-                    <!-- <a class='btn btn-warning' href="{% url 'delete_panel' panel.id %}">Delete</a> -->
                 </div>
                 {% endfor %}
                 {% endif %}
@@ -81,6 +81,7 @@ Github Dashboard App - Panels
     </div>
 </div>
 {% endblock content %}
+<!-- the below script src is a javascript file containing the code for controlling show and hide of new panel/edit panel form fields which distinguishe table from pygal chart.   based upon user selection of table, or its peer charts, repo_name field and panel_style field ('bar, 'pie', etc) will be hidden and disabled in the case of table, or shown and enabled in the case of all other chart options -->
 {% block page_javascript %}
 <script src="{% static 'javascript/panelcreationform.js' %}">
 </script>

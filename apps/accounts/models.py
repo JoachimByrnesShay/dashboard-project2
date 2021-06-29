@@ -1,8 +1,6 @@
 import hashlib
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
-
 from .modules import user_utils
 
 
@@ -32,7 +30,6 @@ class User(AbstractUser):
     username = UserNameField(max_length=200, unique=True)
     email = UserEmailField(unique=True)
   
-
     def gravatar(self, size=None):
         GRAVATAR_URL = 'https://gravatar.com/avatar/%s?d=identicon%s'
         email = str(self.email).strip().lower()
@@ -43,12 +40,10 @@ class User(AbstractUser):
         else:
             size_str = ''
 
-        return GRAVATAR_URL % (digest, size_str)
-
-    
+        return GRAVATAR_URL % (digest, size_str)  
 
     def clean(self):
-        # custom checkDomainExists method which will perform model-level validation based on domain lookup, only passes validator if domain exists
+        # custom checkDomainExists method coded in modules/user_utils.py which will perform model-level validation based on domain lookup, only passes validator if domain exists
         user_utils.checkDomainExists(self.email)
       
         

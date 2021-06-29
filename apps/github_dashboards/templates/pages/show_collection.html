@@ -16,22 +16,25 @@ Github Dashboard App -Show Panel
         <div class='card-body'>
             <h1 class='h4 text-uppercase font-weight-bold'>About this collection:</h1>
             <h3 class='h6 mark p-1'>{{panels|length}} panels in this collection</h3>
+            <!-- custom template tag ensures no truncation of the return value of panelscollections model's panels_to_string method -->
             <p class='h6 border w-50 bg-secondary text-light font-weight-normal pl-2 pt-1 pb-1'>{{ collection|panels_no_truncate }}</p>
             <h3 class='h6 mark p-1'>creator: {{collection.creator}}</h2>
                 <h3 class='h6 mark p-1'>title: {{collection.title }}</h2>
-                    <h3 class='h6 mark p-1'>description: {{collection.description}}</h2>
-                        <h3 class='h6 mark p-1'>Date created: {{collection.created}}</h2>
+                    <h3 class='h6 mark p-1'>description: {{collection.description}}</h3>
+                    <h3 class='h6 mark p-1'>Date created: {{collection.created}}</h3>
         </div>
     </div>
     <div class='ml-0 mr-0 row dashboards justify-content-between position-relative align-items-start'>
         {% for panel in panels %}
+        <!-- custom template tag utilized to determinate bootstrap columns based upon panel's size S, M, or L -->
         <div class=" col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow align-items-start">
-            <!--  <h2>{{ collection }}</h2> -->
             <h3 class='h5 font-weight-bold'>{{panel}}</h3>
             <h3 class='repo-description'>{{panel.description}}</h3>
             {% if panel.panel_type == 'TableOfRepos' %}
+            <!-- caching tables only, as it is the only panel type doing api calls. pygal charges are not doing so as SVG's for pygal charts have been stored as text in the DB -->
             {% cache 300 default panel.id %}
             {% with tablerepos=panel.get_repos %}
+            <!-- in a collection display context, tables' font-size will be adjusted per designated panel-size, S, M, L, using custom template tag -->
             <table class="table w-100" id='table-{{panel.id}}' style="font-size:{{panel.panel_size|resize_from_columns}}em;">
                 {% include 'snippets/table.html' %}
             </table>

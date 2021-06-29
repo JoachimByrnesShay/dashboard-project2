@@ -21,8 +21,7 @@ $(document).ready(function() {
     })
 })
 
-/** hides and disables repo_name and panel_style fields if 'TableOfRepos' is selected, otherwise shows and enables these
- **/
+// hides and disables repo_name and panel_style fields if 'TableOfRepos' is selected, otherwise shows and enables these
 function toggle_non_table_fields(selected) {
     if (selected == 'TableOfRepos') {
         $('id_repo_name').val('')

@@ -105,10 +105,6 @@ ul {
   list-style-type: none;
 }
 
-/*
-
-*/
-
 /* main styles */
 
 body {
@@ -129,8 +125,6 @@ body::before {
   padding: 0;
   margin: 0;
 }
-
-/* */
 
 /* HOME */
 
@@ -179,9 +173,6 @@ thead.thead {
   text-shadow: 2px 2px 2px 2px white, 3px 2px 2px 2px grey;
 }
 
-table {
-}
-
 /* forms */
 
 input, textarea, label {
@@ -195,6 +186,8 @@ form select option {
 select, input, textarea {
   border: 1px solid black !important;
 }
+
+/** this is accomplishing some basic styling of select > option > placeholders vs option text **/
 
 form input[placeholder], form textarea[placeholder] {
   font-weight: 900 !important;
@@ -210,12 +203,6 @@ input[placeholder].form-control {
   color: black !important;
 }
 
-/*form select:invalid {
-  color: green;
-  font-weight: bold;
-
-*/
-
 form select:valid {
   font-weight: 700 !important;
   color: brown !important;
@@ -227,19 +214,7 @@ form select option:not(selected) {
   font-weight: 500 !important;
 }
 
-/* */
-
-mark, .mark {/*border-radius: 5px;
-*/
-  padding: 0 .3em 0 .3em;
-  /*  background: var(--alabaster);
-  background: #044c5c;
-  background: #14045c;
-  background: #5c4004;
-  background: #a57164;
-  background: #704241;
-  background: #1e90ff;
-  background: #c4c3d0;*/
+mark, .mark {
   border: 1px solid midnightblue;
   color: white;
   color: black;
@@ -252,7 +227,7 @@ mark, .mark {/*border-radius: 5px;
   background: hsl(15,50%,95%);
 }
 
-/* panels */
+/* PANELS */
 
 #my-panels .form-card, #my-collections .form-card {
   background: hsl(220,50%,90%);
@@ -262,7 +237,6 @@ mark, .mark {/*border-radius: 5px;
   background: hsl(220,50%,75%);
   color: black;
   text-shadow: 4px 4px 4px ivory;
-  background: linear-gradient(to bottom, rgba(235,241,246,1) 0%,rgba(171,211,238,1) 50%,rgba(137,195,235,1) 51%,rgba(213,235,251,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   background: linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   border: 2px solid midnightblue;
 }
@@ -282,7 +256,7 @@ mark, .mark {/*border-radius: 5px;
   border: 2px solid black;
 }
 
-/* collections */
+/* COLLECTIONS */
 
 .panels-list {
   border: 2px solid black;
@@ -293,7 +267,7 @@ mark, .mark {/*border-radius: 5px;
   padding: 0.2em;
 }
 
-/* peer user */
+/* PEER USERS-  PUBLIC USER INFO ABOUT ALL USERS */
 
 .peer-panels {
   background: lightseagreen;
@@ -335,8 +309,7 @@ mark, .mark {/*border-radius: 5px;
   background: steelblue;
 }
 
-#my-account .btn {/*background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #ffffff 42%, #b49fda 79%, #7ac5d8 100%);
-*/
+#my-account .btn {
   color: black;
   font-weight: bold;
   font-size: 1.3em;
@@ -373,13 +346,13 @@ mark, .mark {/*border-radius: 5px;
   box-shadow: 2px 2px 5px 0.5;
 }
 
-/* table */
+/* TABLE */
 
 .btn-primary {
   background: blue;
 }
 
-/* registration */
+/* REGISTRATION */
 
 #register .card {
   background: white;

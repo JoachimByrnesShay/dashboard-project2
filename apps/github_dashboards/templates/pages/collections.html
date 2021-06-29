@@ -31,13 +31,13 @@ Github Dashboard App - PanelCollections
                         <h3 class='h6'>{{collection.panel_count}} panels</h3>
                         <h3 class='h6'>Title: {{collection.title}}</h3>
                         <h3 class='h6'>Desc: '{{collection.description}}'</h3>
-                        <!-- <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg | safe}}"> -->
                         <h3 class='h6'> created_at: {{collection.created}}</h3>
                         <hr>
                         <h3 class='h3 collection-details'>CLICK TO VIEW DETAILS</h3>
                         <hr>
                     </a>
                     <div class='row justify-content-around'>
+                        <!-- edit and delete buttons/links are provided confirmation functionality by bootstrap modal below -->
                         <a href="{% url 'edit_collection' collection.id %}" class="p-2 border ml-2 mb-0 btn btn-sm btn-danger col-5">Edit</a>
                         <button class="p-2 border mr-2 mb-0 btn btn-sm btn-danger modal-button col-5" data-toggle="modal" data-target="#fm-modal-grid-{{collection.id}}">Delete</button>
                     </div>

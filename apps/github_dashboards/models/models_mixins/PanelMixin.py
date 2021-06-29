@@ -10,6 +10,7 @@ class PanelMixin:
     def is_table(self):
         return self.panel_type == 'TableOfRepos'
 
+
     # utility to obtain a table's repos (for github user's account), for iteration inside of template as "for repo in repos".  only applies for table panels and not to pygal chart panels
     def get_repos(self):
         if self.is_table():
@@ -22,16 +23,13 @@ class PanelMixin:
         repo = custom_utils.get_repo(self.github_username, self.repo_name)
         piechart_style = self.panel_style
         chart_type= self.panel_type
-        print(piechart_style)
-        print(chart_type)
         chart = custom_utils.get_repo_languages_chart(repo, chart_type, piechart_style)
         return chart
 
 
     # utilized in panel clean() override.  clean() will call this method to raise validation errors of github user does not exist or repo does not exist upon panel creation or update
     def clean_repo_name(self):
-        token = os.getenv('GH_ACCESS_TOKEN')
-        
+        token = os.getenv('GH_ACCESS_TOKEN')        
         g = Github(token)
         
         try:
@@ -45,6 +43,7 @@ class PanelMixin:
             except:
                 raise ValidationError('Repo does not exist on github') 
         
+
     # utilized in panel clean() override.  clean() will call this method to create svg by calling get_chart() if panel is not a table (i.e. one true when there is a valid repo_name).   Otherwise svg is empty string.
     def clean_svg(self):
         if self.panel_type != 'TableOfRepos':
@@ -52,9 +51,11 @@ class PanelMixin:
         else:
             self.svg = ''
 
+
     def clean_panel_style(self):
         if self.panel_type == 'TableOfRepos':
             self.panel_style = ''
+
 
     # string representation of instance will be username/ if instance is a table (in all cases where this is true, there is no repo_name), and otherwise as gihub_username/repo_name/
     def __str__(self):
@@ -62,10 +63,9 @@ class PanelMixin:
             return self.github_username + '/'
         else:
             return self.github_username + '/' + self.repo_name
-  
-           
+             
  
-    # clean override calls both clean_repo_name and clean_svg, which are defined above
+    # override of clean method, calling the above utility sub-clean methods in succession
     def clean(self):
          # without try,exception logic in clean_svg, clean_repo_name must be called before clean_svg
         self.clean_repo_name()

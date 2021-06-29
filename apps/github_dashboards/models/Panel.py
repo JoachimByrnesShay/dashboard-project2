@@ -1,11 +1,10 @@
 from django.db import models
 from apps.accounts.models import User
-from django.conf import settings
-from django.utils import timezone
 from .models_mixins.PanelMixin import PanelMixin
 
-"""use TextChoices to delineate available options for panel types """
+
 class PanelTypes(models.TextChoices):
+    """use TextChoices to delineate available options for panel types """
     TABLE='TableOfRepos', 'table- ALL repos for user'
     PIE= 'Pie', "pie chart- 1 repo"
     BAR= 'Bar', 'bar chart- 1 repo'
@@ -14,14 +13,17 @@ class PanelTypes(models.TextChoices):
     DOT = "Dot", 'dot chart- 1 repo'
     TREEMAP = "Treemap", 'treemap chart- 1 repo'
 
-""" use TextChoices to deliniate avaialble options for panel sizes """
+
 class PanelSizes(models.TextChoices):
+    """ use TextChoices to deliniate avaialble options for panel sizes """
     SMALL = 'S', 'small'
     MEDIUM = 'M', 'medium'
     LARGE = 'L', "large"
 
-"""panel class."""
+
 class Panel(models.Model, PanelMixin):
+    """ general class for all panels (including pygal charts and non-pygal tables).  mixes in PanelMixin, which is a custom class to organize methods which are mixed in to Panel as Panel instance methods"""
+   
     # styletypes are styles available in pygal.styles. they are a simpler textchoices case, with no difference between database field value and display value necessary 
     StyleTypes = models.TextChoices('StyleType', "DefaultStyle DarkSolarizedStyle LightSolarizedStyle LightStyle CleanStyle \
     RedBlueStyle DarkColorizedStyle LightColorizedStyle TurquoiseStyle LightGreenStyle DarkGreenStyle DarkGreenBlueStyle BlueStyle")

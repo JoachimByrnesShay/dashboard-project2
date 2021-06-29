@@ -9,17 +9,21 @@ def panel_to_column_size(value):
 
 register.filter('panel_to_column_size', panel_to_column_size)
 
+
 # utilized for dynamically sizing fontsize and tr,th height within tables (only in certain templates) based upon table.panel_size, returns value to be used in template inline style  according to boostrap column size per panel size
 def resize_from_columns(value):
     dic = {'S': 4, 'M': 6, 'L': 12}
     return str(dic[value]*0.12)
 register.filter('resize_from_columns', resize_from_columns)
 
+
+# utilized to designate no truncation of the username in the <br> separated list of panels (username/reponame) included in a collection returned by the collection model's string_of_panels instance method
 def panels_no_truncate(collection):
     return collection.string_of_panels(truncate=False)
 register.filter('panels_no_truncate', panels_no_truncate)
 
-# returns 'danger' if message.tags is 'error', to use alert-danager bootstrap class in template in that case, used in template for bootstrap style
+
+# proof-of-concept.  returns 'danger' if message.tags is 'error', to use alert-danger bootstrap class in template in that case, used in template for bootstrap style
 def message_to_bootstrap(value):
     dic = {'error': 'danger'}
     if value not in dic:
@@ -28,16 +32,8 @@ def message_to_bootstrap(value):
         return dic[value]
 register.filter('message_to_bootstrap', message_to_bootstrap)
 
-# utilized on public peer user pages.  returns value in quotes if value is a string
-def make_quote(value):
-    if type(value) == str:
-        return f"\"{value}\""
-    else:
-        pass
 
-register.filter('make_quote', make_quote)
-
-# utilized on public peer user pages. if there is no bio available, return appropriate string
+# proof-of-concept.  utilized on public peer user pages. if there is no bio available, return appropriate string
 def no_bio(value):
     if not value:
         return "No bio available yet"
@@ -45,8 +41,3 @@ def no_bio(value):
         return value
 register.filter('no_bio', no_bio)
 
-
-
-# {% block othercss %}
-# <link href="https://languages.abranhe.com/logos.css" rel="stylesheet">
-# {% endblock othercss %}

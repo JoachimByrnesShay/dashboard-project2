@@ -1,19 +1,19 @@
 
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from apps.accounts.forms import UserEditForm, RegisterForm
 from django.db.models import Count
-
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+from apps.accounts.forms import UserEditForm, RegisterForm
 from apps.github_dashboards.models import PanelsCollection, Panel
 from apps.accounts.models import User
 
-""" get all users for iterative display of username and a link (to a basic info page per user) for each in template"""
+
 def users_view_all(request):
+    """ get all users for iterative display of username and a link (to a basic info page per user) for each in template"""
     users = User.objects.all()
     context = {
         'users':users,
@@ -22,9 +22,9 @@ def users_view_all(request):
     return render(request, 'users.html', context)
 
 
-"""get logged-in user instance for display in user's myaccount info page"""
 @login_required
 def user_myaccount(request):
+    """get logged-in user instance for display in user's myaccount info page"""
     user = User.objects.get(id=request.user.id)
     count_collections = PanelsCollection.objects.filter(creator=request.user).count()
     count_panels = Panel.objects.filter(creator=request.user).count()
@@ -35,22 +35,26 @@ def user_myaccount(request):
     }
     return render(request,'myaccount.html', context)
     
-"""get selected peer user (any user) for rendering basic info about any user in template. choice made for log-in not required to see fundamental info about peer users"""
-def user_peer(request, user_id):
 
+def user_peer(request, user_id):
+    """get selected peer user (any user) for rendering basic info about any user in template. choice made for log-in not required to see fundamental info about peer users"""
     user = User.objects.get(id=user_id)
+    # another method for obtaining count of panels in collection.  use Count to annotate query, per https://stackoverflow.com/questions/5439901/getting-a-count-of-objects-in-a-queryset-in-django
     collections = PanelsCollection.objects.filter(creator=user).annotate(panel_count=Count('panels'))
     panels = Panel.objects.filter(creator=user)
     context = {'other_user': user, 'panels': panels, 'collections': collections}
+
     return render(request, 'user_peer.html', context)
 
-"""user_edit url is linked from myaccount.html and is utilized to populate user_edit form for logged-in-user."""
+
 @login_required
 def user_edit(request):
+    """user_edit url is linked from myaccount.html and is utilized to populate user_edit form for logged-in-user."""
     user = User.objects.get(id=request.user.id)
     count_dashboards = PanelsCollection.objects.filter(creator=request.user).count()
     count_panels = Panel.objects.filter(creator=request.user).count()
     form = UserEditForm(instance=user)
+
     if form.is_valid():
         form.save()
 
@@ -64,9 +68,9 @@ def user_edit(request):
     return render(request, 'myaccount.html', context)
 
 
-"""user_save url is linked from myaccount.html and is utilized to save user_edit form for logged-in user"""
 @login_required
 def user_save(request):
+    """user_save url is linked from myaccount.html and is utilized to save user_edit form for logged-in user"""
     if request.method == "POST":
         context = {}
         form = UserEditForm(request.POST, instance=request.user)
@@ -82,11 +86,13 @@ def user_save(request):
             context['form'] = form
             return render(request, 'myaccount.html', context)
 
-"""logged-in user change of password, called only from link on user myaccount page/template """
+
 @login_required
 def user_change_password(request):
+    """logged-in user change of password, called only from link on user myaccount page/template """
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
+
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  #
@@ -94,14 +100,17 @@ def user_change_password(request):
             return redirect('user_myaccount')
         else:
             messages.error(request, 'Please correct the error below.')
+
     else:
         form = PasswordChangeForm(request.user)
+
     return render(request, 'change_password.html', {
         'form': form
     })
 
-"""anonymous user register new account"""
+
 def user_register(request):
+    """anonymous user register new account"""
     if request.method == 'POST':
         form = RegisterForm(request.POST)
 
@@ -118,27 +127,25 @@ def user_register(request):
     }       
     return render(request, 'register.html', context)
 
-""" simple user logout"""
-@login_required
-def user_logout(request):
-    logout(request)
-    messages.success(request, "See you soon!  You are now logged out!")
-    return redirect('home')
 
-""" user login, if a @login_required view/url is called from link in template, login will redirect to the referring page, rather than home; otherise redirects to home"""
 def user_login(request):
+    """ user login, if a @login_required view/url is called from link in template, login will redirect to the referring page, rather than home; otherise redirects to home"""
     if request.GET:
         import re
         obj_name = re.sub("[\[\]\/]", '', str(request.GET['next']))
         messages.warning(request, f"LOGIN or SIGNUP to see your {obj_name.upper()}")
+
     if request.method == 'POST':
         form = AuthenticationForm(request, request.POST)
+
         if form.is_valid():
             login(request, form.get_user())
+
             if messages:
                 # clear messages iterator first, technique from imaurer at https://stackoverflow.com/questions/4083164/django-remove-message-before-they-are-displayed
                 list(messages.get_messages(request))
             messages.success(request, "You are now logged in!")
+
             if 'next' in request.GET:
                 return redirect(request.GET['next'])
             else:
@@ -150,4 +157,12 @@ def user_login(request):
         'form': form,
     }
     return render(request, 'login.html', context)
+
+
+@login_required
+def user_logout(request):
+    """ simple user logout"""
+    logout(request)
+    messages.success(request, "See you soon!  You are now logged out!")
+    return redirect('home')
 

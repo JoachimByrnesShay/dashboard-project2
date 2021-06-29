@@ -5,6 +5,7 @@ Github Dashboard App - MyAccount
 {% endblock title %}
 {% block content %}
 <div id='my-account'>
+    <!-- the personal account page of the logged-in user, allowing for display of and editing of account-related info including add or change email, name, bio, etc, and also update/change password -->
     <div class='row font-weight-bold'>
         <div class='col-3'>
             <div class='card'>
@@ -35,6 +36,7 @@ Github Dashboard App - MyAccount
                     <p>Time now:</p><span> {% now "H:i a" %}</span>
                 </div>
             </div>
+            <!-- on a get request the second below form which is constituted solely of a submit button is displayed, along with the subsequent div.card items.  it is intended only to display user data, and a form will only be revealed when user submits to POST to user_edit by submitting the button.  on POST the first below form will be displayed.  That is, the below user_edit action in the 2nd below form is a doorway to the 1st below form which POSTS to user_save and then returns to user_myaccount-- the default user-account view -->
             {% if request.POST %}
             <a class='btn btn-primary border w-100 font-weight-bold' href="{% url 'user_myaccount' %}">Cancel edit</a>
             <form class="form account-form" method="POST" action="{% url 'user_save' %}">
@@ -45,7 +47,6 @@ Github Dashboard App - MyAccount
             {% else %}
             <form class="form" method="POST" action="{% url 'user_edit' %}">
                 {% csrf_token %}
-                <input type='hidden'>
                 <button class='btn btn-danger w-100 border' name='user_edit'>Edit user account information</button>
             </form>
             <a class='btn btn-danger border w-100' href="{% url 'user_change_password' %}">Change password</a>

@@ -5,7 +5,7 @@
 Github Dashboard App - Home
 {% endblock title %}
 {% load panels_extras %}
-<!-- {% load cache %} -->
+{% load cache %}
 {% block content %}
 <div id='home'>
     <h1 class='h5 border home pt-2 pb-2 mb-0 pl-5 ml-n3 mr-n3 pr-5 text-center'>Click any panel to learn more (and see enlargened view for tables)</h1>
@@ -15,8 +15,10 @@ Github Dashboard App - Home
             <h2>{{ panel }}</h2>
             <h3 class='repo-description'>"{{panel.description}}"</h3>
             {% if panel.is_table %}
+            <!-- cache tables only.  only tables -  which are not pygal tables - are making github api calls.  all other types of panels are pygal charts and chart SVG data has been saved in text data form to the database and do not require any API calls -->
             {% cache 300 default panel.id %}
             {% with tablerepos=panel.get_repos %}
+            <!-- adjust font-size of table based upon designated panel-size, using custom template tag -->
             <table class="table w-100" id='table-{{panel.id}}' style="font-size:{{panel.panel_size|resize_from_columns}}em;">
                 {% include 'snippets/table.html' %}
             </table>

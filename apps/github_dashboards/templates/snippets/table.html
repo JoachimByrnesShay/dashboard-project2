@@ -1,3 +1,4 @@
+<!-- the core of table display design for panels which are designated with panel_type 'TableOfRepos'-->
 <!-- mathfilters provides a divide filter, utilized below to determine if repo.size should display in kb or MB -->
 {% load mathfilters %}
 {% load panels_extras %}
@@ -8,7 +9,7 @@
 <h6 class='text-center' style='color:midnightblue;'>A tabular view of Github repositories</h6>
 {% csrf_token %}
 <thead class="thead">
-    <tr style="height: {{panel.panel_size|resize_from_columns}}em">
+    <tr style="height: {{panel.panel_size|resize_from_columns}} em">
         <th scope="col">
             Name
         </th>
@@ -20,15 +21,14 @@
 </thead>
 {% for repo in tablerepos %}
 <tr style="height: {{panel.panel_size|resize_from_columns}}em">
-    <td class="font-weight-bold"><span class='table-cell'>{{repo.name}}</span></td>
-    <td><span class='table-cell'>
-            <!-- use tags, mathfilters and built-in django filters to display in kb if repo.size < 1024, MB if > 1024 -->
-            {% if repo.size < 1024 %} {{repo.size}} kb {% else %} {{repo.size|div:1024|floatformat:2}} MB {% endif %} </span> </td> <td><span class='table-cell'>{{repo.created_at}}</span></td>
-    <td><span class='table-cell'>{{repo.language}}</span><span class='language-icon'><i class="programming lang-{{repo.language|lower}}"></i></span></td>
+    <td class="font-weight-bold">{{repo.name}}</td>
+    <td>
+        <!-- use tags, mathfilters and built-in django filters to display in kb if repo.size < 1024, MB if > 1024 -->
+        {% if repo.size < 1024 %} {{repo.size}} kb {% else %} {{repo.size|div:1024|floatformat:2}} MB {% endif %} </span> </td> <td>{{repo.created_at}}</td>
+    <td>{{repo.language}}<span class='language-icon'><i class="programming lang-{{repo.language|lower}}"></i></span></td>
     {% if panel.panel_size == 'L' or show_panel_size == 'large' %}
     <td>
-        <!--https://css-tricks.com/nested-links/-->
-        <!-- <div class='btn btn-success position-absolute' onclick="window.location='{{repo.html_url}}'" style=" right: 1em; margin-top: -.6em;cursor: pointer;z-index:10" tabindex='1'>View</div> -->
+        <!--solution to using entire body of table representation as a link to its show page AND at same time allowing links within its borders to the respective gihub pages. using the form/action methodology, as inspired by css-tricks-  https://css-tricks.com/nested-links/-->
         <form action="{{repo.html_url}}" name="github_form" method="get" class="position-relative" style="z-index:20;">
             {% csrf_token %}
             <button class='btn btn-primary d-block' formtarget="_blank">View</a>

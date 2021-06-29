@@ -34,7 +34,7 @@ def get_repo_languages_chart(repo, panel_type, chart_style):
     # chart_style is a string (panel object attribute). getattr will use the string name to convert it to a class instance of the same name (pygal styles are class objects)
     this_style = getattr(sys.modules[__name__], chart_style) 
 
-    # same strategy with panel.panel_type, instantiate the chart using paneltype and selected style
+    # same strategy with panel.panel_type, instantiate the chart using paneltype and selected style, using getattr for converstion of paneltype string to pygal paneltype class
     chart = getattr(sys.modules[__name__], panel_type)(style=this_style, width=400, height=200)
     chart.title = "Languages used in this repository"
  
