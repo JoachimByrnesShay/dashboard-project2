@@ -5,7 +5,7 @@
 
 #### heroku url: http://dashboard-project2.herokuapp.com/
 
-#### github url: https://github.com/JoachimByrnesShay/dashboard_project2
+#### github url: https://github.com/JoachimByrnesShay/dashboard-project2
 
 
 github repository statistics
