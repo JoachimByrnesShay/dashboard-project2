@@ -12,7 +12,7 @@ register.filter('panel_to_column_size', panel_to_column_size)
 # utilized for dynamically sizing fontsize and tr,th height within tables (only in certain templates) based upon table.panel_size, returns value to be used in template inline style  according to boostrap column size per panel size
 def resize_from_columns(value):
     dic = {'S': 4, 'M': 6, 'L': 12}
-    return str(dic[value]*0.06)
+    return str(dic[value]*0.12)
 register.filter('resize_from_columns', resize_from_columns)
 
 # returns 'danger' if message.tags is 'error', to use alert-danager bootstrap class in template in that case, used in template for bootstrap style

@@ -7,39 +7,55 @@ Github Dashboard App - Peer
 {% load panels_extras %}
 {% load cache %}
 {% block content %}
-<h1> {{other_user.username | title}} <a><img src="{{other_user.gravatar}}" width=25 height=25 alt='gravatar of peer user'></a></h1>
-<div class='row ml-0 mr-0 card font-weight-bold'>
-    <div class='card-body w-100'>
-        <p>"{{other_user.username | title }}" joined on {{other_user.date_joined}}</p>
-        <p>{{other_user.username | title }}'s Bio:</p>
-        <p class='peer-bio'>{{other_user.bio | no_bio}}</p>
-    </div>
-</div>
-<h4>{{other_user.username | title }}'s {{ panels | length }} Panels</h4>
-<div class='row m-0'>
-    <div class='col-9 border'>
-        <div class='row dashboards position-relative justify-content-start'>
-            {% for panel in panels %}
-            <div class="col-3 dashboard-panel d-flex card m-0 p-0 w-100">
-                <div class='card-body'>
-                    <h6>{{panel}}</h6>
-                    {% if panel.is_table %}
-                    <p class='h2'>A TABLE</p>
-                    {% else %}
-                    <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg }}">
-                    {% endif %}
-                    <p>Click to View Details</p>
-                    <a href="{% url 'show_panel' panel.id %}" class='stretched-link'></a>
-                </div>
-            </div>
-            {% endfor %}
+<div id='user-peer'>
+    <h1> {{other_user.username | title}} <a><img src="{{other_user.gravatar}}" width=25 height=25 alt='gravatar of peer user'></a></h1>
+    <div class='row ml-0 mr-0 card font-weight-bold'>
+        <div class='card-body w-100'>
+            <p>"{{other_user.username | title }}" joined on {{other_user.date_joined}}</p>
+            <p>{{other_user.username | title }}'s Bio:</p>
+            <p class='peer-bio'>{{other_user.bio | no_bio}}</p>
         </div>
     </div>
-    <div class='col-3 border'>
-        <h4>{{other_user.username | title }}'s {{ collections|length }} Collections </h4>
-        {% for collection in collections%}
-        {{ collection.title }}
-        {% endfor %}
+    <div class='row m-0'>
+        <div class='col-7 border peer-panels'>
+            <h4 class='mark mt-2'>{{other_user.username | title }}'s {{ panels | length }} Panels</h4>
+            <div class='row dashboards position-relative justify-content-start'>
+                {% for panel in panels %}
+                <div class="col-4 dashboard-panel d-flex card m-0 p-0 w-100">
+                    <div class='card-body'>
+                        <h6>{{panel}}</h6>
+                        {% if panel.is_table %}
+                        <p class='h2'>A TABLE</p>
+                        {% else %}
+                        <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg }}">
+                        {% endif %}
+                        <p class='panel-details'>Click to View Details</p>
+                        <a href="{% url 'show_panel' panel.id %}" class='stretched-link'></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class='col-5 border peer-collections'>
+            <h4 class='mark mt-2'> {{other_user.username | title }}'s {{ collections|length }} Collections </h4>
+            <div class='row dashboards d-flex justify-content-around'>
+                {% for collection in collections%}
+                <div class='col-5 dashboard-panel card m-0 p-1 w-100 shadow'>
+                    <a class="stretched-link" href="{% url 'show_collection' collection.id %}">
+                        <h3 class='h6 mt-2'>{{collection.panel_count}} panels in collection</h3>
+                        <hr>
+                        <h3 class='h6'>Title: {{collection.title}}</h3>
+                        <h3 class='h6'>Desc: '{{collection.description}}'</h3>
+                        <!-- <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg | safe}}"> -->
+                        <h3 class='h6'> created_at: {{collection.created}}</h3>
+                        <hr>
+                        <h3 class='h4 panel-details'>CLICK TO VIEW DETAILS</h3>
+                        <hr>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}

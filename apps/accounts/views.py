@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from apps.accounts.forms import UserEditForm, RegisterForm
-
+from django.db.models import Count
 
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -39,7 +39,7 @@ def user_myaccount(request):
 def user_peer(request, user_id):
 
     user = User.objects.get(id=user_id)
-    collections = PanelsCollection.objects.filter(creator=user)
+    collections = PanelsCollection.objects.filter(creator=user).annotate(panel_count=Count('panels'))
     panels = Panel.objects.filter(creator=user)
     context = {'other_user': user, 'panels': panels, 'collections': collections}
     return render(request, 'user_peer.html', context)

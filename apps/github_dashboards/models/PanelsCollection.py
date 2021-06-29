@@ -19,6 +19,8 @@ class PanelsCollection(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     
+  
+
     """ returns a <br> separated list of the panels contained in the panelscollection, utilized as html text in admin display as well as templates"""
     def string_of_panels(self):
        self_panels = self.panels.all()

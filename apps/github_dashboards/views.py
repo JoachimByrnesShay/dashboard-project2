@@ -8,6 +8,7 @@ from django.contrib import auth, messages
 from apps.accounts.models import User
 from .models import Panel, PanelsCollection
 from dotenv import load_dotenv
+from django.db.models import Count
 
 
 """load any needed env variables"""
@@ -50,8 +51,8 @@ def delete_panel(request, panel_id):
 def delete_collection(request, collection_id):
     collection = PanelsCollection.objects.get(id=collection_id)
     collection.delete()
-    messages.warning(request, 'Collection: ("collection.title") was successfully deleted!' )
-    return redirect('panel_collections')
+    messages.warning(request, f'Collection: ("{collection.title}") was successfully deleted!' )
+    return redirect('user_collections')
 
 
 @login_required
@@ -117,8 +118,9 @@ def user_collections(request):
             new_collection.save()
             form.save_m2m()
             messages.error(request, "Successfully created new panel collection!")
+  
 
-    collections = PanelsCollection.objects.filter(creator=request.user) 
+    collections = PanelsCollection.objects.filter(creator=request.user).annotate(panel_count=Count('panels'))
     context = {'form':form, 'collections':collections, 'collections_active': 'active'}
     return render(request,'pages/collections.html',context)
 

@@ -7,24 +7,30 @@ Github Dashboard App - Home
 {% load panels_extras %}
 <!-- {% load cache %} -->
 {% block content %}
-<div class='row dashboards justify-content-between position-relative align-items-start'>
-    {% for panel in panels %}
-    <div class="col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow">
-        <h2>{{ panel }}</h2>
-        <h3 class='repo-description'>{{panel.repo_description}}</h3>
-        {% if panel.is_table %}
-        {% cache 180 default panel.id %}
-        {% with tablerepos=panel.get_repos %}
-        <table class="table w-100" id='table-{{panel.id}}' style="font-size:{{panel.panel_size|resize_from_columns}}em;">
-            {% include 'snippets/table.html' %}
-        </table>
-        {% endwith %}
-        {% endcache %}
-        {% else %}
-        <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg }}">
-        {% endif %}
-        <a class='stretched-link' href="{% url 'show_panel' panel_id=panel.id %}"></a>
+<div id='home'>
+    <h1 class='h5 border home pt-2 pb-2 mb-0 pl-5 ml-n3 mr-n3 pr-5 text-center'>Click any panel to learn more (and see enlargened view for tables)</h1>
+    <div class='row dashboards justify-content-between position-relative align-items-start'>
+        {% for panel in panels %}
+        <div class="col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow">
+            <h2>{{ panel }}</h2>
+            <h3 class='repo-description'>"{{panel.description}}"</h3>
+            {% if panel.is_table %}
+            {% cache 180 default panel.id %}
+            {% with tablerepos=panel.get_repos %}
+            <table class="table w-100" id='table-{{panel.id}}' style="font-size:{{panel.panel_size|resize_from_columns}}em;">
+                {% include 'snippets/table.html' %}
+            </table>
+            {% endwith %}
+            {% endcache %}
+            {% else %}
+            <div class='svg-div'>
+                <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg }}">
+            </div>
+            {% endif %}
+            <p class='panel-details text-center'>CLICK TO VIEW DETAILS</p>
+            <a class='stretched-link' href="{% url 'show_panel' panel_id=panel.id %}"></a>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 {% endblock content %}

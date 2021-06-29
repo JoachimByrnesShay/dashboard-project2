@@ -1,0 +1,94 @@
+/*@import url('reset/reset.css');
+*/
+@import url('styles_main.css');
+
+/*@import url('base/navbar.css');
+*/
+
+/*@import url('base/base.users.css');
+*/
+@import url('home/home.collections.css');
+
+/** declare css variables for use across css stylesheets **/
+
+:root {
+  --color-lightblue: lightblue;
+  --font-primary-family: 'Montserrat';
+  --melon: #fec5bbff;
+  --pale-pink: #fcd5ceff;
+  --misty-rose: #fae1ddff;
+  --isabelline: #f8edebff;
+  --platinum: #e8e8e4ff;
+  --alabaster: #d8e2dcff;
+  --linen: #ece4dbff;
+  --champagne-pink: #ffe5d9ff;
+  --peach-puff: #ffd7baff;
+  --charcoal: #264653ff;
+  --persian-green: #2a9d8fff;
+  --orange-yellow-crayola: #e9c46aff;
+  --sandy-brown: #f4a261ff;
+  --burnt-sienna: #e76f51ff;
+}
+
+/*
+a {
+  text-decoration: none;
+}
+
+/*#my_panels .card-body + )
+.thead {
+  background: midnightblue;
+}
+*/
+
+/*.show-panel table.attributes, table.attributes th, table.attributes td,
+table.attributes tr {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+body {
+  background: rgb(215,240,240);
+  background: #e5e5e5;
+  background: var(--color-lightblue);
+  font-family: var(--font-primary-family);
+  background: var(--linen);
+  background: var(--alabaster);
+  background: #e7feff;
+  background: #faf0e6;
+}
+
+.table {
+  font-size: 2em;
+}
+
+.show-panel a.btn-danger {
+  margin-bottom: 1.4em;
+}
+
+.btn-danger {
+  background: palevioletred;
+  color: white;
+  font-family: Arial,sans-serif;
+  letter-spacing: 1px;
+  border: 4px solid black;
+  border-radius: 7px;
+  -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+          box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+h1, .btn-primary, .bg-primary {
+  background: var(--platinum);
+  color: black;
+}
+
+h1.home {
+  background: #00cccc;
+  background: #ffebcd;
+  background: #87ceeb;
+  border: 3px solid blue;
+}
+
+.container {
+  padding: 0;
+}*/

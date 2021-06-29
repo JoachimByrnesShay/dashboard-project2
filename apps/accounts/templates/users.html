@@ -4,16 +4,18 @@
 Github Dashboard App - All Users
 {% endblock title %}
 {% block content %}
-<h1> Users </h1>
-<div class='row users'>
-    {% for user in users %}
-    <div class='col-3 h-100'>
-        <a class='stretched-link' href="{% url 'user_peer' user_id=user.id %}"></a>
-        <div class='card text-center rounded-3 border-3 h-100 d-block shadow'>
-            <h3 class='text-center username'>{{user.username|title}}</h3>
-            <img class='text-center d-inline-block m-auto' src="{{user.gravatar}}" width='80' height='70' alt='a users gravatar'>
+<div id='users'>
+    <h1> Users </h1>
+    <div class='row users'>
+        {% for user in users %}
+        <div class='col-3 h-100 pb-4'>
+            <a class='stretched-link' href="{% url 'user_peer' user_id=user.id %}"></a>
+            <div class='card text-center rounded-3 border-3 h-100 d-block shadow pb-3'>
+                <h3 class='text-center username'>{{user.username|title}}</h3>
+                <img class='text-center d-inline-block m-auto' src="{{user.gravatar}}" width='80' height='70' alt='a users gravatar'>
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 {% endblock content %}

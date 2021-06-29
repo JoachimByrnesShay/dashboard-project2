@@ -1,70 +1,350 @@
-/*@import url('reset/reset.css');
-*/
-@import url('base/navbar.css');
-@import url('base/base.users.css');
-@import url('home/home.collections.css');
-@import url('registration/registration.css');
+/* navbar and header */
 
-/** declare css variables for use across css stylesheets **/
-
-:root {
-  --test-hilarious: green;
-  --color-lightblue: lightblue;
-  --font-primary-family: 'Montserrat';
-}
-
-.container {
-  padding: 0;
-}
-
-#myaccount p, #myaccount span {
+.navbar, .navbar-expand {
   padding: 0;
   margin: 0;
 }
 
-#myaccount span {
+#navbarNav {
+  line-height: 20px;
+}
+
+header nav.navbar {
+  background: hsla(20,40%,20%,1);
+  background: #5c1404;
+}
+
+header nav.navbar a {
+  color: rgb(255,255,255);
+}
+
+.navspan {
+  display: flex;
+}
+
+.navbar-brand {
+  margin-left: 2em;
+}
+
+.navbar-nav {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 2.2em;
+  height: 1.8em;
+}
+
+.nav-link {
+  font-size: 20px;
+  padding-top: 23px;
+  padding-bottom: 5px;
+  height: 100%;
+  margin: auto;
+}
+
+.navbar-nav {
+  display: flex;
+}
+
+.main-links .users.nav-item {
+  width: 15ch;
+}
+
+.main-links .nav-item {
+  margin-right: 1.5em;
+}
+
+.active {
+  text-shadow: .4em -.3em .4em yellow;
+  font-weight: bold;
+  max-width: 100%;
+  box-shadow: 1em 1em .5 grey;
+}
+
+header nav.navbar li a:hover {
+  color: hsla(155,20%,85%,1.0);
+}
+
+.log .nav-link {
+  margin-left: 0em;
+}
+
+.main-links {
+  position: absolute;
+  left: 20em;
+}
+
+.auth-links .nav-item {
+  margin-right: 1em;
+  width: 10em;
+}
+
+.auth-links {
+  position: absolute;
+  left: 75%;
+}
+
+.username img {
+  margin-right: 2em;
+  border: red 5px solid;
+}
+
+.nav-item.username {
+  width: 100%;
+}
+
+.main-links .nav-item a {
+  box-shadow: 5px 5px 2px 1px rgba(45, 25,100, .2);
+  width: 15ch;
+}
+
+.main-links .nav-item {
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+/*
+
+*/
+
+/* main styles */
+
+body {
+  margin: 0;
+  padding: 0;
   background: lightblue;
-  border-radius: 3px;
+  font-family: "Montserrat";
+  font-weight: 500;
+}
+
+body::before {
+  display: block;
+  content: '';
+  height: 4em; /* or whatever */
+}
+
+.container-fluid {
+  padding: 0;
+  margin: 0;
+}
+
+/* */
+
+/* HOME */
+
+#home h1 {
+  background: midnightblue;
+  color: white;
+  font-weight: bold;
+}
+
+.dashboard-panel {
+  background: beige;
+  padding: .4em;
+  font-variant: small-caps;
+  border: 1px solid brown;
   color: black;
-  padding: .2em .5em .2em .5em;
+}
+
+.stretched-link:hover {
+  text-decoration: none;
+}
+
+.stretched-link {
+  color: black;
+  text-shadow: 2px 2px 2px grey;
+}
+
+.repo-description {
+  color: black;
   font-size: 1.1em;
 }
 
-#myaccount {
+.dashboard-panel h2 {
+  font-size: 1.2em;
+  padding: .7em 0 0 0;
+}
+
+embed {
+  border: 2px solid #00008b;
+  border: 2px solid #da9100;
+  margin: auto;
+}
+
+thead.thead {
+  background: black;
+  color: white;
+  text-shadow: 2px 2px 2px 2px white, 3px 2px 2px 2px grey;
+}
+
+table {
+}
+
+/* forms */
+
+input, textarea, label {
+  font-weight: 900;
+}
+
+form select option {
+  font-weight: 400 !important;
+}
+
+select, input, textarea {
+  border: 1px solid black !important;
+}
+
+form input[placeholder], form textarea[placeholder] {
+  font-weight: 900 !important;
+  color: black !important;
+}
+
+form .form-group .form-control::placeholder {
+  color: brown !important;
+  font-weight: 500;
+}
+
+input[placeholder].form-control {
+  color: black !important;
+}
+
+/*form select:invalid {
+  color: green;
+  font-weight: bold;
+
+*/
+
+form select:valid {
+  font-weight: 700 !important;
+  color: brown !important;
+  background: whitesmoke;
+}
+
+form select option:not(selected) {
+  color: black;
+  font-weight: 500 !important;
+}
+
+/* */
+
+mark, .mark {/*border-radius: 5px;
+*/
+  padding: 0 .3em 0 .3em;
+  /*  background: var(--alabaster);
+  background: #044c5c;
+  background: #14045c;
+  background: #5c4004;
+  background: #a57164;
+  background: #704241;
+  background: #1e90ff;
+  background: #c4c3d0;*/
+  border: 1px solid midnightblue;
+  color: white;
+  color: black;
+  font-weight: bold;
+  border-radius: 3px;
+}
+
+#show-collection .mark {
+  width: 50%;
+  background: hsl(15,50%,95%);
+}
+
+/* panels */
+
+.panel-display {
+  background: hsl(220,50%,75%);
+  color: black;
+  text-shadow: 4px 4px 4px ivory;
+  background: linear-gradient(to bottom, rgba(235,241,246,1) 0%,rgba(171,211,238,1) 50%,rgba(137,195,235,1) 51%,rgba(213,235,251,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: linear-gradient(to bottom, rgba(225,255,255,1) 0%,rgba(225,255,255,1) 7%,rgba(225,255,255,1) 12%,rgba(253,255,255,1) 12%,rgba(230,248,253,1) 30%,rgba(200,238,251,1) 54%,rgba(190,228,248,1) 75%,rgba(177,216,245,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  border: 2px solid midnightblue;
+}
+
+.panel-display .btn-danger {
+  text-shadow: none;
+}
+
+#show-panel .panel-display h2.table-announce {
+  background: white;
+  color: black;
+  text-shadow: none;
+}
+
+.table-identify {
+  margin-top: 2em;
+  border: 2px solid black;
+}
+
+/* collections */
+
+.panels-list {
+  border: 2px solid black;
+}
+
+.collection-details, .panel-details {
+  background: lightblue;
+  padding: 0.2em;
+}
+
+/* peer user */
+
+.peer-panels {
+  background: lightseagreen;
+}
+
+.peer-collections {
+  background: hsl(15,50%,70%);
+}
+
+/* MY ACCOUNT styles */
+
+#my-account p, #my-account span {
+  padding: 0;
+  margin: 0;
+}
+
+#my-account .card-body {
+  padding-top: .3em;
+}
+
+#my-account span {
+  background: hsl(109,50%,90%);
+  border: 1px solid midnightblue;
+  border-radius: 3px;
+  color: black;
+  padding: .1em .5em .1em .5em;
+  font-size: 1.1em;
+  margin-bottom: .2em;
+  display: inline-block;
+}
+
+#my-account p {
+  text-transform: uppercase;
+  margin-bottom: .2em;
+  margin-left: .1em;
+}
+
+#my-account {
   background: steelblue;
 }
 
-#myaccount .btn {
-  background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #ffffff 42%, #b49fda 79%, #7ac5d8 100%);
+#my-account .btn {/*background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #ffffff 42%, #b49fda 79%, #7ac5d8 100%);
+*/
   color: black;
-  text-shadow: 2px 2px 2px white, 2px 2px 3px blue;
   font-weight: bold;
   font-size: 1.3em;
   width: 90%;
   border-radius: 0;
   border: 1px solid blue;
-}
-
-#myaccount div .card-body {
-  background: cornsilk;
-  background: rgba(0,212,255,1);
-  background: linear-gradient(90deg, rgba(200,75,36,1) 0%, rgba(20,212,255,1) 35%, rgba(240,50,9,0.05926120448179273) 100%);
-  background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
-  background-image: linear-gradient(to right, #eea2a2 0%, #bbc1bf 19%, #57c6e1 42%, #b49fda 79%, #7ac5d8 100%);
-  background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
-  background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%);
-  padding-bottom: .7em;
-}
-
-.btn-primary {
-  background-color: hsla(10,80%,35%,.6);
-  color: midnightblue;
-  border: 1px solid blue;
-  font-weight: normal;
-  color: rgb(240,240,240);
-  color: rgb(0,0,0);
-  color: rgb(220,200,200);
   color: white;
+}
+
+#my-account div .card-body {
+  background: white;
+  padding-bottom: .7em;
 }
 
 .btn-primary:hover {
@@ -74,87 +354,23 @@
 
 .account-form {
   background: white;
+  padding: 1em;
 }
 
-#myaccount .card {
+#my-account .card {
   background: ghostwhite;
 }
 
 .account-form input, .account-form textarea {
-  background: floralwhite;
+  background: white;
   color: black;
   font-weight: 800;
   border: 2px solid silver;
   box-shadow: 2px 2px 5px 0.5;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-}
+/* table */
 
-/** general styles **/
-
-ul.navspan {
-  list-style-type: none;
-}
-
-.dashboard-panel a.stretched-link:hover {
-  text-decoration: none;
-  background-color: lightyellow;
-}
-
-.peer-bio {
-  border: 1px solid black;
-  font-weight: 500;
-  padding: .5em;
-}
-
-h1 {
-  background: #Acc1d9;
-  padding: .2em 0.4em .2em 0.4em;
-  color: hsl(220,50%,40%);
-  text-shadow: 4px 4px .6em hsl(20,50%,50%);
-}
-
-body {
-  background: rgb(215,240,240);
-  background: #e5e5e5;
-  background: var(--color-lightblue);
-  font-family: var(--font-primary-family);
-}
-
-.bold form, .bold form input, .bold form textarea, .bold form select {
-  font-weight: bold;
-}
-
-.card {
-  padding: 0;
-}
-
-#myaccount .card-body {
-  padding: 0.5em 0 0 0.5em;
-  border: 2px solid blue;
-}
-
-form input {
-  font-weight: 900;
-}
-
-header nav.navbar {
-  background: hsla(20,40%,20%,1);
-}
-
-header nav.navbar a {
-  color: hsla(30,80%,80%,0.9);
-  color: rgb(255,255,255);
-}
-
-header nav.navbar li a:hover {
-  color: hsla(155,20%,85%,1.0);
-}
-
-#table, #table h5, #table thead, #table tr, #table th {
-  font-size: .5em;
-  background: green;
+.btn-primary {
+  background: blue;
 }

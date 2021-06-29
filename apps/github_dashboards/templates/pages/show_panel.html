@@ -7,49 +7,87 @@ Github Dashboard App -Show Panel
 {% load panels_extras %}
 {% load cache %}
 {% block content %}
-<div class='card'>
-    <div class='card-body font-weight-bold'>
-        <h1 class='h4 font-weight-bold'>Panel Display for panel: <mark>"{{panel}}"</mark>:</h1>
-        {% if request.META.HTTP_REFERER %}
-        <!-- if there is META.HTTP_REFERER data, use it, otherwise as would occur if user refreshes current page- redirect to 'home'-avoids non-functioning 'return prev' link -->
-        <a class='h4 btn btn-danger' href="{{ request.META.HTTP_REFERER }}"> return to previous</a>
-        {% else %}
-        <a class='h4 btn btn-danger' href="{% url 'home' %}"> return to previous</a>
-        {% endif %}
-        <h2 class='h5'><span class='font-weight-bold'>Type:</span> <mark>{{panel.panel_type}}</mark><span class='font-weight-bold'>,&nbsp;Size:</span> <mark>{{panel.panel_size}}</mark></h2>
-        <h2 class='h5'><span class='font-weight-bold'>Description:</span> <mark>{{panel.description}}</mark></h2>
-        <h2 class='h5'><span class='font-weight-bold'>Creator:</span> <mark>{{panel.creator}}</mark></h2>
-        <h2 class='h5'><span class='font-weight-bold'>Created:</span> <mark>{{panel.created}}</mark></h2>
+<div id='show-panel'>
+    <div class='card'>
+        <div class='card-body font-weight-bold panel-display'>
+            <!-- if there is META.HTTP_REFERER data, use it, otherwise as would occur if user refreshes current page- redirect to 'home'- conditional by way of firstof template tag below, i.e. first value if truthy else 2nd value, avoids non-functioning 'return to prev' link in the latter case.  important as show_panel.html is linked from each panel on each of home, panels, collections>collection, all_users>user_peer -->
+            {% with ref=request.META.HTTP_REFERER %}
+            <a class='h4 btn btn-danger text-uppercase font-weight-bold' href='{% firstof ref "/" %}'> return to previous page</a>
+            {% endwith %}
+            <h1 class='h4 font-weight-bold'>Panel Display for panel: <mark>"{{panel}}"</mark>:</h1>
+            <br>
+            <div class='row'>
+                <div class='col-3'>
+                    <table class='attributes' style='width:16em;'>
+                        <tr>
+                            <th>Type:</th>
+                            <td>{{panel.panel_type}}</td>
+                            <!--    <h2 class='h6'><span class='font-weight-bold text-uppercase'>Type:</span> <mark>{{panel.panel_type}}</mark></h2> -->
+                        </tr>
+                        <tr>
+                            <th>Size:</th>
+                            <td>{{panel.panel_size}}</td>
+                            <!--    <h2 class='h6'><span class='font-weight-bold text-uppercase'>Type:</span> <mark>{{panel.panel_type}}</mark></h2> -->
+                        </tr>
+                        <tr>
+                            <th>Creator:</th>
+                            <td>{{panel.creator}}</td>
+                        </tr>
+                        <tr>
+                            <th>Created:</th>
+                            <td>{{panel.created|date:"Y-m-d"}}</td>
+                            <td>{{panel.created|date:"h:A"}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class='col-6'>
+                    <h5 class='font-weight-bold'>Description:</h5>
+                    <textarea value="{{panel.description}}" disabled style="resize: none !important;height: 0;min-height: 10em;width:16em;">{{panel.description}}</textarea>
+                </div>
+            </div>
+            <!-- <tr>
+    <h2 class='h6'><span class='font-weight-bold text-uppercase'>Size:</span> <mark>{{panel.panel_size}}</mark></h2>
+</tr>
+<tr>
+    <h2 class='h6'><span class='font-weight-bold text-uppercase'>Creator:</span> <mark>{{panel.creator}}</mark></h2>
+</tr>
+<tr>
+    <h2 class='h6'><span class='font-weight-bold text-uppercase'>Created:</span> <mark>{{panel.created}}</mark></h2>
+</tr>
+<tr>
+    <h2 class='h6'><span class='font-weight-bold text-uppercase'>Description:</span> <mark>{{panel.description}}</mark></h2>
+</tr> -->
+            {% if panel.is_table %}
+            <h2 class='h6 font-weight-bold text-uppercase w-100 border mt-3 mb-0 p-1 table-announce'>Tables display in full size on this page, display in designated size on home page and on collections page (if part of a collection) </h2>
+            {% endif %}
+        </div>
+    </div>
+    <!-- <div class='ml-0 mr-0 row dashboards justify-content-between position-relative align-items-start'> -->
+    <div class='ml-0 mr-0 row dashboards justify-content-between'>
         {% if panel.is_table %}
-        <h2 class='h5'>Tables display in full size on this page, display in designated size on home page and if part of a collection, on collections page</h2>
-        {% endif %}
-    </div>
-</div>
-<!-- <div class='ml-0 mr-0 row dashboards justify-content-between position-relative align-items-start'> -->
-<div class='ml-0 mr-0 row dashboards justify-content-between'>
-    {% if panel.is_table %}
-    <!-- for tables only- in show_panel template only, they will be in full 12-column display regardless of panel_size value.  
+        <!-- for tables only- in show_panel template only, they will be in full 12-column display regardless of panel_size value.  
      as all templates displaying tables use the same table snippet html which includes dynamic sizing on table and tr font-size and tr height using custom filters encoded in inline styles in the snippet, important_table.css with !important styles is loaded for purposes of this templates -->
-    {% block othercss %}
-    <link rel="stylesheet" href="{% static 'css/important_table.css' %}" />
-    {% endblock othercss %}
-    <div class="col dashboard-panel card shadow">
-        <h2>{{ panel }}</h2>
-        <h3 class='repo-description'>{{panel.description}}</h3>
-        {% cache 60 default panel.id request %}
-        {% with tablerepos=panel.get_repos %}
-        <table class="" id='table-{{panel.id}}' style="font-size:{{panel.panel_size|resize_from_columns}}em;">
-            {% include 'snippets/table.html' with show_panel_size='large' %}
-        </table>
-        {% endwith %}
-        {% endcache %}
-    </div>
-    {% else %}
-    <div class="col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow align-self-start">
-        <h2>{{ panel }}</h2>
-        <h3 class='repo-description'>{{panel.repo_description}}</h3>
-        <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg }}">
-        {% endif %}
+        {% block othercss %}
+        <link rel="stylesheet" href="{% static 'css/important_table.css' %}" />
+        {% endblock othercss %}
+        <div class="col dashboard-panel card shadow">
+            <h2>{{ panel }}</h2>
+            <h3 class='repo-description'>{{panel.description}}</h3>
+            {% cache 60 default panel.id request %}
+            {% with tablerepos=panel.get_repos %}
+            <table class="" id='table-{{panel.id}}' style="font-size:{{panel.panel_size|resize_from_columns}}em;">
+                {% include 'snippets/table.html' with show_panel_size='large' %}
+            </table>
+            {% endwith %}
+            {% endcache %}
+        </div>
+        {% else %}
+        <div class="col-{{panel.panel_size | panel_to_column_size }} dashboard-panel card d-flex shadow align-self-start">
+            <h2>{{ panel }}</h2>
+            <h3 class='repo-description'>{{panel.repo_description}}</h3>
+            <embed class='mb-0' type="image/svg+xml" src="{{ panel.svg }}">
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock content %}

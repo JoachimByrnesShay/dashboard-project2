@@ -5,9 +5,9 @@
 {% block othercss %}
 <link href="https://languages.abranhe.com/logos.css" rel="stylesheet">
 {% endblock othercss %}
-<h6 class='text-center'>A tabular view of Github repositories</h6>
+<h6 class='text-center' style='color:midnightblue;'>A tabular view of Github repositories</h6>
 {% csrf_token %}
-<thead class="bg-dark text-white">
+<thead class="thead">
     <tr style="height: {{panel.panel_size|resize_from_columns}}em">
         <th scope="col">
             Name
@@ -29,9 +29,9 @@
     <td>
         <!--https://css-tricks.com/nested-links/-->
         <!-- <div class='btn btn-success position-absolute' onclick="window.location='{{repo.html_url}}'" style=" right: 1em; margin-top: -.6em;cursor: pointer;z-index:10" tabindex='1'>View</div> -->
-        <form action="{{repo.html_url}}" method="get" class="position-relative" style="z-index:20;">
+        <form action="{{repo.html_url}}" name="github_form" method="get" class="position-relative" style="z-index:20;">
             {% csrf_token %}
-            <button class='btn btn-success'>View</button>
+            <button class='btn btn-primary d-block' formtarget="_blank">View</a>
         </form>
     </td>
     {% endif %}
