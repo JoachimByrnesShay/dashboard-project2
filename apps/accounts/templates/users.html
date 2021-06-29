@@ -5,8 +5,9 @@ Github Dashboard App - All Users
 {% endblock title %}
 {% block content %}
 <div id='users'>
-    <h1> Users </h1>
+    <h1 class='mark h3'> Users: CLICK ON ANY USER to see their public page </h1>
     <div class='row'>
+        <!-- row based display of card with gravatar for all users registered in app, with each linking to a designated public user page (some info including first/last name kept private )-->
         {% for user in users %}
         <div class='col-3 pb-4 align-items-end'>
             <a class='stretched-link' href="{% url 'user_peer' user_id=user.id %}"></a>
